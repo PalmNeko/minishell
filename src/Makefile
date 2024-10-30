@@ -1,5 +1,5 @@
 # settings
-NAME     = a.out
+NAME     = minishell
 SRC      = $(shell find . -name "*.c")
 CC      = cc
 CFLAGS = -Wall -Wextra -Werror -MMD -MP
