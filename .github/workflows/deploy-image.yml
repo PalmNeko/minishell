@@ -1,6 +1,6 @@
 name: deploy minishell test flow
 
-on: [push]
+on: workflow_dispatch
 jobs:
   Deploy-to-Github-Packages:
     runs-on: ubuntu-latest
