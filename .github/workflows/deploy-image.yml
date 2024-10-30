@@ -3,6 +3,7 @@ name: deploy minishell test flow
 on:
   push:
     paths:
+      - '.github/workflow/deploy-image.yml'
       - 'docker/ubuntu/Dockerfile'
 jobs:
   Deploy-to-Github-Packages:
