@@ -8,9 +8,6 @@ jobs:
     container:
       image: ghcr.io/palmneko/minishell-ubuntu:22.04
     steps:
-      - name: install git
-        run: |
-          apt install -y git
       - name: Check Environment
         run: |
           ls /
