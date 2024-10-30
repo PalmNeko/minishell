@@ -2,13 +2,14 @@
 NAME     = test.out
 SRC      = $(shell find . -name "*.c")
 CXX      = g++
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -pthread -lgtest_main -lgtest
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP
+LDLIBS   = -pthread -lgtest_main -lgtest
 
 CACHEDIR = cache
 
 # generate from above variable
-OBJS    = $(addprefix $(CACHEDIR)/,$(SRC:.cpp=.o))
-DEPS    = $(addprefix $(CACHEDIR)/,$(SRC:.cpp=.d))
+OBJS    = $(addprefix $(CACHEDIR)/,$(SRC:.c=.o))
+DEPS    = $(addprefix $(CACHEDIR)/,$(SRC:.c=.d))
 
 # PHONY rules
 all: $(NAME)
@@ -40,6 +41,6 @@ show:
 $(NAME): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LDLIBS)
 
-$(CACHEDIR)/%.o: %.cpp
+$(CACHEDIR)/%.o: %.c
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -MF $(CACHEDIR)/$*.d -o $@ -c $<
