@@ -8,6 +8,12 @@ jobs:
     container:
       image: ghcr.io/palmneko/minishell-ubuntu:22.04
     steps:
+      - name: env
+        run: |
+          whoami
+          pwd
+          ls
+          ls /
       - name: Cloning
         run: |
           git init .
