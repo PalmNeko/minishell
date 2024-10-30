@@ -1,0 +1,12 @@
+name: deploy minishell test flow
+
+on: [push]
+jobs:
+  Deploy-to-Github-Packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@4
+      - name: Check file
+        run: |
+          ls
+          test -f docker/ubuntu/Dockerfile
