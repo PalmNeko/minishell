@@ -1,6 +1,9 @@
 name: deploy minishell test flow
 
-on: workflow_dispatch
+on:
+  push:
+    paths:
+      - 'docker/ubuntu/Dockerfile'
 jobs:
   Deploy-to-Github-Packages:
     runs-on: ubuntu-latest
