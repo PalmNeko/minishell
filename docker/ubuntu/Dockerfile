@@ -6,7 +6,8 @@ apt upgrade -y
 apt install -y \
 	gcc \
 	valgrind \
-	python3-pip
+	python3-pip \
+	git
 pip install pytest
 EOF
 
@@ -17,8 +18,7 @@ FROM base as build
 RUN <<EOF
 	apt install -y \
 		cmake \
-		g++ \
-		git
+		g++
 EOF
 
 RUN git clone https://github.com/google/googletest.git && \
