@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/palmneko/minishell-ubuntu:22.04
+      options: --workdir "/home/appuser"
     steps:
       - name: env
         run: |
