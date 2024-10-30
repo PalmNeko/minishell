@@ -1,6 +1,9 @@
 name: test minishell
 
 on: ["push"]
+defaults:
+  run:
+    working-directory: "/home/appuser"
 jobs:
 
   Test:
@@ -10,7 +13,6 @@ jobs:
     steps:
       - name: env
         run: |
-          cd "/home/appuser"
           whoami
           pwd
           ls
