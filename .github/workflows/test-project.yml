@@ -8,14 +8,12 @@ jobs:
     container:
       image: ghcr.io/palmneko/minishell-ubuntu:22.04
     steps:
-      - name: Check Environment
+      - name: Cloning
         run: |
-          ls /
-          which pytest
-          which git
-          which g++
-          which gcc
-      - uses: actions/checkout@v4
+          git init ${GITHUB_WORKSPACE}
+          git remote add origin ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
+          git fetch --depth 1 --no-recurse-submodules origin ${GITHUB_REF}
+          git checkout --progress --force -B ${GITHUB_REF_NAME} ${GITHUB_REF}
       - name: Unit test # google test
         run: |
           make -f tests/googletest/Makefile
