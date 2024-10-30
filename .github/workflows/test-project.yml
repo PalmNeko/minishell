@@ -19,8 +19,7 @@ jobs:
           ls /
       - name: Cloning
         run: |
-          git init /tmp/workdirectory
-          cd /tmp/workdirectory
+          git init .
           git remote add origin ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
           git fetch --depth 1 --no-recurse-submodules origin ${GITHUB_REF_NAME}
           git checkout --progress ${GITHUB_REF_NAME}
