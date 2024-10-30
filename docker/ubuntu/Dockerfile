@@ -33,6 +33,11 @@ RUN git clone https://github.com/google/googletest.git && \
 
 FROM base as final
 
+RUN <<EOF
+	apt install -y \
+		nodejs
+EOF
+
 # User
 ARG UID=10001
 RUN adduser \
