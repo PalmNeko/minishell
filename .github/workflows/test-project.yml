@@ -1,22 +1,17 @@
 name: test minishell
 
 on: ["push"]
+
 defaults:
   run:
     working-directory: "/home/appuser"
-jobs:
 
+jobs:
   Test:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/palmneko/minishell-ubuntu:22.04
     steps:
-      - name: env
-        run: |
-          whoami
-          pwd
-          ls
-          ls /
       - name: Cloning
         run: |
           git init .
