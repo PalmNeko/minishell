@@ -25,7 +25,7 @@ jobs:
           git checkout --progress ${GITHUB_REF_NAME}
       - name: Unit test # google test
         run: |
-          make -f tests/googletest/Makefile
+          make -C tests/googletest
           tests/googletest/test.out
       - name: System test # pytest
         run: |
