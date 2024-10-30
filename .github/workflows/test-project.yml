@@ -21,7 +21,7 @@ jobs:
           cd /tmp/workdirectory
           git remote add origin ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
           git fetch --depth 1 --no-recurse-submodules origin ${GITHUB_REF_NAME}
-          git checkout --progress --force -B ${GITHUB_REF_NAME} ${GITHUB_REF_NAME}
+          git checkout --progress ${GITHUB_REF_NAME}
       - name: Unit test # google test
         run: |
           make -f tests/googletest/Makefile
