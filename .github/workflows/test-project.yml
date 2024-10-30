@@ -2,8 +2,6 @@ name: test minishell
 
 on: ["push"]
 jobs:
-  Checkout:
-    runs-on: ubuntu-latest
 
   Test:
     runs-on: ubuntu-latest
