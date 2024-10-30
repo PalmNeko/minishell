@@ -10,6 +10,13 @@ jobs:
       IMAGE_NAME: ghcr.io/palmneko/minishell-ubuntu
       IMAGE_TAG: 22.04
     steps:
+      - name: Check Environment
+        run: |
+          ls /
+          which pytest
+          which git
+          which g++
+          which gcc
       - uses: actions/checkout@v4
       - name: Unit test # google test
         run: |
