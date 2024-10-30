@@ -2,14 +2,17 @@ name: test minishell
 
 on: ["push"]
 jobs:
+  Checkout:
+    runs-on: ubuntu-latest
+
   Test:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/palmneko/minishell-ubuntu:22.04
-    env:
-      IMAGE_NAME: ghcr.io/palmneko/minishell-ubuntu
-      IMAGE_TAG: 22.04
     steps:
+      - name: install git
+        run: |
+          apt install git
       - name: Check Environment
         run: |
           ls /
