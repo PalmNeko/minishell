@@ -1,4 +1,4 @@
-name: test minishell
+name: unit test and system test
 
 on: ["push"]
 

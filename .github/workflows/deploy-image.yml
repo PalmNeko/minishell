@@ -1,4 +1,4 @@
-name: deploy minishell test flow
+name: deploy minishell test image container
 
 on:
   push:
