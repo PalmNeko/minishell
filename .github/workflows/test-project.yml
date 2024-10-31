@@ -4,7 +4,7 @@ on: ["push"]
 
 defaults:
   run:
-    working-directory: "/home/appuser"
+    working-directory: "/home/minishell"
 
 jobs:
   Test:

@@ -39,11 +39,11 @@ RUN adduser \
     --disabled-password \
     --gecos "" \
     --uid "${UID}" \
-    appuser
-USER appuser
+    minishell
+USER minishell
 
 COPY --from=build googletest/googlemock/include/gmock /usr/local/include/gmock
 COPY --from=build googletest/googletest/include/gtest /usr/local/include/gtest
 COPY --from=build googletest/build/lib/*.a /usr/local/lib/
 
-WORKDIR /home/appuser
+WORKDIR /home/minishell
