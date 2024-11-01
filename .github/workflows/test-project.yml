@@ -1,0 +1,27 @@
+name: unit test and system test
+
+on: ["push"]
+
+defaults:
+  run:
+    working-directory: "/home/minishell"
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/palmneko/minishell-ubuntu:22.04
+    steps:
+      - name: Cloning
+        run: |
+          git init .
+          git remote add origin ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
+          git fetch --depth 1 --no-recurse-submodules origin ${GITHUB_REF_NAME}
+          git checkout --progress ${GITHUB_REF_NAME}
+      - name: Unit test # google test
+        run: |
+          make -C tests/googletest
+          tests/googletest/test.out
+      - name: System test # pytest
+        run: |
+          pytest tests/pytest
