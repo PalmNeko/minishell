@@ -39,6 +39,6 @@ show:
 $(NAME): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LDLIBS)
 
-$(CACHEDIR)/%.o: %.cpp
+$(CACHEDIR)/%.o: %.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -MF $(CACHEDIR)/$*.d -o $@ -c $<
