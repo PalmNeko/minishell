@@ -13,7 +13,7 @@ EOF
 
 # Installing
 # cmake, g++, git はgoogleテストを導入するのに必要
-FROM base as build
+FROM base AS build
 
 RUN <<EOF
 	apt install -y \
@@ -31,7 +31,7 @@ RUN git clone https://github.com/google/googletest.git && \
 	cp -r ../googletest/include/gtest /usr/local/include/gtest && \
 	cp lib/*.a /usr/local/lib/
 
-FROM base as final
+FROM base AS final
 
 # User
 ARG UID=10001
