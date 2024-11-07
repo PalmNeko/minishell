@@ -1,25 +1,54 @@
 
-# TODO
-1. '='のオートマトンを追加する。
-2. オートマトンが足りているかどうかを調査する。
-3. 宣言と説明、エラーを作成する。
-4. その他の関数と説明を簡単に追加する。
+# 字句解析設計
+# 宣言
+`t_list *ms_lexical_analyze(const char *input)`
+
+# 説明
+　inputの文字列を字句解析を行い、トークン（単語）のリストを作成する。
+トークンは下記の有限オートマトンによって判断される。
+もしも複数のオートマトンで解釈可能な場合は、下記の優先度に従って一つに決定される。
+一つのリスト(t_list)には一つのトークン(t_token)が入る。
+
+対象のトークンは文字列として抜き出され、メモリにコピーされる。
+
+もしも、一つもトークン可能な文字列がない場合は、拒否トークン(TK_DECLINED)が入ったリストが返される。
+
+また、次のトークンは、t_token_optに、対応する構造体に設定すること。
+* リダイレクション
+* 変数
+
+# 戻り値
+成功した場合は、リストの先頭ポインタ。
+失敗した場合は、NULLが返され、errnoに適切な値が設定される。
+
+# エラー
+ENOMEM　メモリ確保関連のエラーが発生した場合
+
+# その他注意事項
+
+* その他の関数セクションを参考に、オートマトンに従ったtokenize関数を実装すること。
+* 優先度を判断する関数を作成すること。
+* 構造体、関数宣言は、lexical_analyze.hに作成すること。
+* 指定のある各関数の実装は、`関数名.c`のファイルに作成すること。(他は自由)
 
 # メタ文字
-ここでは、meta文字は次のうちのどれかを指すものとする：'<' '<<' '<<-' '>' '>>' ' ' '\n' '\t' '=' '&&' '||'
-ここでは、簡単のためリストは作成していないが、実際の設計時には含める予定。
+ここでは、meta文字は次のうちのどれかを指すものとする：
+	'<' '>' ' ' '\n' '\t' '=' ('&' '|')
 
-# 分類一覧
- | 分類 | 意味 |
- | --- | --- |
- | 識別子 | 環境変数代入時に指定できる名称 |
- | ワード | 文字列 |
- | リダイレクション | `< << <<- > >>` のどれか(数値を含む) |
- | シングルクウォート | `'` |
- | ダブルクォート | `"` |
- | 変数 | `$`から始まる特定の文字列。特殊変数含む |
- | パイプ | `|` |
- | 区切り文字 | `\t\n ` のいずれかが連続する文字列 |
+# トークンの分類一覧
+ | 分類 | 意味 | t_token_type |
+ | --- | --- | --- |
+ | 拒否 | どのトークンにも当てはまらない | TK_DECLINED |
+ | 識別子 | 環境変数代入時に指定できる名称 | TK_IDENTIFY |
+ | ワード | 文字列 | TK_WORD |
+ | リダイレクション | `< << <<- > >>` のどれか(数値を含む) | TK_REDIRECTION |
+ | シングルクウォート | `'` | TK_SINGLE_QUOTE |
+ | ダブルクォート | `"` | TK_DOUBLE_QUOTE |
+ | 変数 | `$`から始まる特定の文字列。特殊変数含む | TK_VARIABLE |
+ | パイプ | `|` | TK_PIPE |
+ | 区切り文字 | `\t\n ` のいずれかが連続する文字列 | TK_DELIMITER |
+ | 代入演算子 | `=` | TK_EQUALS |
+ | (リスト) | `&& \|\|` のどれか | TK_LIST |
 
 # 有限オートマトン
 識別子
@@ -74,16 +103,16 @@ stateDiagram-v2
 (カッコ内は、本家では変数として扱うが、今回は扱わないもの)
 ```mermaid
 stateDiagram-v2
-	[*] --> assignment_start: $
-	assignment_start --> 受理: ?, (0-9), (#), ($), (!), (@) (*), (_)
-	assignment_start --> assignment_bracket_start: {
-	assignment_bracket_start --> inner_bracket: a-z, A-Z, 0-9
+	[*] --> variable_start: $
+	variable_start --> 受理: ?, (0-9), (#), ($), (!), (@) (*), (_)
+	variable_start --> variable_bracket_start: {
+	variable_bracket_start --> inner_bracket: a-z, A-Z, 0-9
 	inner_bracket --> inner_bracket: a-z, A-Z, 0-9
 	inner_bracket --> 受理: }
-	assignment_bracket_start --> 受理: }
-	assignment_start --> assignment: a-z, A-Z
-	assignment --> assignment: a-z, A-Z, 0-9
-	assignment --> 受理: 以外
+	variable_bracket_start --> 受理: }
+	variable_start --> variable: a-z, A-Z
+	variable --> variable: a-z, A-Z, 0-9
+	variable --> 受理: 以外
 ```
 
 パイプ
@@ -100,6 +129,12 @@ stateDiagram-v2
 	delimiter --> 受理: 以外
 ```
 
+代入演算子
+```mermaid
+stateDiagram-v2
+	[*] --> 受理: =
+```
+
 （リスト）
 ```mermaid
 stateDiagram-v2
@@ -110,16 +145,40 @@ stateDiagram-v2
 ```
 
 # 優先度
-優先度
+
+優先度は、3つの判断基準よって順に決定される。
+1. 種別による優先度
+2. トークン（単語）の長さ
+3. 種別内の優先度
+順に判断され、同じ優先度だった場合、次の判断基準で判断される。
+
+種別内の優先度は、左にあるものの方が高いものとする。
+
+**種別による優先度**
 |優先度| 対象 |
 |---|---|
 |高| --- |
-|0| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, （リスト）, 区切り文字 |
-|1| 識別子, ワード |
+|--| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, （リスト）, 区切り文字, 代入演算子 |
+|--| 識別子, ワード |
+|--| 拒否 |
 |低| --- |
+
+**トークンの長さ**
+より長いものが優先度が高くなる。
+
+**種別内の優先度**
+種別による優先度の表の同じ優先度のものに対して、左にあるものが優先度が高い。
+
+**オートマトンに従って計算される場合の判断例**
+| 入力値 | トークンの種類 | 優先度によって決定されたトークンの種類 | 決定事由 |
+| --- | --- | --- | --- |
+| `$Abs` | ワード　変数 | 変数 | 種別による優先度 |
+| `Abs#` | 識別子(`Abs`)　ワード(`Abs#`) | ワード | トークンの長さ |
+| `Abs ` | 識別子(`Abs`)　ワード(`Abs`) | 識別子 | 種別内の優先度 |
 
 # 構造体
 ```c
+// トークンの種類
 typedef enum e_token_type {
 	TK_DECLINED, // 拒否 (対象のオートマトンでは解析できなかった)
 	TK_IDENTIFY, // 識別子
@@ -127,13 +186,14 @@ typedef enum e_token_type {
 	TK_DELIMITER, // 区切り文字 '\t\n '
 	TK_VARIABLE, // 変数
 	TK_PIPE, // '|'
+	TK_EQUALS, // '='
 	TK_SINGLE_QUOTE, // '
 	TK_DOUBLE_QUOTE, // "
 	TK_REDIRECTION, // < << <<- > >>
-	// TK_LIST_AND, // &&
-	// TK_LIST_OR, // ||
+	// TK_LIST, // && ||
 }	t_token_type;
 
+// redirectionの種類
 typedef enum e_redirection_type {
 	RD_INPUT, // <
 	RD_OUTPUT, // >
@@ -142,23 +202,90 @@ typedef enum e_redirection_type {
 	RD_HEREDOC_VAR, // <<-
 }	t_redirection_type;
 
+// トークンのopt
+typedef struct s_token_opt {
+	void *value; // 値
+	void (*free_opt)(void *); // 値をfreeするための関数ポインタ
+	void (*print_opt)(void *); // 値を出力するための関数ポインタ
+}	t_token_opt;
+
+// トークン
 typedef struct s_token {
-	t_token_type type;
-	char	*token;
-	int		end_pos; // 入力文字列に対する、トークン外の文字の開始位置
-	int		start_pos; // 入力文字列に対する、トークンの開始位置
-	void *opt;
-	void (*free_opt)(void *);
-	void (*print_opt)(void *);
+	t_token_type	type;
+	char			*token; // メモリに確保された文字列
+	int				end_pos; // 入力文字列に対する、トークン外の文字の開始位置
+	int				start_pos; // 入力文字列に対する、トークンの開始位置
+	t_token_opt		*opt; // メモリに確保されたオプション
 }	t_token;
 
+// リダイレクションのopt
 typedef struct s_redirection {
 	t_redirection_type type;
 	int fd;
 }	t_redirection;
 
+// 変数のopt
+typedef struct s_variable {
+	char *value;
+}	t_variable;
 
 ```
+
+# その他の関数
+
+## tokenize系
+### 共通
+**宣言** `t_token *ms_tokenize_*(const char *input, int pos)`の形で統一されている。
+
+**説明**
+inputのposから始まる文字列に対して、
+対象のトークンかどうかをオートマトンと構造体を元に処理し、t_tokenへのポインタを返す。
+オートマトンで受理できない場合は、実引数の初期値を`ms_tokenize_declined`に渡し、呼び出した結果を返す。
+
+**引数**
+inputは、入力文字列。
+posは、判断するトークンの最初の文字列。
+
+**戻り値**
+成功時、メモリに確保されたt_token型へのポインタ。
+失敗時、NULL
+
+**エラー**
+ENOMEM メモリ確保関連のエラー
+
+### 関数名一覧
+* ms_tokenize_declined
+* ms_tokenize_identify
+* ms_tokenize_word
+* ms_tokenize_delimiter
+* ms_tokenize_variable
+* ms_tokenize_pipe
+* ms_tokenize_equals
+* ms_tokenize_single_quote
+* ms_tokenize_double_quote
+* ms_tokenize_redirection
+
+### ms_tokenize_declined
+拒否トークンの生成を行う。
+start_posとend_posには、同じ値が入る。
+
+## 優先度関数
+**宣言**
+`int ms_token_priority_cmp(t_token *left, t_token *right)`
+
+**説明**
+tokenの優先度を比較して結果を返す。
+優先度は、*優先度*のセクションを参照してください。
+
+NULLが指定された場合は、最も低い優先度のtokenとして扱う。
+
+**戻り値**
+* `left > right` の場合、正の値
+* `left < right` の場合、負の値
+* `left == right` の場合、0
+
+**エラー**
+なし
 # 参考
 
 字句解析に置いて、有限オートマトンと言われるものが使用されるらしく、また字句解析に使用できそうなため、これを利用する。
