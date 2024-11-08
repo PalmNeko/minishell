@@ -39,7 +39,7 @@ int	main(void)
 		line = readline("prompt> ");
 		// Ctrl-Dを押すとEOFだけを送りNULL
 		if (line == NULL)
-			break ;
+			print("exit");
 		add_history(line);
 		printf("line: %s\n", line);
 		free(line);
