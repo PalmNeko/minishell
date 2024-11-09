@@ -219,16 +219,16 @@ typedef struct s_token {
 }	t_token;
 
 // リダイレクションのopt
-typedef struct s_redirection {
+typedef struct s_redirection_opt {
 	t_redirection_type type;
-	int fd; // ファイルディスクリプタ、typeやトーク
+	int fd; // ファイルディスクリプタ、typeや字句解析の結果から判断して適切な値を入れる
 	bool is_expansion; // 変数展開するかどうかの値、初期値は true
-}	t_redirection;
+}	t_redirection_opt;
 
 // 変数のopt
-typedef struct s_variable {
+typedef struct s_variable_opt {
 	char *value;
-}	t_variable;
+}	t_variable_opt;
 
 ```
 
