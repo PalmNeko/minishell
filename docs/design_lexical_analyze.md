@@ -221,7 +221,8 @@ typedef struct s_token {
 // リダイレクションのopt
 typedef struct s_redirection {
 	t_redirection_type type;
-	int fd;
+	int fd; // ファイルディスクリプタ、typeやトーク
+	bool is_expansion; // 変数展開するかどうかの値、初期値は true
 }	t_redirection;
 
 // 変数のopt
