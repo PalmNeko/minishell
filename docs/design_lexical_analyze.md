@@ -199,7 +199,7 @@ typedef enum e_redirection_type {
 	RD_OUTPUT, // >
 	RD_APPEND, // >>
 	RD_HEREDOC, // <<
-	RD_HEREDOC_VAR, // <<-
+	RD_HEREDOC_TRIM, // <<-
 }	t_redirection_type;
 
 // トークンのopt
