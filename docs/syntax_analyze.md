@@ -182,90 +182,154 @@ typedef struct s_syntax_result {
 
 ## 構文ノード作成関数
 
-**宣言**
+### ms_parse_<BNFの構文名>
+- **宣言**
 ```c
-// 終端構文
-t_syntax_node	*ms_parse_declined(t_list *tokens);
-t_syntax_node	*ms_parse_identify_element(t_list *tokens);
-t_syntax_node	*ms_parse_word_element(t_list *tokens);
-t_syntax_node	*ms_parse_equals_element(t_list *tokens);
-t_syntax_node	*ms_parse_redirection_element(t_list *tokens);
-t_syntax_node	*ms_parse_delimiter_element(t_list *tokens);
-t_syntax_node	*ms_parse_merged_word(t_list *tokens);
-
-// 非終端構文
-t_syntax_node	*ms_parse_assignment_word(t_list *tokens);
-t_syntax_node	*ms_parse_redirection_word(t_list *tokens);
-t_syntax_node	*ms_parse_simple_command(t_list *tokens);
-t_syntax_node	*ms_parse_command(t_list *tokens);
-t_syntax_node	*ms_parse_pipeline(t_list *tokens);
+t_syntax_node	*ms_parse_<BNFの構文名>(t_list *tokens);
 ```
-
-**説明**
-構文に沿った構文ノードを作成する関数群。
-各tokensは、構文解析を行うためのトークンの最初のリストである。
-
-**戻り値**
-成功時、メモリに確保された構文ノードを返す。
-エラー時、NULLを返し、errnoに適切な値を設定する。
-
-**エラー**
-ENOMEM malloc関連のエラー
+> 例
+> ```c
+> t_syntax_node	*ms_parse_declined(t_list *tokens);
+> ```
+- **説明**: 構文に沿った構文ノードを作成する関数。 特記：ms_parse_declinedは受け取った最初のトークンを保持する、終端構文である。
+- **引数**:
+  - **tokens**: 構文の判断を行う最初のトークンへのポインタ
+- **戻り値**:
+  - **成功時**: メモリに確保された構文ノードを返す。
+  - **エラー時**: NULLを返し、errnoに適切な値を設定する。
+- **エラー**: ENOMEM malloc関連のエラー
 
 ## t_syntax_node関連の関数
+### 構造体
 
-**宣言**
+### ms_syntax_node_create
 ```c
-t_syntax_node	*ms_create_syntax_node(t_syntax_type type);
-void			ms_destroy_syntax_node(t_syntax_node *node);
-t_syntax_node	*ms_append_node_syntax_node(t_syntax_node *parent, t_syntax_node *child);
-t_syntax_node	*ms_append_token_syntax_node(t_syntax_node *parent, t_token *token);
-void			ms_print_syntax_node(t_syntax_node *node);
-void			ms_print_syntax_node_recursive(t_syntax_node *node);
-// 必要になったときに
-/*
-typedef void	*(*t_iter_func)(t_syntax_node *node, int depth);
-
-void			ms_iter_syntax_node(t_syntax_node *node, t_iter_func f);
-void			ms_copy_syntax_node(t_syntax_node *node);
-void			ms_copy_syntax_node_recursive(t_syntax_node *node);
-
-*/
+t_syntax_node *ms_syntax_node_create(t_syntax_type type)
 ```
+- **構文**: `ms_syntax_node_create(type)`
+- **説明**: 指定された `type` の新しい構文ノードを作成
+- **引数**:
+  - `type` - ノードの種類を表す `t_syntax_type`
+- **戻り値**:
+  - **成功時**: 作成した `t_syntax_node` のポインタ
+  - **エラー時**: NULLを返し、errnoに適切な値を設定する。
+- **エラー**: ENOMEM malloc関連のエラー
 
-**説明**
-* **ms_create_syntax_node** typeの構文ノードを作成する。children, tokensの初期値はNULL
-* **ms_destroy_syntax_node** 構文ノードで使用しているメモリを開放する。NULLポインタが指定された場合は何もしない。
-* **ms_append_syntax_node** parentノードのchildrenにchildノードを追加する。
-* **ms_append_syntax_node** parentノードのtokensにtokenを追加する。
-* **ms_print_syntax_node** nodeを一つ標準出力に出力する。
-* **ms_print_syntax_node_recursive** nodeを再帰的にchildrenのノードも出力する。
+### ms_syntax_node_destroy
+```c
+void ms_syntax_node_destroy(t_syntax_node *node)
+```
+- **構文**: `ms_syntax_node_destroy(node)`
+- **説明**: 指定した構文ノードを解放し、メモリを返却。nodeがNULLの場合は何もしない。
+- **引数**:
+  - `node` - 解放する `t_syntax_node` のポインタ
+- **戻り値**: なし
+- **エラー**: なし
 
-**戻り値**
-戻り値があるものはその型に応じて次に従う。
+### ms_syntax_node_append_node
+```c
+t_syntax_node *ms_syntax_node_append_node(t_syntax_node *parent, t_syntax_node *child)
+```
+- **構文**: `ms_syntax_node_append_node(parent, child)`
+- **説明**: 親ノード `parent` に子ノード `child` を追加
+- **引数**:
+  - `parent` - 子ノードを追加する親ノードのポインタ
+  - `child` - 追加する子ノードのポインタ
+- **戻り値**: 親ノードのポインタ
+- **エラー**: なし
 
-* **ms_create_syntax_node** は、成功時、メモリ上に作成したノードへのポインタ、失敗時、NULL.
-* **ms_append**系の関数は、成功時、parentのアドレス。失敗時、NULL.
+### ms_syntax_node_append_token
+```c
+t_syntax_node *ms_syntax_node_append_token(t_syntax_node *parent, t_token *token)
+```
+- **構文**: `ms_syntax_node_append_token(parent, token)`
+- **説明**: 親ノード `parent` に `token` を追加し、トークンの内容を含む新しいノードを作成
+- **引数**:
+  - `parent` - トークンを追加する親ノードのポインタ
+  - `token` - 追加する `t_token` のポインタ
+- **戻り値**: 親ノードのポインタ
+- **エラー**: なし
 
-戻り値がある関数はerrnoに適切な値を設定する。
+### ms_syntax_node_print
+```c
+void ms_syntax_node_print(t_syntax_node *node)
+```
+- **構文**: `ms_syntax_node_print(node)`
+- **説明**: 指定した構文ノード `node` の情報を表示
+- **引数**:
+  - `node` - 表示する `t_syntax_node` のポインタ
+- **戻り値**: なし
+- **エラー**: なし
 
-**エラー**
-ENOMEM malloc関連のエラー
+### ms_syntax_node_print_recursive
+```c
+void ms_syntax_node_print_recursive(t_syntax_node *node)
+```
+- **構文**: `ms_syntax_node_print_recursive(node)`
+- **説明**: 指定した構文ノード `node` とその子孫ノードを再帰的に表示
+- **引数**:
+  - `node` - 再帰的に表示する `t_syntax_node` のポインタ
+- **戻り値**: なし
+- **エラー**: なし
+
+### ms_syntax_node_iter
+```c
+void ms_syntax_node_iter(t_syntax_node *node, void (*f)(t_syntax_node *node, int depth))
+```
+- **構文**: `ms_syntax_node_iter(node, f)`
+- **説明**: 構文ノード `node` をルートとして指定した関数 `f` を各ノードに適用
+- **引数**:
+  - `node` - 走査を始める `t_syntax_node` のポインタ
+  - `f` - 各ノードに適用する関数ポインタ。
+	- **引数**
+	  - `node`: 対象のノード
+	  - `depth`: rootからの深さ
+	- **戻り値**: なし
+- **戻り値**: なし
+- **エラー**: なし
+
+### ms_syntax_node_copy
+```c
+t_syntax_node ms_syntax_node_copy(t_syntax_node *node)
+```
+- **構文**: `ms_syntax_node_copy(node)`
+- **説明**: 指定した構文ノード `node` をコピー
+- **引数**:
+  - `node` - コピー対象の `t_syntax_node` のポインタ
+- **戻り値**: コピーされた構文ノード
+- **エラー**: ENOMEM malloc関連のエラー
+### ms_syntax_node_copy_recursive
+```c
+void ms_syntax_node_copy_recursive(t_syntax_node *node)
+```
+- **構文**: `ms_syntax_node_copy_recursive(node)`
+- **説明**: 指定した構文ノード `node` とその子孫ノードを再帰的にコピー
+- **引数**:
+  - `node` - コピー対象の `t_syntax_node` のポインタ
+- **戻り値**: コピーされた構文ノード
+- **エラー**: ENOMEM malloc関連のエラー
 
 ## t_syntax_result関連の関数
-**宣言**
+### ms_create_syntax_result
 ```c
-t_syntax_result	*ms_create_syntax_result(t_syntax_node *node)s;
-void			ms_destroy_syntax_result(t_syntax_result *result);
+t_syntax_result *ms_create_syntax_result(t_syntax_node *root)
 ```
+- **構文**: `ms_create_syntax_result(root)`
+- **説明**: 構文解析の結果として、ルートノード `root` を含む新しい `t_syntax_result` を作成
+- **引数**:
+  - `root` - 構文解析結果のルートとなる `t_syntax_node` のポインタ
+- **戻り値**:
+  - **成功時**: 作成した `t_syntax_result` のポインタ
+  - **エラー時**: NULLを返し、errnoに適切な値を設定する。
+- **エラー**: ENOMEM malloc関連のエラー
 
-**説明**
-**ms_create_syntax_result** rootにnodeが入った構文解析の結果を作成する。
-**ms_destroy_syntax_result** メモリを開放する。NULLが指定されたときは、何もしない。
-
-**戻り値**
-* **ms_create_syntax_result** 成功時、構文解析の結果。エラー時NULL
-エラー時、errnoに適切な値が設定される。
-
-**エラー**
-ENOMEM malloc関連のエラー
+### ms_destroy_syntax_result
+```c
+void ms_destroy_syntax_result(t_syntax_result *result)
+```
+- **構文**: `ms_destroy_syntax_result(result)`
+- **説明**: 構文解析の結果を格納した `result` を解放し、メモリを返却。引数にNULLが渡された場合は、何もしない。
+- **引数**:
+  - `result` - 解放する `t_syntax_result` のポインタ
+- **戻り値**: なし
+- **エラー**: なし
