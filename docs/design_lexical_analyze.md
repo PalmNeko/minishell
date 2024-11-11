@@ -49,7 +49,8 @@ ENOMEM　メモリ確保関連のエラーが発生した場合
  | 空白 | `\t\n ` のいずれかが連続する文字列 | TK_BLANK |
  | 改行 | `\n` | TK_NEWLINE |
  | 代入演算子 | `=` | TK_EQUALS |
- | (カッコ) | `(` `)` のどれか |  TK_BRACKET |
+ | (左カッコ) | `(` |  TK_LEFT_PARENTHESIS |
+ | (右カッコ) | `)` のどれか |  TK_RIGHT_BRACKET |
  | (リスト) | `&& \|\|` のどれか | TK_LIST |
 
 # 有限オートマトン
@@ -143,9 +144,13 @@ stateDiagram-v2
 	[*] --> 受理: =
 ```
 
-（カッコ）
+（左カッコ）
 ```mermaid
 	[*] --> 受理: '('
+```
+
+（右カッコ）
+```mermaid
 	[*] --> 受理: ')'
 ```
 
@@ -172,7 +177,7 @@ stateDiagram-v2
 |優先度| 対象 |
 |---|---|
 |高| --- |
-|--| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, （リスト）, 空白文字, 代入演算子, 改行文字, （かっこ） |
+|--| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, （リスト）, 空白文字, 代入演算子, 改行文字, （左かっこ）, (右かっこ) |
 |--| 識別子, ワード |
 |--| 拒否 |
 |低| --- |
@@ -205,7 +210,8 @@ typedef enum e_token_type {
 	TK_SINGLE_QUOTE, // '
 	TK_DOUBLE_QUOTE, // "
 	TK_REDIRECTION, // < << <<- > >>
-	TK_BRACKET, // '(' ')'
+	TK_LEFT_PARENTHESIS, // '('
+	TK_RIGHT_PARENTHESIS, // ')'
 	TK_LIST, // && ||
 }	t_token_type;
 
@@ -282,7 +288,8 @@ ENOMEM メモリ確保関連のエラー
 * ms_tokenize_single_quote
 * ms_tokenize_double_quote
 * ms_tokenize_redirection
-* ms_tokenize_bracket
+* ms_tokenize_left_parenthesis
+* ms_tokenize_right_parenthesis
 * ms_tokenize_list
 
 ### ms_tokenize_declined
