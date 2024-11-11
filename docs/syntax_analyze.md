@@ -8,16 +8,6 @@ tokensに対して構文解析を行いその結果を返す。
 構文ノードが終端構文の場合は、tokensにトークンのリストが指定される。
 構文ノードが非終端構文の場合は、childrenに終端構文もしくは非終端構文のリストが設定される。
 
-この関数は、以下の処理がすべて終わった後のトークンに対して処理されることを想定している。
-* `ms_remove_double_quote`
-* `ms_remove_single_quote`
-* `ms_parameter_expansion`
-
-以上の関数により、以下のトークンはすべて削除されているものとする。
-* TK_SINGLE_QUOTE
-* TK_DOUBLE_QUOTE
-* TK_VARIABLE
-
 # 戻り値
 
 全ての戻り値(NULL含む)は、ms_destroy_syntax_resultの引数に指定して呼び出し可能である。
