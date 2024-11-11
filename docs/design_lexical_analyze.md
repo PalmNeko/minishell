@@ -225,37 +225,13 @@ typedef enum e_token_type {
 	TK_LIST, // && ||
 }	t_token_type;
 
-// redirectionの種類
-typedef enum e_redirection_type {
-	RD_INPUT, // <
-	RD_OUTPUT, // >
-	RD_APPEND, // >>
-	RD_HEREDOC, // <<
-	RD_HEREDOC_TRIM, // <<-
-}	t_redirection_type;
-
-// トークンのopt
-typedef struct s_token_opt {
-	void *value; // 値
-	void (*free_opt)(void *); // 値をfreeするための関数ポインタ
-	void (*print_opt)(void *); // 値を出力するための関数ポインタ
-}	t_token_opt;
-
 // トークン
 typedef struct s_token {
 	t_token_type	type;
 	char			*token; // メモリに確保された文字列
 	int				end_pos; // 入力文字列に対する、トークン外の文字の開始位置
 	int				start_pos; // 入力文字列に対する、トークンの開始位置
-	t_token_opt		*opt; // メモリに確保されたオプション
 }	t_token;
-
-// リダイレクションのopt
-typedef struct s_redirection_opt {
-	t_redirection_type type;
-	int fd; // ファイルディスクリプタ、typeや字句解析の結果から判断して適切な値を入れる
-	bool is_expansion; // 変数展開するかどうかの値、初期値は true
-}	t_redirection_opt;
 
 ```
 
