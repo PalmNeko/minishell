@@ -73,6 +73,7 @@ stateDiagram-v2
 stateDiagram-v2
 	[*] --> number: 0-9
 	number --> number: 0-9
+	number --> 拒否: オーバーフロー
 	number --> 受理: 以外
 ```
 
@@ -88,10 +89,7 @@ stateDiagram-v2
 リダイレクション
 ```mermaid
 stateDiagram-v2
-	[*] --> number: 0-9
-	number --> number: 0-9
-	number --> 拒否: オーバーフロー
-	number --> redirection: <, >
+	[*] --> redirection: <, >
 	redirection --> 受理: 以外
 	redirection --> 受理: '>'
 	redirection --> heredoc: <
@@ -137,7 +135,7 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
 	[*] --> blank: '\t', ' '
-	blank --> blank: '\n', '\t', ' '
+	blank --> blank: '\t', ' '
 	blank --> 受理: 以外
 ```
 
