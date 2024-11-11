@@ -25,35 +25,60 @@ ENOMEM malloc関連のエラー
 | 名前 | 対応するt_syntax_type | 対応するBNF |
 | --- | --- | --- |
 | 拒否 | SY_DECLINED | 無し |
-| 識別子要素 | SY_IDENTIFY_ELEMENT | identify_element |
-| ワード要素 | SY_WORD_ELEMENT | word_element |
-| 代入演算子要素 | SY_EQUALS_ELEMENT | equals_element |
-| リダイレクション要素 | SY_REDIRECTION_ELEMENT | redirection_element |
-| 区切り文字要素 | SY_DELIMITER_ELEMENT | delimiter_element |
+| 識別子要素 | SY_IDENTIFY | identify |
+| 数値 | SY_NUMBER | number |
+| 単語要素 | SY_WORD | word |
+| 空白要素 | SY_BLANK | blank |
+| 改行要素 | SY_NEWLINE | newline |
+| 変数要素 | SY_VARIABLE | variable |
+| パイプ要素 | SY_PIPE | pipe |
+| 等号要素 | SY_EQUALS | equals |
+| シングルクォート要素 | SY_SINGLE_QUOTE | single_quote |
+| ダブルクォート要素 | SY_DOUBLE_QUOTE | double_quote |
+| リダイレクト要素 | SY_REDIRECTION | redirection |
+| 左かっこ要素 | SY_LEFT_PARENTHESIS | left_parenthesis |
+| 右かっこ要素 | SY_RIGHT_PARENTHESIS | right_parenthesis |
+| トークンリスト要素 | SY_LIST_TOKEN | list_token |
+| 全要素 | SY_ALL | all |
 
 ## 非終端構文
 | 名前 | 対応するt_syntax_type | 対応するBNF |
 | --- | --- | --- |
-| 結合ワード | SY_MERGED_WORD | merged_word |
-| 代入ワード | SY_ASSIGNMENT_WORD | assignment_word |
-| リダイレクションワード | SY_REDIRECTION_WORD | redirection_word |
-| 単純なコマンド | SY_SIMPLE_COMMAND | simple_command |
+| ダブルクォートで囲まれた単語 | SY_DOUBLE_QUOTED_WORD | double_quoted_word |
+| シングルクォートで囲まれた単語 | SY_SINGLE_QUOTED_WORD |single_quoted_word |
+| 単語リスト | SY_WORD_LIST | word_list |
+| 代入単語 | SY_ASSIGNMENT_WORD | assignment_word |
+| リダイレクト単語 | SY_REDIRECTION_WORD | redirection_word |
+| 単純コマンド | SY_SIMPLE_COMMAND | simple_command |
 | コマンド | SY_COMMAND | command |
 | パイプライン | SY_PIPELINE | pipeline |
+| リスト | SY_LIST | list |
+| 複合リスト | SY_COMPOUND_LIST | compound_list |
+| ユーザー入力 | SY_USER_INPUT | user_input |
+| 命令 | SY_INSTRUCTION | instruction |
 
 # BNF記法
 
 ## 事前定義
 
 以下の定義は、字句解析で分割したトークンとして参照される。
-| name | t_token_type
+各定義は、終端構文とする。
+| name | t_token_type |
 | --- | --- |
 | identify | TK_IDENTIFY |
+| number | TK_NUMBER |
 | word | TK_WORD |
-| delimiter | TK_DELIMITER |
+| blank | TK_BLANK |
+| newline | TK_NEWLINE |
+| variable | TK_VARIABLE |
 | pipe | TK_PIPE |
 | equals | TK_EQUALS |
+| single_quote | TK_SINGLE_QUOTE |
+| double_quote | TK_DOUBLE_QUOTE |
 | redirection | TK_REDIRECTION |
+| left_parenthesis | TK_LEFT_PARENTHESIS |
+| right_parenthesis | TK_RIGHT_PARENTHESIS |
+| list_token | TK_LIST |
 
 ## BNF
 
@@ -67,19 +92,37 @@ ENOMEM malloc関連のエラー
 > (): グループ化
 > `<<name>>`: 疑似要素。概念で定義されたもの。
 
-```
-<identify_element> ::= <identify>
-<word_element> ::= <word>
-<equals_element> ::= <equals>
-<redirection_element> ::= <redirection>
-<delimiter_element> ::= <delimiter>
-<merged_word> ::= <identify_element> | <word_element> | <merged_word> <merged_word>
+```md
+# 終端構文
+<all> ::= 全ての種類のトークン
 
-<assignment_word> ::= <identify_element> <equals_element> <merged_word>
-<redirection_word> ::= <redirection_element> <merged_word> | <redirection_element> <delimiter_element> <merged_word>
-<simple_command> ::= <assignment_word> | <merged_word> | <redirection_word> | <simple_command> <delimiter_element> <simple_command>
+# クォート
+<double_quoted_word> ::= <double_quote> <all>* <double_quote>
+<single_quoted_word> ::= <single_quote> <all>* <single_quote>
+
+# ワード
+<word_list> ::= <word_list> <word_list> | <identify> | <word> | <double_quoted_word> | <single_quoted_word> | <variable> | <number>
+
+# コマンド
+<assignment_word> ::= <identify> <equals> <word_list>
+<redirection_element> ::= <number> <redirection> | <redirection>
+<redirection_word> ::= <redirection_element> <word_list> | <redirection_element> <blank> <word_list>
+<simple_command> ::= <assignment_word> | <word_list> | <redirection_word> | <simple_command> <blank> <simple_command>
 <command> ::= <simple_command>
-<pipeline> ::= <delimiter_element>? <command> <delimiter_element>? | <pipeline> '|' <pipeline>
+
+# パイプライン
+<pipeline> ::= <blank>? <command> <blank>? | <pipeline> <pipe> <pipeline>
+
+# リスト
+<list> ::= <pipeline> | <pipeline> <list_token> <pipeline> | <compound_list>
+<compound_list> ::= <left_parenthesis> <list> <right_parenthesis>
+
+# 入力（ヒアドクで使用）
+<user_input> ::= <all> | <user_input> <user_input>
+
+# 命令 ここが最初
+<instruction> ::= <list> | <list> <newline> | <list> <newline> <user_input>
+
 ```
 
 # 構造体
@@ -89,32 +132,48 @@ ENOMEM malloc関連のエラー
 typedef enum e_syntax_type {
 	// 終端構文
 	SY_DECLINED, // 拒否
-	SY_QUOTE_ELEMENT, // クォート要素
-	SY_IDENTIFY_ELEMENT, // 識別子要素
-	SY_WORD_ELEMENT, // ワード要素
-	SY_EQUALS_ELEMENT, // 代入演算子要素
-	SY_REDIRECTION_ELEMENT, // リダイレクション要素
-	SY_DELIMITER_ELEMENT, // 区切り文字要素
+	SY_IDENTIFY, // 識別子要素
+	SY_NUMBER, // 数値
+	SY_WORD, // 単語要素
+	SY_BLANK, // 空白要素
+	SY_NEWLINE, // 改行要素
+	SY_VARIABLE, // 変数要素
+	SY_PIPE, // パイプ要素
+	SY_EQUALS, // 等号要素
+	SY_SINGLE_QUOTE, // シングルクォート要素
+	SY_DOUBLE_QUOTE, // ダブルクォート要素
+	SY_REDIRECTION, // リダイレクト要素
+	SY_LEFT_PARENTHESIS, // 左かっこ要素
+	SY_RIGHT_PARENTHESIS, // 右かっこ要素
+	SY_LIST_TOKEN, // トークンリスト要素
+	SY_ALL, // 全要素
+
 	// 非終端構文
-	SY_MERGED_WORD, // 結合ワード
-	SY_ASSIGNMENT_WORD, // 代入ワード
-	SY_REDIRECTION_WORD, // リダイレクションワード
-	SY_SIMPLE_COMMAND, // 単純なコマンド
+	SY_DOUBLE_QUOTED_WORD, // ダブルクォートで囲まれた単語
+	SY_SINGLE_QUOTED_WORD, // シングルクォートで囲まれた単語
+	SY_WORD_LIST, // 単語リスト
+	SY_ASSIGNMENT_WORD, // 代入単語
+	SY_REDIRECTION_WORD, // リダイレクト単語
+	SY_SIMPLE_COMMAND, // 単純コマンド
 	SY_COMMAND, // コマンド
 	SY_PIPELINE, // パイプライン
+	SY_LIST, // リスト
+	SY_COMPOUND_LIST, // 複合リスト
+	SY_USER_INPUT, // ユーザー入力
+	SY_INSTRUCTION, // 命令
 }	t_syntax_type;
 
 // 構文木のノード
 typedef struct s_syntax_node	t_syntax_node;
 typedef struct s_syntax_node {
 	t_syntax_type 	type; // 構文の種類
-	t_list			*tokens; // トークンのリスト。tokenの型の値を保管するリスト。終端構文で使用。
+	t_list			*token; // トークン。終端構文で使用。
 	t_list			*children; // 子構文のリスト。t_syntax_tree型の値を保管するリスト。非終端構文で使用。
 }	t_syntax_node;
 
 // 構文木
 typedef struct s_syntax_result {
-	t_syntax_node *root; // 一番先頭の構文
+	t_syntax_node *root; // 一番先頭の構文 (instruction)
 }	t_syntax_result;
 
 ```
