@@ -46,8 +46,10 @@ ENOMEM　メモリ確保関連のエラーが発生した場合
  | ダブルクォート | `"` | TK_DOUBLE_QUOTE |
  | 変数 | `$`から始まる特定の文字列。特殊変数含む | TK_VARIABLE |
  | パイプ | `|` | TK_PIPE |
- | 区切り文字 | `\t\n ` のいずれかが連続する文字列 | TK_DELIMITER |
+ | 空白 | `\t\n ` のいずれかが連続する文字列 | TK_BLANK |
+ | 改行 | `\n` | TK_NEWLINE |
  | 代入演算子 | `=` | TK_EQUALS |
+ | (カッコ) | `(` `)` のどれか |  TK_BRACKET |
  | (リスト) | `&& \|\|` のどれか | TK_LIST |
 
 # 有限オートマトン
@@ -121,18 +123,30 @@ stateDiagram-v2
 	[*] --> 受理: |
 ```
 
-区切り文字
+空白
 ```mermaid
 stateDiagram-v2
-	[*] --> delimiter: '\n', '\t', ' '
-	delimiter --> delimiter: '\n', '\t', ' '
-	delimiter --> 受理: 以外
+	[*] --> blank: '\t', ' '
+	blank --> blank: '\n', '\t', ' '
+	blank --> 受理: 以外
+```
+
+改行
+```mermaid
+stateDiagram-v2
+	[*] --> 受理: '\n'
 ```
 
 代入演算子
 ```mermaid
 stateDiagram-v2
 	[*] --> 受理: =
+```
+
+（カッコ）
+```mermaid
+	[*] --> 受理: '('
+	[*] --> 受理: ')'
 ```
 
 （リスト）
@@ -158,7 +172,7 @@ stateDiagram-v2
 |優先度| 対象 |
 |---|---|
 |高| --- |
-|--| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, （リスト）, 区切り文字, 代入演算子 |
+|--| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, （リスト）, 空白文字, 代入演算子, 改行文字, （かっこ） |
 |--| 識別子, ワード |
 |--| 拒否 |
 |低| --- |
@@ -183,14 +197,16 @@ typedef enum e_token_type {
 	TK_DECLINED, // 拒否 (対象のオートマトンでは解析できなかった)
 	TK_IDENTIFY, // 識別子
 	TK_WORD, // ワード
-	TK_DELIMITER, // 区切り文字 '\t\n '
+	TK_BLANK, // 空白文字 '\t '
+	TK_NEWLINE, // 改行文字 '\n'
 	TK_VARIABLE, // 変数
 	TK_PIPE, // '|'
 	TK_EQUALS, // '='
 	TK_SINGLE_QUOTE, // '
 	TK_DOUBLE_QUOTE, // "
 	TK_REDIRECTION, // < << <<- > >>
-	// TK_LIST, // && ||
+	TK_BRACKET, // '(' ')'
+	TK_LIST, // && ||
 }	t_token_type;
 
 // redirectionの種類
@@ -258,13 +274,16 @@ ENOMEM メモリ確保関連のエラー
 * ms_tokenize_declined
 * ms_tokenize_identify
 * ms_tokenize_word
-* ms_tokenize_delimiter
+* ms_tokenize_blank
+* ms_tokenize_newline
 * ms_tokenize_variable
 * ms_tokenize_pipe
 * ms_tokenize_equals
 * ms_tokenize_single_quote
 * ms_tokenize_double_quote
 * ms_tokenize_redirection
+* ms_tokenize_bracket
+* ms_tokenize_list
 
 ### ms_tokenize_declined
 拒否トークンの生成を行う。
