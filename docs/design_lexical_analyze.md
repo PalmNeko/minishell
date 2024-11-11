@@ -247,11 +247,6 @@ typedef struct s_redirection_opt {
 	bool is_expansion; // 変数展開するかどうかの値、初期値は true
 }	t_redirection_opt;
 
-// 変数のopt
-typedef struct s_variable_opt {
-	char *value;
-}	t_variable_opt;
-
 ```
 
 # その他の関数
