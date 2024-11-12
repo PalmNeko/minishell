@@ -176,7 +176,7 @@ typedef struct s_syntax_node	t_syntax_node;
 typedef struct s_syntax_node {
 	t_syntax_type 	type; // 構文の種類
 	t_token			*token; // トークン。終端構文で使用。
-	t_list			*children; // 子構文のリスト。t_syntax_tree型の値を保管するリスト。非終端構文で使用。
+	t_syntax_node	**children; // 子構文の配列。null-terminated。非終端構文で使用。
 	int				start_pos; // 構文が始まるトークンのpos
 	int				end_pos; // 対象外だったトークンのpos
 }	t_syntax_node;
