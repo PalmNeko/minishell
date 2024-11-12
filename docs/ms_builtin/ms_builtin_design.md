@@ -7,6 +7,12 @@ minishell内部の組み込みコマンドの実装仕様。各関数の引数�
 int execve(const char *path, char *const argv[], char *const envp[]);
 ```
 
+### ビルトインで使うシェル変数
+- PWD
+- OLDPWD
+- CDPATH
+- PATH
+  
 ## コマンドフロー
 ```mermaid
 flowchart
@@ -50,7 +56,7 @@ int ms_builtin(const char *path, char *const argv[], char *const envp[])
 
 ### ms_builtin_echo
 ```c
-int ms_builtin_echo(const char **arg)
+int ms_builtin_echo(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `echo [arg...]`
 - **説明**: argを空白区切りで標準出力に出力し、最後に改行を出力
@@ -58,7 +64,7 @@ int ms_builtin_echo(const char **arg)
 
 ### ms_builtin_cd
 ```c
-int ms_builtin_cd(const char **dir)
+int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `cd [相対パス or 絶対パス]`
 - **説明**: 現在ディレクトリをdirに変更
@@ -73,7 +79,7 @@ int ms_builtin_cd(const char **dir)
 
 ### ms_builtin_pwd
 ```c
-int ms_builtin_pwd(void)
+int ms_builtin_pwd(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `pwd`
 - **説明**: 現在の作業ディレクトリの絶対パス名を表示
@@ -84,7 +90,7 @@ int ms_builtin_pwd(void)
 
 ### ms_builtin_export
 ```c
-int ms_builtin_export(const char **args)
+int ms_builtin_export(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `export name=value`
 - **説明**: 環境変数を設定または変更
@@ -95,7 +101,7 @@ int ms_builtin_export(const char **args)
 
 ### ms_builtin_unset
 ```c
-int ms_builtin_unset(const char **args)
+int ms_builtin_unset(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `unset variable`
 - **説明**: 環境変数を削除
@@ -106,7 +112,7 @@ int ms_builtin_unset(const char **args)
 
 ### ms_builtin_env
 ```c
-int ms_builtin_env(void)
+int ms_builtin_env(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `env`
 - **説明**: 現在の環境変数をすべて表示
@@ -114,12 +120,13 @@ int ms_builtin_env(void)
 
 ### ms_builtin_exit
 ```c
-void ms_builtin_exit(char **status)
+void ms_builtin_exit(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `exit [status]`
 - **説明**: シェルを終了
   - statusが指定された場合: その値を終了ステータスとして使用
   - statusが未指定の場合: 直前のコマンドの終了ステータスを使用
+  - エラーの場合：下記のエラーに対応する出力を行い終了処理を行う。
 - **エラー**:
   - numeric argument required (statusが数値以外)
   - no such file or directory
