@@ -1,10 +1,12 @@
 # settings
 NAME     = test.out
 SRC      = \
-	$(shell find . -name "*.cpp")
+	$(shell find . -name "*.cpp" -o -name "*.c")
 SRC_DIR  = ../../src
 CXX      = g++
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -g -O0 -I $(SRC_DIR)/include
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -g -O0 -I $(SRC_DIR)/include -I include
+CC       = cc
+CFLAGS   = $(CXXFLAGS)
 LDFLAGS  = -L.
 LDLIBS   = -lmsh -pthread -lgtest_main -lgtest
 
@@ -57,6 +59,10 @@ $(NAME): $(OBJS) libmsh.a
 
 libmsh.a: $(shell find $(SRC_DIR) -name "*.c" -not -name "main.c")
 	$(MK_MSH)
+
+$(CACHEDIR)/%.c.o: %.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(CACHEDIR)/%.cpp.o: %.cpp
 	mkdir -p $(@D)
