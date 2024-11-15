@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess
 import re
+import logging
 from test.support import captured_stdout
 sys.path.append(os.getcwd())
 
@@ -12,9 +13,13 @@ def run_checker(script_file: str, title: str) -> bool:
     expected_stderr_file = re.sub('.sh$', '_stderr.txt', script_file)
     result = run_script(script_file, stdout_file, stderr_file)
     logger = TestLogger(title, script_file)
-    assert_status(logger, result.returncode)
-    assert_stdout(logger, stdout_file, expected_stdout_file)
-    assert_stderr(logger, stderr_file, expected_stderr_file)
+    try:
+        assert_status(logger, result.returncode)
+        assert_stdout(logger, stdout_file, expected_stdout_file)
+        assert_stderr(logger, stderr_file, expected_stderr_file)
+    except AssertionError as e:
+        logging.error("\n" + logger.make_diff())
+        raise
 
 def run_script(script_file, stdout_file, stderr_file):
     with open(stdout_file, "w") as stdout, open(stderr_file, "w") as stderr:
@@ -71,4 +76,20 @@ class TestLogger:
         message += f"\tscript-file: {self.script_file}\n"
         message += f"\tactual-file: {self.actual_file}\n"
         message += f"\texpected-file: {self.expected_file}\n"
+        return message
+
+    def make_diff(self):
+        message = f"script: {self.script_file}\n"
+        if not hasattr(self, "actual_file"):
+            if not hasattr(self, "status"):
+                return message
+            message += f"status: {self.status}\n"
+            return message
+        command = [
+            "diff",
+            "-y", "--color=always",
+            self.expected_file, self.actual_file]
+        result = subprocess.run(command, capture_output=True, text=True)
+        message = "$ " + " ".join(command) + "\n"
+        message += result.stdout
         return message
