@@ -6,7 +6,11 @@ run: # run container
 down:
 	docker container stop minishell
 
-test: #run test
+test: test_gtest test_pytest # run test
+
+test_gtest:
 	make -C tests/googletest/
-	./tests/googletest/test.out
-	pytest tests/pytest
+	valgrind -q --leak-check=full --error-exitcode=12 ./tests/googletest/test.out
+
+test_pytest:
+	bash tests/pytest/run_test.sh
