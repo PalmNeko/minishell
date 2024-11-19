@@ -51,7 +51,8 @@ I --> J --> K
 ```c
 int ms_builtin(const char *path, char *const argv[], char *const envp[])
 ```
-- **説明**: argv[0]に対応するビルトイン変数の実行
+- **説明**:
+  -  argv[0]に対応するビルトイン変数の実行
 - **戻り値**:
   - 実行先関数の終了ステータスを返す
 
@@ -59,28 +60,42 @@ int ms_builtin(const char *path, char *const argv[], char *const envp[])
 ```c
 int ms_builtin_echo(const char *path, char *const argv[], char *const envp[])
 ```
-- **構文**: `echo [arg...]`
-- **説明**: argを空白区切りで標準出力に出力し、最後に改行を出力
-- **戻り値**: 常に0
+- **構文**: `echo -n [arg...]`
+- **説明**
+  - argを空白区切りで標準出力に出力し、最後に改行を出力
+- **オプション**
+  - -n : 最後の改行が出力されない。 
+- **戻り値**
+  -  常に0
 
 ### ms_builtin_cd
 ```c
 int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
 ```
-- **構文**: `cd [相対パス or 絶対パス]`
+- **構文**: `cd [-L | -R[-e]] [dir]`
 - **説明**
-  - 現在ディレクトリをdirに変更
-  - デフォルト：**$HOME**
-  - **\$CDPATH**でdirを含むディレクトリの検索パスを定義
+  - カレントディレクトリをdirに変更
+  - デフォルト値として**HOME**が設定されている。
+  - **CDPATH**はdirを含むディレクトリの検索パスを定義
+    - **CDPATH**内の候補ディレクトリは`:`で区切られる。
+    - **CDPATH**内の空のディレクトリはカレントディレクトリを意味する。
+  - dirが`/`で始まる時、**CDPATH**は使われない。 
   - 引数が"-"であるとき、**$OLDPWD**に移動し、新しいディレクトリの絶対パス名が標準出力に表示される。
+  - **CDPATH**内の空以外のディレクトリ名が使われたときや、`-`が最初の引数の時にディレクトリの変更が成功すると新しいディレクトリの絶対パス名をSTDOUTに出力。
+- **オプション**
+  - -L : シンボリックを辿って探索を行う。（デフォルトの挙動） 
+  - -P : シンボリックリンクではなく物理的なディレクトリ構造を参照
+  - -e : -Pオプションと同時に指定した際に、ディレクトリ変更に成功し、カレントディレクトリが判定出来ない場合に失敗ステータスを返す。
 - **戻り値**:
   - 成功: 0
-  - 失敗: 1　 
+  - 失敗:
+    - 1(`EISDIR`,`ENOENT`,`EACCESS`,`too many argments`)
+    - 2(`Invalid Option`)
 - **エラー**:
-  - no such file or directory
-  - not a directory
-  - permission denied (実行権限なし)
-  - too many arguments (引数が2個以上)
+  - too many arguments
+    - dirが2つ以上の時
+- **ref**
+  - https://ja.manpages.org/stat/2
 
 ### ms_builtin_pwd
 ```c
@@ -108,12 +123,14 @@ int ms_builtin_export(const char *path, char *const argv[], char *const envp[])
 ```c
 int ms_builtin_unset(const char *path, char *const argv[], char *const envp[])
 ```
-- **構文**: `unset variable`
-- **説明**: 環境変数を削除
+- **構文**: `unset [name...]`
+- **説明**: 
+  - nameに対応する変数を削除する。
+  - 読み込み専用の変数の設定を指定時のみ失敗。
+  - 設定が消された変数や関数はすべて、それ以降の環境から削除される。
 - **戻り値**:
   - 成功: 0
   - 失敗: 1
-- **エラー**: invalid identifier (argsに無効な文字が含まれる)
 
 ### ms_builtin_env
 ```c
