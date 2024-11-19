@@ -41,7 +41,7 @@ ENOMEM　メモリ確保関連のエラーが発生した場合
  | シングルクウォート | `'` | TK_SINGLE_QUOTE |
  | ダブルクォート | `"` | TK_DOUBLE_QUOTE |
  | 変数 | `$`から始まる特定の文字列。特殊変数含む | TK_VARIABLE |
- | パイプ | `|` | TK_PIPE |
+ | パイプ | `\|` | TK_PIPE |
  | 空白 | `\t\n ` のいずれかが連続する文字列 | TK_BLANK |
  | 改行 | `\n` | TK_NEWLINE |
  | 代入演算子 | `=` | TK_EQUALS |
