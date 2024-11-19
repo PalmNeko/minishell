@@ -1,9 +1,10 @@
 #include "prot_builtin.h"
 
-int	main(void)
+int	prot_builtin(void)
 {
-	char *line;
-	int ret;
+	char	*line;
+	int		ret;
+
 	while (1)
 	{
 		line = readline("bulitin> ");
@@ -17,6 +18,12 @@ int	main(void)
 			ret = prot_pwd();
 		else if (strncmp(line, "$?", 2) == 0)
 			printf("status: %d\n", ret);
+		else
+		{
+			printf("%s : command not found\n", line);
+			ret = 127;
+		}
+		free(line);
 	}
-	return (0);
+	return (ret);
 }
