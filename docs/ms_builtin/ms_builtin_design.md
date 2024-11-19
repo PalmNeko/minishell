@@ -96,6 +96,19 @@ int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
     - dirが2つ以上の時
 - **ref**
   - https://ja.manpages.org/stat/2
+  - playgrond/ms_builtin/firs_prot_builtinよりプロトタイプも作成しています。
+- **例**
+  	``` bash
+	$ pwd
+	[...]/current_dir
+	$ cd symboric_1 && pwd && cd ../
+	[...]/current_dir/symboric_1
+	$ cd -L symboric_1 && pwd && cd ../
+	[...]/current_dir/symboric_1
+	$ cd -P symboric_1 && pwd && cd ../
+	[...]/current_dir/physical_dir
+	```
+ 
 
 ### ms_builtin_pwd
 ```c
