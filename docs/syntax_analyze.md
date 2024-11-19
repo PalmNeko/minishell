@@ -25,7 +25,6 @@ ENOMEM malloc関連のエラー
 | --- | --- | --- |
 | 拒否 | SY_DECLINED | 無し |
 | 識別子要素 | SY_IDENTIFY | identify |
-| 数値 | SY_NUMBER | number |
 | 単語要素 | SY_WORD | word |
 | 空白要素 | SY_BLANK | blank |
 | 改行要素 | SY_NEWLINE | newline |
@@ -49,6 +48,7 @@ ENOMEM malloc関連のエラー
 | 代入単語 | SY_ASSIGNMENT_WORD | assignment_word |
 | リダイレクト単語 | SY_REDIRECTION_WORD | redirection_word |
 | 単純コマンド | SY_SIMPLE_COMMAND | simple_command |
+| 代入コマンド | SY_ASSIGNMENT_COMMAND | assignment_command |
 | コマンド | SY_COMMAND | command |
 | パイプライン | SY_PIPELINE | pipeline |
 | リスト | SY_LIST | list |
@@ -65,7 +65,6 @@ ENOMEM malloc関連のエラー
 | name | t_token_type |
 | --- | --- |
 | identify | TK_IDENTIFY |
-| number | TK_NUMBER |
 | word | TK_WORD |
 | blank | TK_BLANK |
 | newline | TK_NEWLINE |
@@ -98,14 +97,15 @@ ENOMEM malloc関連のエラー
 <single_quoted_word> ::= <single_quote> <all>* <single_quote>
 
 # ワード
-<word_list> ::= <word_list> <word_list> | <identify> | <word> | <double_quoted_word> | <single_quoted_word> | <variable> | <number>
+<word_list> ::= <word_list> <word_list> | <identify> | <word> | <double_quoted_word> | <single_quoted_word> | <variable>
 
 # コマンド
 <assignment_word> ::= <identify> <equals> <word_list>
-<redirection_element> ::= <number> <redirection> | <redirection>
+<redirection_element> ::= <redirection> | <redirection>
 <redirection_word> ::= <redirection_element> <word_list> | <redirection_element> <blank> <word_list>
-<simple_command> ::= <assignment_word> | <word_list> | <redirection_word> | <simple_command> <blank> <simple_command>
-<command> ::= <simple_command>
+<simple_command> ::= <word_list> | <redirection_word> | <simple_command> <blank> <simple_command>
+<assignment_command> ::= <assignment_word> | <assignment_command> <blank> <assignment_command>
+<command> ::= <simple_command> | <assignment_command>
 
 # パイプライン
 <pipeline> ::= <blank>? <command> <blank>? | <pipeline> <pipe> <pipeline>
@@ -141,7 +141,6 @@ typedef enum e_syntax_type {
 	// 終端構文
 	SY_DECLINED, // 拒否
 	SY_IDENTIFY, // 識別子要素
-	SY_NUMBER, // 数値
 	SY_WORD, // 単語要素
 	SY_BLANK, // 空白要素
 	SY_NEWLINE, // 改行要素
@@ -163,6 +162,7 @@ typedef enum e_syntax_type {
 	SY_ASSIGNMENT_WORD, // 代入単語
 	SY_REDIRECTION_WORD, // リダイレクト単語
 	SY_SIMPLE_COMMAND, // 単純コマンド
+	SY_ASSIGNMENT_COMMAND, // 代入コマンド
 	SY_COMMAND, // コマンド
 	SY_PIPELINE, // パイプライン
 	SY_LIST, // リスト
