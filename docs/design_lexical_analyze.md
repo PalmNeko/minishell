@@ -36,9 +36,8 @@ ENOMEM　メモリ確保関連のエラーが発生した場合
  | --- | --- | --- |
  | 拒否 | どのトークンにも当てはまらない | TK_DECLINED |
  | 識別子 | 環境変数代入時に指定できる名称 | TK_IDENTIFY |
- | 数値 | 数値 | TK_NUMBER |
  | ワード | 文字列 | TK_WORD |
- | リダイレクション | `< << <<- > >>` のどれか(数値を含む) | TK_REDIRECTION |
+ | リダイレクション | `< << > >>` のどれか(数値を含む) | TK_REDIRECTION |
  | シングルクウォート | `'` | TK_SINGLE_QUOTE |
  | ダブルクォート | `"` | TK_DOUBLE_QUOTE |
  | 変数 | `$`から始まる特定の文字列。特殊変数含む | TK_VARIABLE |
@@ -64,15 +63,6 @@ stateDiagram-v2
 	identify --> 受理: (a-z, A-Z, 0-9) 以外
 ```
 
-数値
-```mermaid
-stateDiagram-v2
-	[*] --> number: 0-9
-	number --> number: 0-9
-	number --> 拒否: オーバーフロー
-	number --> 受理: 以外
-```
-
 ワード
 ```mermaid
 stateDiagram-v2
@@ -88,9 +78,7 @@ stateDiagram-v2
 	[*] --> redirection: <, >
 	redirection --> 受理: 以外
 	redirection --> 受理: '>'
-	redirection --> heredoc: <
-	heredoc --> 受理: '-'
-	heredoc --> 受理: 以外
+	redirection --> 受理: <
 ```
 
 文字列リテラル(シングルクウォート)
@@ -110,14 +98,9 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
 	[*] --> variable_start: $
-	variable_start --> 受理: ?, (0-9), (#), ($), (!), (@) (*), (_)
-	variable_start --> variable_bracket_start: {
-	variable_bracket_start --> inner_bracket: a-z, A-Z, 0-9
-	inner_bracket --> inner_bracket: a-z, A-Z, 0-9
-	inner_bracket --> 受理: }
-	variable_bracket_start --> 受理: }
+	variable_start --> 受理: ?
 	variable_start --> variable: a-z, A-Z
-	variable --> variable: a-z, A-Z, 0-9
+	variable --> variable: a-z, A-Z
 	variable --> 受理: 以外
 ```
 
@@ -180,7 +163,7 @@ stateDiagram-v2
 |優先度| 対象 |
 |---|---|
 |高| --- |
-|--| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, （リスト）, 空白文字, 代入演算子, 改行文字, （左かっこ）, (右かっこ), 数値 |
+|--| 変数, リダイレクション, シングルクォート, ダブルクォート, パイプ, リスト, 空白文字, 代入演算子, 改行文字, 左かっこ, 右かっこ |
 |--| 識別子, ワード |
 |--| 拒否 |
 |低| --- |
@@ -204,7 +187,6 @@ stateDiagram-v2
 typedef enum e_token_type {
 	TK_DECLINED, // 拒否 (対象のオートマトンでは解析できなかった)
 	TK_IDENTIFY, // 識別子
-	TK_NUMBER, // 数値
 	TK_WORD, // ワード
 	TK_BLANK, // 空白文字 '\t '
 	TK_NEWLINE, // 改行文字 '\n'
@@ -213,7 +195,7 @@ typedef enum e_token_type {
 	TK_EQUALS, // '='
 	TK_SINGLE_QUOTE, // '
 	TK_DOUBLE_QUOTE, // "
-	TK_REDIRECTION, // < << <<- > >>
+	TK_REDIRECTION, // < << > >>
 	TK_LEFT_PARENTHESIS, // '('
 	TK_RIGHT_PARENTHESIS, // ')'
 	TK_LIST, // && ||
