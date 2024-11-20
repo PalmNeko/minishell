@@ -7,7 +7,8 @@ apt install -y \
 	gcc \
 	valgrind \
 	python3-pip \
-	git
+	git \
+	libreadline-dev
 pip install pytest
 EOF
 
