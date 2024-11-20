@@ -52,7 +52,7 @@ I --> J --> K
 int ms_builtin(const char *path, char *const argv[], char *const envp[])
 ```
 - **説明**:
-  -  argv[0]に対応するビルトイン変数の実行
+  -  argv[0]に対応するビルトイン関数の実行
 - **戻り値**:
   - 実行先関数の終了ステータスを返す
 
@@ -131,8 +131,12 @@ int ms_builtin_pwd(const char *path, char *const argv[], char *const envp[])
 ```c
 int ms_builtin_export(const char *path, char *const argv[], char *const envp[])
 ```
-- **構文**: `export name=value`
-- **説明**: 環境変数を設定または変更
+- **構文**:
+  `export [name[=word]]`
+- **説明**:
+  -  nameに印をつける。このnameはこれ以降の環境にエクスポートされる。
+  -  変数名に`=word`が続くと`変数名`の値として`word`が格納される。
+  -  引数がない場合はこのシェル内でエクスポートされている全ての名前のリストの出力。
 - **戻り値**:
   - 成功: 0
   - 失敗: 1
@@ -142,7 +146,8 @@ int ms_builtin_export(const char *path, char *const argv[], char *const envp[])
 ```c
 int ms_builtin_unset(const char *path, char *const argv[], char *const envp[])
 ```
-- **構文**: `unset [name...]`
+- **構文**:
+  `unset [name...]`
 - **説明**: 
   - nameに対応する変数を削除する。
   - 読み込み専用の変数の設定を指定時のみ失敗。
@@ -155,7 +160,8 @@ int ms_builtin_unset(const char *path, char *const argv[], char *const envp[])
 ```c
 int ms_builtin_env(const char *path, char *const argv[], char *const envp[])
 ```
-- **構文**: `env`
+- **構文**:
+  `env`
 - **説明**: 現在の環境変数をすべて表示
 - **戻り値**: 常に0
 
