@@ -7,14 +7,20 @@ minishell内部の組み込みコマンドの実装仕様。各関数の引数�
 int execve(const char *path, char *const argv[], char *const envp[]);
 ```
 
-### ビルトインで使う内部（シェル）変数
+### ビルトインで使うシェル変数
 - PWD
 - OLDPWD
 - CDPATH
 - PATH
 
-- **builtin_command_string_list**:
-  ```
+### データ構造
+- **builtin_command_list**:
+  ``` c
+  typedef struct s_cmd_list{
+  	char *cmd;
+  	int (*func)();
+  } t_cmd_list
+
   ["echo", "cd", "pwd", "export", "unset", "env", "exit"]
   ```
 
@@ -56,6 +62,15 @@ int ms_builtin(const char *path, char *const argv[], char *const envp[])
 - **戻り値**:
   - 実行先関数の終了ステータスを返す
 
+### ms_builtin_func common
+- **エラー**
+  -  invalid option(オプションが不正な時)
+    ```
+    minishell: <cmd>: -<opt>: invalid option
+    <cmd>: usage: <cmd> [able_opt]
+    ```
+  - 終了ステータスは2を返す。
+ 
 ### ms_builtin_echo
 ```c
 int ms_builtin_echo(const char *path, char *const argv[], char *const envp[])
@@ -64,7 +79,8 @@ int ms_builtin_echo(const char *path, char *const argv[], char *const envp[])
 - **説明**
   - argを空白区切りで標準出力に出力し、最後に改行を出力
 - **オプション**
-  - -n : 最後の改行が出力されない。 
+  - -n : 最後の改行が出力されない。
+  - `-n`以外はすべて出力文字列として認識する。
 - **戻り値**
   -  常に0
 
@@ -93,7 +109,7 @@ int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
   - 成功: 0
   - 失敗:
     - 1(`EISDIR`,`ENOENT`,`EACCESS`,`too many argments`)
-    - 2(`Invalid Option`)
+    - 2(`invalid Option`)
 - **エラー**:
   - too many arguments
     - dirが2つ以上の時
@@ -112,7 +128,6 @@ int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
 	$ cd -P symboric_1 && pwd && cd ../
 	[...]/current_dir/physical_dir
 	```
- 
 
 ### ms_builtin_pwd
 ```c
@@ -120,11 +135,12 @@ int ms_builtin_pwd(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `pwd`
 - **説明**
-  -  現在の作業ディレクトリの絶対パス名を表示
-  -  \$PWDを用いて表示する。
+  -  現在の作業ディレクトリの絶対パス名(\$PWD)を表示
 - **戻り値**:
   - 成功: 0
-  - 失敗: 1
+  - 失敗: invalid option -> 2
+- **エラー**
+  - invalid option  
 - **特記**: カレントのPermissionが000でも動作
 
 ### ms_builtin_export
@@ -139,7 +155,9 @@ int ms_builtin_export(const char *path, char *const argv[], char *const envp[])
   -  引数がない場合はこのシェル内でエクスポートされている全ての名前のリストの出力。
 - **戻り値**:
   - 成功: 0
-  - 失敗: 1
+  - 失敗:
+    1 : invalid identifier
+    2 : invalid option
 - **エラー**: invalid identifier (nameに無効な文字が含まれる)
 
 ### ms_builtin_unset
