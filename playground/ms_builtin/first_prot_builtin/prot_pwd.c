@@ -8,6 +8,6 @@ int	prot_pwd(void)
 		perror("getcwd");
 		return (1);
 	}
-	printf("%s\n", buf);
+	printf("%s\n", getenv("PWD"));
 	return (0);
 }

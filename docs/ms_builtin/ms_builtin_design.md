@@ -88,6 +88,7 @@ int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
   - -e : -Pオプションと同時に指定した際に、ディレクトリ変更に成功し、カレントディレクトリが判定出来ない場合に失敗ステータスを返す。
   - **シンボリックリンクの判定**
     - `lstat(2)`で得られた`buf.st_mode`においてフラグ`S_IFLNK`が該当すればシンボリックリンクである。
+    - getcwd()でシンボリックリンクを参照するとリンク先にたどり着いてしまうため、PWD設定時にはgetcwdを使わない方が良さそう。
 - **戻り値**:
   - 成功: 0
   - 失敗:
@@ -117,7 +118,9 @@ int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
 int ms_builtin_pwd(const char *path, char *const argv[], char *const envp[])
 ```
 - **構文**: `pwd`
-- **説明**: 現在の作業ディレクトリの絶対パス名を表示
+- **説明**
+  -  現在の作業ディレクトリの絶対パス名を表示
+  -  \$PWDを用いて表示する。
 - **戻り値**:
   - 成功: 0
   - 失敗: 1
