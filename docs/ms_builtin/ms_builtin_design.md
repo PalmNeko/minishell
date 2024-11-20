@@ -100,6 +100,7 @@ int ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
 - **ref**
   - https://ja.manpages.org/stat/2
   - playgrond/ms_builtin/firs_prot_builtinよりプロトタイプも作成しています。
+    - FirstProtTypeはnooptと-Pオプション($PWDの中身やエラーハンドリングなどは非対応）のみ対応
 - **例**
   	``` bash
 	$ pwd
