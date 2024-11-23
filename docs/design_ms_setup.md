@@ -76,9 +76,6 @@ MNSH_SUBSHELL: サブシェルのネストレベル
 - 各変数について、下記処理を行ったあとms_shell_varに格納し、ms_shell_var_listのアドレスを返す。
 | 変数名 | 初期化時の挙動 |
 |:--|:--|
-| MNSH | `argv[0]` |
-| MNSHPID | 起動時のプロセスID |
-| SHLVL | 現在のシェルの階層数 |
 | PWD | 起動時のカレントディレクトリ |
 | OLDPWD | 未設定("") |
 | CDPATH | 未設定("") |
@@ -90,7 +87,6 @@ MNSH_SUBSHELL: サブシェルのネストレベル
 | PATH | `**char environ(をminishell用に格納したもの)のPATHを継承` |
 | PS1 | `minishell $ ` |
 | PS2 | `> ` |
-| IFS | `<space><tab><newline>` |
 | MNSH_SUBSHELL | `0` |
 
 ## 6.キー入力のハンドリング
