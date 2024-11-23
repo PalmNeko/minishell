@@ -6,7 +6,7 @@ minishellのsetup
 - minishellで扱うデータを格納する構造体
   ```c
   typedef struct minishell{
-	t_ms_env_var_list env_var_list;
+	t_ms_env_list env_var_list;
 	t_ms_shell_var_list shell_var_list;
 	t_malloc tmalloc;
   }t_minishell
@@ -41,7 +41,7 @@ minishellのsetup
   ```
 - メモリの動的確保を管理する構造体変数
 ```c
-struct struct s_malloc(){
+typedef struct s_malloc(){
 	void *ptr;
 	struct s_malloc *next;
 } t_malloc
