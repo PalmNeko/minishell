@@ -48,9 +48,6 @@ struct struct s_malloc(){
 ```
 
 ### シェル変数
-MNSH: bashの完全なパス名
-MNSHPID: 現在のminishellプロセスのプロセスID
-SHLVL: 現在のシェルの階層数
 PWD: 現在の作業ディレクトリ
 OLDPWD: 直前の作業ディレクトリ
 CDPATH: cd検索パス
@@ -62,8 +59,6 @@ TMPDIR: 一時ファイルのディレクトリ
 PATH: コマンド検索パス
 PS1: プライマリプロンプト(特殊文字考慮なし)
 PS2: セカンダリプロンプト(特殊文字考慮なし)
-IFS: 内部フィールドセパレータ
-
 MNSH_SUBSHELL: サブシェルのネストレベル
 
 ## 処理
