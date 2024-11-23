@@ -84,8 +84,8 @@ MNSH_SUBSHELL: サブシェルのネストレベル
 | CDPATH | 未設定("") |
 | HISTCMD | `1` |
 | HISTFILE | `~/.mnsh_history` |
-| HISTFILESIZE | `0` |
-| HISTSIZE | `0` |
+| HISTFILESIZE | `HISTSIZEの値` |
+| HISTSIZE | `500` |
 | TMPDIR | `/tmp` |　<- 要確認お願いします
 | PATH | `**char environ(をminishell用に格納したもの)のPATHを継承` |
 | PS1 | `minishell $ ` |
