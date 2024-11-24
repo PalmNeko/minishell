@@ -1,5 +1,5 @@
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef LEXER_TYPE_H
+# define LEXER_TYPE_H
 
 typedef enum e_token_type
 {
