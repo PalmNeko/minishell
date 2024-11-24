@@ -28,7 +28,7 @@ int	ms_builtin_echo(const char *path, char *const argv[], char *const envp[])
 	index = 1;
 	while (argv[index] != NULL && ft_strcmp(argv[index], "-n") == 0)
 		index++;
-	joined = ms_join_ntp(&argv[index], " ");
+	joined = ms_join_ntp((const char **)&argv[index], " ");
 	if (joined == NULL)
 		return (0);
 	ft_putstr_fd(joined, 1);

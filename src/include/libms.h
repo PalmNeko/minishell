@@ -27,10 +27,15 @@ char	*ft_strncat(char *dest, const char *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *s, size_t n);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_strdup(const char *s1);
 
 /**
  * libms
  */
-char	*ms_join_ntp(char *const ntp[], const char *pad);
+char	*ms_join_ntp(const char *ntp[], const char *pad);
+char	**ms_dup_ntp(const char *ntp[]);
+char	**ms_dup_ntp2(const char *const ntp[]);
+void	ms_destroy_ntp(char *ntp[]);
 
 #endif
