@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
+#include "libms.h"
 #include <stddef.h>
 
 char	*ms_join_ntp(char *const ntp[], const char *pad)

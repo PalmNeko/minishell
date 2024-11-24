@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
+#include "libms.h"
 #include <stddef.h>
 
 void	ft_bzero(void *s, size_t n)

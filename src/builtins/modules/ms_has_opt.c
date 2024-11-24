@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ms_has_opt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 03:16:14 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 03:16:14 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
-#include <unistd.h>
+#include "builtin.h"
+#include "libms.h"
+#include <stdbool.h>
+#include <stddef.h>
 
-void	ft_putstr_fd(char *s, int fd)
+bool	ms_has_opt(char *const argv[], const char *opt)
 {
-	write(fd, s, ft_strlen(s));
+	while (*argv != NULL)
+	{
+		if (ft_strcmp(*argv, opt) == 0)
+			return (true);
+		argv++;
+	}
+	return (false);
 }

@@ -13,6 +13,9 @@
 #ifndef BUILTIN_H
 # define BUILTIN_H
 
-int	ms_builtin_echo(const char *path, char *const argv[], char *const envp[]);
+# include <stdbool.h>
+
+int		ms_builtin_echo(const char *path, char *const argv[], char *const envp[]);
+bool	ms_has_opt(char *const argv[], const char *opt);
 
 #endif

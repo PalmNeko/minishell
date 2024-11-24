@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
+#include "builtin.h"
+#include "libms.h"
 #include <limits.h>
 #include <stdbool.h>
 #include <stdlib.h>
