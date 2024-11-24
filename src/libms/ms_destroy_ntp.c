@@ -14,6 +14,7 @@
 
 /**
  * release null terminated string array on mmemory.
+ * @param ntp null terminated string array
  */
 void	ms_destroy_ntp(char *ntp[])
 {
