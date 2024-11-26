@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ms_int_echo.h"
+#include "libft.h"
 #include <stdbool.h>
 #include <stddef.h>
 
