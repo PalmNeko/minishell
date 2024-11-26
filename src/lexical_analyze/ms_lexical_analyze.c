@@ -3,6 +3,7 @@
 #include "lexer_type.h"
 #include "tokenize.h"
 
-t_token	**ms_lexical_analyze(const char *input)
-{
-}
+// t_token	**ms_lexical_analyze(const char *input)
+// {
+
+// }
