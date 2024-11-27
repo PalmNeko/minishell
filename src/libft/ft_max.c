@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/08/03 12:12:32 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/08/03 12:12:32 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
-#include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
-
-bool	ms_has_opt(char *const argv[], const char *opt)
+int	ft_max(int a, int b)
 {
-	while (*argv != NULL)
-	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
-	}
-	return (false);
+	if (a > b)
+		return (a);
+	else
+		return (b);
 }

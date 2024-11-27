@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_lstpush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/27 17:21:31 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/27 17:21:31 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
 #include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+void	ft_lstpush(t_list **lst, t_list *content)
 {
-	while (*argv != NULL)
-	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
-	}
-	return (false);
+	ft_lstadd_front(lst, content);
+	return ;
 }

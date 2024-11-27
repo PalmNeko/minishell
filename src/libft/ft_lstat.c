@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_lstat.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/27 17:25:15 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/27 17:25:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
 #include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+t_list	*ft_lstat(t_list *list, int no)
 {
-	while (*argv != NULL)
+	int		index;
+	t_list	*first;
+
+	first = ft_lstfirst(list);
+	list = first;
+	index = 0;
+	while (index < no)
 	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
+		if (list == NULL)
+			return (NULL);
+		list = list->next;
+		index++;
 	}
-	return (false);
+	if (list != NULL)
+		return (list);
+	return (NULL);
 }
