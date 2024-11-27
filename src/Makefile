@@ -2,7 +2,7 @@
 NAME     = minishell
 SRC      = $(shell find . -name "*.c")
 CC      = cc
-CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -MMD -MP -I include
 CACHEDIR = cache
 
 # generate from above variable
