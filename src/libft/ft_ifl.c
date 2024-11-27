@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_ifl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/06/06 15:18:22 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/06/06 15:22:59 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include <stdbool.h>
 
 /**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+ * @brief like ternary operator for long.
+ *
+*/
+long	ft_ifl(bool condition, long iftrue, long iffalse)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	if (condition)
+		return (iftrue);
+	else
+		return (iffalse);
 }

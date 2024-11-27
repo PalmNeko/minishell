@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_isupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2023/11/07 19:12:48 by tookuyam          #+#    #+#             */
+/*   Updated: 2023/11/07 19:21:45 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
-
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+int	ft_isupper(int c)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	unsigned char	uc;
+
+	uc = c;
+	if ('A' <= uc && uc <= 'Z')
+		return (!0);
+	else
+		return (0);
 }

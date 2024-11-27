@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_free_iter.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/06/07 18:40:54 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/06/07 18:43:50 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "libft.h"
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+void	ft_free_iter(t_free_args *free_args, size_t size)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	size_t	index;
+
+	index = 0;
+	while (index < size)
+	{
+		free_args[index].free_func(free_args[index].arg);
+		index++;
+	}
+	return ;
 }

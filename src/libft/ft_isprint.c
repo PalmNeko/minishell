@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2023/09/26 20:18:57 by tookuyam          #+#    #+#             */
+/*   Updated: 2023/09/27 14:52:39 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
-
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+int	ft_isprint(int c)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	if (' ' <= c && c <= '~')
+		return (!0);
+	else
+		return (0);
 }

@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2023/09/24 17:33:21 by tookuyam          #+#    #+#             */
+/*   Updated: 2023/09/24 17:58:19 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
-
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+int	ft_isalnum(int c)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	if ('0' <= c && c <= '9')
+		return (!0);
+	else if ('A' <= c && c <= 'Z')
+		return (!0);
+	else if ('a' <= c && c <= 'z')
+		return (!0);
+	else
+		return (0);
 }

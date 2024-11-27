@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/27 12:34:42 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include <stddef.h>
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+void	ft_bzero(void *s, size_t n)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	unsigned char	*sp;
+	size_t			set_count;
+
+	sp = s;
+	set_count = 0;
+	while (set_count < n)
+		sp[set_count++] = 0;
+	return ;
 }

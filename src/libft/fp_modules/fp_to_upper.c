@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   fp_to_upper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/23 14:49:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/23 16:18:13 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include <stdbool.h>
+#include "libft.h"
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+char	*fp_to_upper(bool be_upper, int *len, char *str)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	(void)len;
+	if (str == NULL)
+		return (NULL);
+	if (be_upper == true)
+		return (ft_strtoupper(str));
+	else
+		return (str);
 }

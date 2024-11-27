@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_lstfirst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/18 14:50:51 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/18 15:03:47 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "libft.h"
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+t_list	*ft_lstfirst(t_list *lst)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	t_list	*itr;
+	t_list	*prev_temp;
+
+	if (lst == NULL)
+		return (NULL);
+	if (lst->prev == NULL)
+		return (lst);
+	prev_temp = lst->prev;
+	lst->prev = NULL;
+	itr = prev_temp;
+	while (itr->prev != NULL)
+		itr = itr->prev;
+	lst->prev = prev_temp;
+	return (itr);
 }

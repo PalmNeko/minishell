@@ -1,21 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2023/10/08 19:04:51 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/18 15:07:54 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "libft.h"
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+int	ft_lstsize(t_list *lst)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	t_list	*itr;
+	t_list	*start;
+	int		size;
+
+	start = ft_lstfirst(lst);
+	if (start == NULL)
+		return (0);
+	if (start->prev != NULL)
+		start->prev->next = NULL;
+	itr = start;
+	size = 0;
+	while (itr != NULL)
+	{
+		size += 1;
+		itr = itr->next;
+	}
+	if (start->prev != NULL)
+		start->prev->next = start;
+	return (size);
 }

@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_lstnewcircular.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/18 13:55:03 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/18 13:57:38 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "libft.h"
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+t_list	*ft_lstnewcircular(void *content)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	t_list	*lst;
+
+	lst = ft_lstnew(content);
+	if (lst == NULL)
+		return (NULL);
+	lst->next = lst;
+	lst->prev = lst;
+	return (lst);
 }

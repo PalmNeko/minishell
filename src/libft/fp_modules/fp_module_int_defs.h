@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   fp_module_int_defs.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/25 15:26:45 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/25 16:32:21 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#ifndef FP_MODULE_INT_DEFS_H
+# define FP_MODULE_INT_DEFS_H
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
-{
-	return (ms_dup_ntp((const char **)ntp));
-}
+# define FP_SDEFAULT 0
+# define FP_SSIGN 1
+# define FP_SSPACE 2
+
+# define FP_FLAGS "#0- +"
+# define FP_CONVERSION_TYPES "dicsuxXp%"
+
+#endif

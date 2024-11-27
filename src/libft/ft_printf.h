@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/23 16:23:24 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/08/03 15:23:28 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
-{
-	return (ms_dup_ntp((const char **)ntp));
-}
+# include <stdarg.h>
+
+int	ft_printf(const char *format, ...);
+int	ft_dprintf(int fd, const char *format, ...);
+int	ft_vdprintf(int fd, const char *format, va_list arg_ptr);
+
+#endif

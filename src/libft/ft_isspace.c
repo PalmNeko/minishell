@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2023/11/07 18:11:41 by tookuyam          #+#    #+#             */
+/*   Updated: 2023/11/07 18:11:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
-
 /**
- * same as ms_dup_ntp except type is different.
+ * If c is '\t', '\n', '\v', '\f', '\r' or ' ', return non-zero.
+ * else, return zero.
  */
-char	**ms_dup_ntp2(const char *const ntp[])
+int	ft_isspace(char c)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	if (('\t' <= c && c <= '\r') || c == ' ')
+		return (1);
+	else
+		return (0);
 }

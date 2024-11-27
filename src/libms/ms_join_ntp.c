@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "ms_int_echo.h"
+#include "libft.h"
 #include <stddef.h>
 
 /**
@@ -37,8 +38,8 @@ char	*ms_join_ntp(const char *ntp[], const char *sep)
 	while (ntp[index] != NULL)
 	{
 		if (index != 0)
-			ft_strncat(joined, sep, total_len);
-		ft_strncat(joined, ntp[index], total_len);
+			ft_strlcat(joined, sep, total_len + 1);
+		ft_strlcat(joined, ntp[index], total_len + 1);
 		index++;
 	}
 	return (joined);

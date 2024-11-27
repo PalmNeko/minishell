@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   fp_get_sign_type.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/25 15:36:58 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/25 15:38:25 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "fp_module_types.h"
+#include "fp_module_int_defs.h"
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+int	fp_get_sign_type(t_cs *cs)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	if (cs->flag_plus)
+		return (FP_SSIGN);
+	else if (cs->flag_space)
+		return (FP_SSPACE);
+	else
+		return (FP_SDEFAULT);
 }

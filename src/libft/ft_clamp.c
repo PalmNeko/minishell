@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_clamp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/08/07 10:34:54 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/08/07 10:34:54 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
-#include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
-
-bool	ms_has_opt(char *const argv[], const char *opt)
+/**
+ * I refer this page: https://developer.mozilla.org/ja/docs/Web/CSS/clamp
+ */
+int	ft_clamp(int min, int val, int max)
 {
-	while (*argv != NULL)
-	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
-	}
-	return (false);
+	if (val < min)
+		return (min);
+	else if (val > max)
+		return (max);
+	else
+		return (val);
 }

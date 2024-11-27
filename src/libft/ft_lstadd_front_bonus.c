@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2023/10/08 19:02:06 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/18 16:17:27 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "libft.h"
+#include <stddef.h>
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	t_list	*first;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	first = ft_lstfirst(*lst);
+	if (first->prev != NULL)
+		first->prev->next = new;
+	new->prev = first->prev;
+	new->next = first;
+	first->prev = new;
+	if (*lst == first)
+		*lst = new;
+	return ;
 }

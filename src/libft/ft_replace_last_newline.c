@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_replace_last_newline.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/08/05 11:43:49 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/08/05 11:43:49 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
-#include "libft.h"
 #include <stdbool.h>
-#include <stddef.h>
+#include "libft.h"
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+bool	ft_replace_last_newline(char *str)
 {
-	while (*argv != NULL)
+	size_t	len;
+
+	len = ft_strlen(str);
+	if (len == 0)
+		return (false);
+	if (str[len - 1] == '\n')
 	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
+		str[len - 1] = '\0';
+		return (true);
 	}
 	return (false);
 }

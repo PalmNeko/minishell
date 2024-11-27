@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   ft_errinfo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/02 19:26:31 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/02 19:29:58 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include <stddef.h>
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+static char	*g_errinfo;
+
+void	ft_set_errinfo(char *einfo)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	g_errinfo = einfo;
+}
+
+char	*ft_get_errinfo(void)
+{
+	return (g_errinfo);
+}
+
+void	ft_clear_errinfo(void)
+{
+	g_errinfo = NULL;
 }

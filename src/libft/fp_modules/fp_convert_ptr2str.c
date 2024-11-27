@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp2.c                                      :+:      :+:    :+:   */
+/*   fp_convert_ptr2str.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/24 22:08:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:17 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/25 17:13:14 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/25 17:13:16 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "fp_module.h"
+#include "libft.h"
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp2(const char *const ntp[])
+char	*fp_convert_ptr2str(int precision, int *len, unsigned int value)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	if (value == 0)
+	{
+		*len = 5;
+		return (ft_strdup("(nil)"));
+	}
+	return (fp_convert_uint2str(precision, len, value, 16));
 }
