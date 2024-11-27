@@ -21,6 +21,7 @@
 char	*ms_join_ntp(const char *ntp[], const char *pad);
 char	**ms_dup_ntp(const char *ntp[]);
 char	**ms_dup_ntp2(const char *const ntp[]);
+char	**ms_dup_ntp3(char *ntp[]);
 void	ms_destroy_ntp(char *ntp[]);
 
 // environment variable
