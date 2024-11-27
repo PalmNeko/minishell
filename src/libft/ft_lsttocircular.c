@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_lsttocircluar.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/08/08 16:41:18 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/08/08 16:41:18 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
 #include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+void	ft_lsttocircular(t_list *lst)
 {
-	while (*argv != NULL)
-	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
-	}
-	return (false);
+	t_list	*first;
+	t_list	*last;
+
+	first = ft_lstfirst(lst);
+	last = ft_lstlast(lst);
+	if (first == NULL || last == NULL)
+		return ;
+	first->prev = last;
+	last->next = first;
+	return ;
 }

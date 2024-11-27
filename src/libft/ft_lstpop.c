@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_lstpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/07/27 17:13:42 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/07/27 17:13:42 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
 #include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+t_list	*ft_lstpop(t_list **lst)
 {
-	while (*argv != NULL)
-	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
-	}
-	return (false);
+	t_list	*first;
+
+	if (lst == NULL || *lst == NULL)
+		return (NULL);
+	first = ft_lstfirst(*lst);
+	if (first == NULL)
+		return (NULL);
+	if (first->prev != NULL)
+		first->prev->next = first->next;
+	if (first->next != NULL)
+		first->next->prev = first->prev;
+	if (first->next == first)
+		*lst = NULL;
+	else
+		*lst = first->next;
+	first->prev = NULL;
+	first->next = NULL;
+	return (first);
 }

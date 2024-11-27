@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/08/03 15:18:08 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/08/03 15:18:08 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
-#include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
+#include "ft_printf.h"
+#include <stdarg.h>
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+int	ft_dprintf(int fd, const char *format, ...)
 {
-	while (*argv != NULL)
-	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
-	}
-	return (false);
+	va_list	ap;
+	int		result;
+
+	va_start(ap, format);
+	result = ft_vdprintf(fd, format, ap);
+	va_end(ap);
+	return (result);
 }
