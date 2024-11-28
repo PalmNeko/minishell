@@ -11,7 +11,7 @@ TEST(ms_setenv, can_set_new_environ)
 {
 	ms_unsetenv("NEW_ENVIRON");
 	ASSERT_EQ(ms_setenv("NEW_ENVIRON", "ms_setenv", 0), 0);
-	EXPECT_EQ(ms_getenv("NEW_ENVIRON"), "ms_setenv");
+	EXPECT_STREQ(ms_getenv("NEW_ENVIRON"), "ms_setenv");
 }
 
 // 変数を上書き設定できる。
@@ -20,7 +20,7 @@ TEST(ms_setenv, can_overwrite)
 	ms_unsetenv("NEW_ENVIRON");
 	ASSERT_EQ(ms_setenv("NEW_ENVIRON", "ms_setenv", 0), 0);
 	ASSERT_EQ(ms_setenv("NEW_ENVIRON", "ms_woiej", 1), 0);
-	EXPECT_EQ(ms_getenv("NEW_ENVIRON"), "ms_woiej");
+	EXPECT_STREQ(ms_getenv("NEW_ENVIRON"), "ms_woiej");
 }
 
 // nameがNULLだったら、-1を返して、errnoにEINVALが設定される。

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_ntp3.c                                      :+:      :+:    :+:   */
+/*   ms_int_validate_env_name.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 15:39:18 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/28 15:03:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/28 13:01:53 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/28 13:49:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "libft.h"
+#include <stdbool.h>
+#include <stddef.h>
 
-/**
- * same as ms_dup_ntp except type is different.
- */
-char	**ms_dup_ntp3(char *ntp[])
+bool	ms_int_validate_env_name(const char *name)
 {
-	return (ms_dup_ntp((const char **)ntp));
+	if (name == NULL)
+		return (false);
+	else if (ft_strchr(name, '=') != NULL)
+		return (false);
+	else if (ft_strlen(name) == 0)
+		return (false);
+	else
+		return (true);
 }
