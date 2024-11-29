@@ -32,4 +32,9 @@ int		ms_import_env(char *const envp[]);
 char	**ms_export_env(void);
 void	ms_clear_environ(void *unused);
 
+// errors
+void	ms_perror_shell(const char *msg);
+void	ms_perror_cmd(const char *name, const char *msg);
+void	ms_perror_cmd2(const char *name, const char *type, const char *msg);
+
 #endif
