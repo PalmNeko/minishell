@@ -13,7 +13,11 @@
 #ifndef LIBMS_H
 # define LIBMS_H
 
+# include "libft_type.h"
 # include <stddef.h>
+
+/** string.h */
+char	*ms_strpbrk(const char *s, const char *accept);
 
 /**
  * libms
@@ -22,7 +26,10 @@ char	*ms_join_ntp(const char *ntp[], const char *pad);
 char	**ms_dup_ntp(const char *ntp[]);
 char	**ms_dup_ntp2(const char *const ntp[]);
 char	**ms_dup_ntp3(char *ntp[]);
+char	**ms_dup_ntp4(char *const ntp[]);
 void	ms_destroy_ntp(char *ntp[]);
+void	ms_destroy_ntp2(void **ntp, void (*fr)(void *));
+void	*ms_lst_to_ntp(t_list **lst, void *(*cp)(void *), void (*fr)(void *));
 
 // environment variable
 char	*ms_getenv(const char *name);

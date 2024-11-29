@@ -10,11 +10,10 @@ extern "C" {
 // オプションを飛ばすこと
 TEST(ms_extract_args, remove_options)
 {
-	char *const	*argv;
+	const char	*argv[] = {"command", "-opts", "arg1", "-arg2", NULL};
 	char		**args;
 
-	argv = (char *const[]){"command", "-opts", "arg1", "-arg2", NULL};
-	args = ms_extract_args(argv);
+	args = ms_extract_args((char *const *)argv);
 	ASSERT_NE(args, nullptr);
 	EXPECT_STREQ(args[0], "arg1");
 	EXPECT_STREQ(args[1], "-arg2");
@@ -25,11 +24,10 @@ TEST(ms_extract_args, remove_options)
 // --からは引数
 TEST(ms_extract_args, double_hyphen)
 {
-	char *const	*argv;
+	const char	*argv[] = {"command", "--", "-opts", "arg1", "-arg2", NULL};
 	char		**args;
 
-	argv = (char *const[]){"command", "--", "-opts", "arg1", "-arg2", NULL};
-	args = ms_extract_args(argv);
+	args = ms_extract_args((char *const *)argv);
 	ASSERT_NE(args, nullptr);
 	EXPECT_STREQ(args[0], "-opts");
 	EXPECT_STREQ(args[1], "arg1");

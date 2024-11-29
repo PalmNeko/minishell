@@ -21,10 +21,10 @@ TEST(ms_getenv, basic)
 	equal_ptr = strchr(envs[0], '=');
 	ASSERT_NE(equal_ptr, nullptr);
 	cutted_name = strndup(envs[0], equal_ptr - envs[0]);
-	ms_destroy_ntp(envs);
 	value_ptr = ms_getenv(cutted_name);
 	free(cutted_name);
 	EXPECT_STREQ(equal_ptr + 1, value_ptr);
+	ms_destroy_ntp(envs);
 }
 
 // 存在しない名前を参照したらnullptrを返す。

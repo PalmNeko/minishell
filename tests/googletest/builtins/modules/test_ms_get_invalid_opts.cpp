@@ -4,6 +4,7 @@
 
 extern "C" {
     #include "builtin_internal.h"
+	#include <stdlib.h>
 };
 
 // 有効なオプションを削除する。
@@ -13,5 +14,6 @@ TEST(ms_get_invalid_opts, remove_valid_opts)
 
 	invalid_opts = ms_get_invalid_opts("asdb", "ab");
 	ASSERT_NE(invalid_opts, nullptr);
-	EXPECT_STREQ(invalid_opts, "sd");
+	EXPECT_STREQ(invalid_opts, "ds");
+	free(invalid_opts);
 }

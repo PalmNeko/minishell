@@ -11,10 +11,10 @@ extern "C" {
 // それ以外の引数までをオプションとして扱う。
 TEST(ms_extract_opts, until_argument)
 {
-	char	*options;
-	char *const	*args = (char *const[]){"command", "-abds", "argument", "-dummy", NULL};
+	char		*options;
+	const char	*args[] = {"command", "-abds", "argument", "-dummy", NULL};
 
-	options = ms_extract_opts(args);
+	options = ms_extract_opts((char *const*)args);
 	ASSERT_NE(options, nullptr);
 	EXPECT_STREQ(options, "abds");
 	free(options);
@@ -24,11 +24,11 @@ TEST(ms_extract_opts, until_argument)
 TEST(ms_extract_opts, until_double_hyphen)
 {
 	char		*options;
-	char *const	*args = (char *const[]){"command", "-abds-", "--", "-dummy", NULL};
+	const char	*args[] = {"command", "-abds-", "--", "-dummy", NULL};
 
-	options = ms_extract_opts(args);
+	options = ms_extract_opts((char *const*)args);
 	ASSERT_NE(options, nullptr);
-	EXPECT_STREQ(options, "abds-");
+	EXPECT_STREQ(options, "-abds");
 	free(options);
 }
 
@@ -36,9 +36,9 @@ TEST(ms_extract_opts, until_double_hyphen)
 TEST(ms_extract_opts, remove_duplicated)
 {
 	char		*options;
-	char *const	*args = (char *const[]){"command", "-aaaa", "--", "-dummy", NULL};
+	const char	*args[] = {"command", "-aaaa", "--", "-dummy", NULL};
 
-	options = ms_extract_opts(args);
+	options = ms_extract_opts((char *const*)args);
 	ASSERT_NE(options, nullptr);
 	EXPECT_STREQ(options, "a");
 	free(options);
@@ -48,9 +48,9 @@ TEST(ms_extract_opts, remove_duplicated)
 TEST(ms_extract_opts, return_empty_if_has_no_opts)
 {
 	char		*options;
-	char *const	*args = (char *const[]){"command", "", "--", "-dummy", NULL};
+	const char	*args[] = {"command", "", "--", "-dummy", NULL};
 
-	options = ms_extract_opts(args);
+	options = ms_extract_opts((char *const*)args);
 	ASSERT_NE(options, nullptr);
 	EXPECT_STREQ(options, "");
 	free(options);

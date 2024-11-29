@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:49:45 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/27 16:29:29 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:35:10 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			ft_lstsize(t_list *lst);
 int			ft_max(int a, int b);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 int			ft_min(int a, int b);
-int			ft_mkostemp(char *template, int flags);
+int			ft_mkostemp(char *temp, int flags);
 int			ft_nop(void);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -103,8 +103,8 @@ void		*ft_realloc(void *ptr, size_t old_size, size_t size);
 void		ft_bzero(void *s, size_t n);
 void		ft_clear_errinfo(void);
 void		ft_free_iter(t_free_args *free_args, size_t size);
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		ft_lstadd_front(t_list **lst, t_list *new);
+void		ft_lstadd_back(t_list **lst, t_list *new_lst);
+void		ft_lstadd_front(t_list **lst, t_list *new_lst);
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstdel_content(
 				t_list **root, void *content, void (*del)(void *));
