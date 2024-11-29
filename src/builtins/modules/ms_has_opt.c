@@ -11,15 +11,25 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "libms.h"
+#include "builtin_internal.h"
 #include <stdbool.h>
 #include <stddef.h>
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+bool	ms_has_opt(char *const argv[], char opt, const char *valid_opts)
 {
+	if (argv[0] == NULL)
+		return (false);
+	argv++;
 	while (*argv != NULL)
 	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
+		if (ms_validate_opts(*argv, valid_opts) == true)
+		{
+			if (ft_strchr(*argv + 1, opt) != NULL)
+				return (true);
+		}
+		else
+			return (false);
 		argv++;
 	}
 	return (false);

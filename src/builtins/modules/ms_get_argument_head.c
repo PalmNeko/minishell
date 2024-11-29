@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_extract_opts.c                                  :+:      :+:    :+:   */
+/*   ms_get_argument_head.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/29 11:47:54 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/29 16:54:53 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/29 19:13:44 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/29 19:36:21 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_internal.h"
-#include "libft.h"
-#include <stdbool.h>
 #include <stddef.h>
 
-char	*ms_extract_opts(char *const argv[])
+char	**ms_get_argument_head(char *const argv[], const char *valid_opts)
 {
-	bool	set[256];
-
-	if (argv[0] != NULL)
-		argv++;
-	ft_memset(set, 0, sizeof(set));
-	while (*argv != NULL && ms_is_option(*argv) == true)
+	if (argv[0] == NULL)
+		return (NULL);
+	argv++;
+	while (*argv != NULL)
 	{
-		ms_set_character_map(*argv + 1, set);
+		if (ms_validate_opts(*argv, valid_opts) == false)
+			return ((char **)argv);
 		argv++;
 	}
-	return (ms_create_string_from_map(set));
+	return ((char **)argv);
 }

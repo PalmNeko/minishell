@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "builtin_internal.h"
 #include "libms.h"
-#include "ms_int_echo.h"
 #include "libft.h"
 #include <limits.h>
 #include <stdbool.h>
@@ -20,21 +20,21 @@
 
 int	ms_builtin_echo(const char *path, char *const argv[], char *const envp[])
 {
-	int		index;
 	char	*joined;
+	char	**arg_head;
 
 	(void)path;
 	(void)envp;
 	if (argv[0] == NULL)
 		return (0);
-	index = 1;
-	while (argv[index] != NULL && ft_strcmp(argv[index], "-n") == 0)
-		index++;
-	joined = ms_join_ntp((const char **)&argv[index], " ");
+	arg_head = ms_get_argument_head(argv, "n");
+	if (arg_head == NULL)
+		return (0);
+	joined = ms_join_ntp((const char **)arg_head, " ");
 	if (joined == NULL)
 		return (0);
 	ft_putstr_fd(joined, 1);
-	if (! ms_has_opt(argv, "-n"))
+	if (! ms_has_opt(argv, 'n', "n"))
 		ft_putchar_fd('\n', 1);
 	free(joined);
 	return (0);

@@ -83,6 +83,35 @@ TEST(builtin_echo, must_print_hyphen_and_n)
     EXPECT_EQ(output, "sba -n abs");
 }
 
+/** オプションじゃないオプションを含む場合は、そのまま出力する */
+TEST(builtin_echo, must_print_including_non_options)
+{
+	std::string output;
+	const char *args[] = {"echo", "-na", "abs", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "-na abs\n");
+}
+
+/** --は引数として扱う。 */
+TEST(builtin_echo, must_print_double_hyphen)
+{
+	std::string output;
+	const char *args[] = {"echo", "--", "-n", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "-- -n\n");
+}
+
+/** オプションが繰り返し指定されても正しく認識する。 */
+TEST(builtin_echo, interpret_repeated_option)
+{
+	std::string output;
+	const char *args[] = {"echo", "-nnnnnnnn", "hello", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "hello");
+}
 
 static std::string	ms_get_output(const char *args[])
 {

@@ -6,10 +6,11 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 13:35:17 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/29 13:40:11 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/11/29 19:38:10 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "builtin_internal.h"
 #include <stdbool.h>
 #include <stddef.h>
@@ -20,6 +21,8 @@ bool	ms_validate_opts(const char *opt_arg, const char *valid_opts)
 	bool	vopts_map[256];
 	size_t	index;
 
+	ft_memset(opts_map, false, 256);
+	ft_memset(vopts_map, false, 256);
 	if (ms_is_option(opt_arg) == false)
 		return (false);
 	ms_set_character_map(opt_arg + 1, opts_map);
