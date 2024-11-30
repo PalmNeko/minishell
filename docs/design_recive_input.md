@@ -1,101 +1,38 @@
-# ユーザーからの入力受取 (ms_input)
+# input_from_cmdline
 
-## WorkFlow
-``` mermaid
-flowchart
-AA[initialize]
-A["ms_input_wait"]
-B{"recived_string"}
-C{"ms_input_check_closing"}
-D["ms_input_error_not_close"]
-D_1["status=2"]
-E{"heredoc
-now?"}
-E_1{"heredoc
-start?"}
-E_2["ms_input_heredoc_init"]
-F["ms_input_heredoc"]
-F_1{heredoc_finish?}
-G["add_history"]
-H["exec part"]
-I["free(recived_string)"]
-Z["finishlize"]
+## main
+ 
+### `void ms_input(t_minishell mnsh)`
+- **説明**
+	- ユーザーからの入力を受け取る
+	- 入力値があるならば、下記処理を行い、入力値をヒストリーに格納してexec_partへ渡す。
+		- "<<"が含まれる時、heredoc用の文字列を取得する挙動を行う
+		- 括弧、クォーテーションの閉じ忘れなどは考慮せずに次へ渡す。
+	- 入力値がEOFであれば終了処理を行う。
+	- 入力値が空文字列であれば新しい行を出力する。
+### 定義
+- **input**
+	- コマンドラインからの入力のこと。
+	- ms_input_waitで出力した文字列。
+	- ms_input_heredoc内の入力文字列は、mainflowとは違うinputを受け取って連結させているため、違う変数として扱う。
 
-AA --> A
-A --> B
-B --> |"no input"| I
-B --> |EOF| Z
-B -->|"OTHER"| C
-C -->|"NO_CLOSED"| D --> D_1 --> I
-C -->|"CLOSED"| E
+### データ構造 
+``` c
 
-E -->|"Yes"| F
-E -->|"No"| E_1
-E_1 -->|"Yes"| E_2 --> I
-E_1 -->|"No"| G --> H --> I
+typedef struct s_delimiter{
+	char *delimiter;
+}t_delimiter
 
-F --> F_1
-F_1 -->|"Yes"| G
-F_1 -->|"No"| I
+typedef struct s_heredoc{
+	size_t *heredoc_count;
+	t_delimiter *delimiter_list;
+}t_heredoc
 
-I --> A
 ```
 
-### ms_input_heredoc
-``` mermaid
-flowchart
-A("Start")
-B{"cmdline == 
- delimiter"}
-C["heredoc_count--"]
-D["append 
-heredoc_list"]
-
-Z("End")
-
-A --> B
-B --> |"Yes"| C --> Z
-B --> |"No"| D --> Z
-```
-
-
-## Variable
-`char *cmdline (Default = "")`
-- コマンドラインからの入力を格納する変数。
-- ms_input_waitで出力した文字列を格納する。
-
-`int input_status (Default = 0)`
-- プロンプト出力状態の確認に使う。
-- **出力文字**
-	- 0:PS1
-	- 1:PS2
-
-`int closing_flag (Default = 0)`
-- クォート、括弧が閉じられているかどうか判別するフラグ。
-- `"` `'` `(` `)` のような閉じる必要のある文字についてそれぞれビットフラグを立てて管理する。
-
-	``` c
-	typedef struct s_heredoc_list{
-		char *line;
-		struct s_heredoc_list *next;
-	}t_heredoc_list
-
-	typedef struct s_delimiter_list{
-		char *delimiter;
-		struct s_delimiter_list *next;
-	}t_delimiter_list
-
-	typedef struct s_heredoc{
-		int heredoc_count;
-		t_delimiter *delimiter_list;
-		t_heredoc_list *head;
-		t_heredoc_list *tail;
-	}t_heredoc
-	```
 - heredoc用の構造体変数
 	`heredoc_count (Default = 0)`
 	- heredocの個数を格納する。
-	`
 
 	`t_heredoc_list`
 	`t_heredoc`
@@ -105,46 +42,91 @@ B --> |"No"| D --> Z
 
 	`t_delimiter_list`
 	- delimiterを格納するリスト。左から先頭に格納される。
-## function
-### `char *ms_input_wait(int input_status)`
-- **説明**
-プロンプトを表示してreadline関数を用いてユーザーからの入力を待つ。  
-input_statusの状態によって表示するプロンプトを変える。
-- **返り値**
-readline関数からの入力によって得られた文字列
 
-### `int *ms_input_isvalid_token(char *cmdline)`
-- **説明**
-cmdlineで渡された文字列において下記文字が適切に処理されているか
-	- `(` `)` `'` `"`が閉じられているか 
-	- `( )`の中にmeta_token以外の文字列が入っているか
-		- ex: OK -> `(echo hoge | wc)` , `(aaa)` 
-		- ex: NG -> `( )`, `( | )`
-	- パイプ及びリストの間に文字列が入っているか
-		- ex: OK -> `cat || cat | cat` , `cat&|cat`
-			- `&`単体は今回メタ文字として扱わないため
-		- ex: NG -> `cat ||| cat` , `cat |&& cat`
-- **返り値**
-	- 正常時は０を返す
-	- 適切に処理されていない文字のうち一番最初の文字に対応する数値
+### workflow
 
-### `void ms_input_error_not_close(int closing_flag)`
-- **説明**
-`closing_flag`のビットマスクに応じて、シンタックスエラーを出力
+```mermaid
+flowchart TD
+
+%%mainflow
+A[[init_part]]
+B[wait_input
+message -> PS2]
+C{"input"}
+%%D{ms_closing_check}
+E["add_history"]
+F[[exec part]]
+G[set_status]
+H[free input]
 
 
-### `t_heredoc ms_input_heredoc_init(char *cmdline)`
-- **説明**
-	- cmdlineに応じた初期化を行った構造体を返す。
-	- エラーのときはNULLポインタを返す。
-	- `<<`の数を`heredoc_flag`に格納する。
-	- `heredoc_flag`の数だけ、デリミタを格納する。
-- **エラー**
-	- `<<`のnext_tokenがmeta_tokenだった時、以下を出力
-		- `syntax error near unexpected token <next_meta_token>`
+A --> B -->|receive input| C -->  HE_1 --> E --> F --> G --> H --> B
 
-### `void ms_input_heredoc(t_heredoc *heredoc)`
+%%heredoc
+HE_1{"`'<<'が入力に
+含まれる？`"}
+HE_2[["ms_input_heredoc"]]
+HE_1 --> |Yes| HE_2--> E
+
+%%input_value
+C --> |empty| H
+C --> |EOF| END[[exit part]]
+%%exit
+
+
+```
+---
+### `char *ms_input_heredoc(t_minishell mnsh,char *input)`
 - **説明**
-	- ヒアドキュメントの処理を行う。
-	- 文字列がデリミタである場合にヒアドクカウントを減らす
-	- 文字列がデリミタでない場合はheredoc_list(heredocの内容を格納しているリスト)の最後尾に文字列を追加する。
+	- ヒアドキュメントとして扱う文字の処理を行う。
+	- 初期化の際に併せてinputに改行を加える。
+	- inputに各入力を改行文字と併せて加える。
+- **戻り値**
+	- コマンドラインから受け取った文字列を一行ずつ改行と併せて結合し、その結果を返す。
+		``` bash
+		$ << EOF << EOF2
+		> aaa
+		> EOF
+		> EOF2
+
+		// historyで参照した時
+		$ << EOF << EOF2
+		aaa
+		EOF
+		EOF2
+
+		---
+		```
+	
+### work_flow
+``` mermaid
+flowchart TD
+
+%%mainflow
+AA[["main_flow"]]
+AAA["concat '\n' 
+-> input"]
+A[["init for heredoc"]]
+B[["wait_input
+message -> PS2"]]
+C_1["concat new_input 
+-> input with '\n'"]
+C{new_input is 
+current delimita?}
+%%delimita
+C_2["heredoc_count--"]
+C_3{"heredoc_count
+ == 0"}
+C_4["next_delimita
+-> current_delimita"]
+D[[return input
+mainflow]]
+
+
+
+AA --> AAA --> A --> B --> C_1 --> C
+C --> B 
+C --> C_2 --> C_3
+C_3 --> |Yes| D
+C_3 --> |No| C_4 --> B
+```
