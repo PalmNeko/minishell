@@ -46,6 +46,8 @@ std::string CaptureFd::read(void)
     char        buf[1024];
     int         read_size;
 
+    if (this->isCaptured == false)
+        return ("");
     read_size = ::read(this->pipedFd[0], buf, 1023);
     while (read_size != -1)
     {

@@ -4,11 +4,13 @@
  * special member functions
  */
 IoTerminal::IoTerminal(void)
+    : isBooted(false)
 {}
 
 IoTerminal::~IoTerminal(void)
 {
-    this->exit();
+    if (this->isBooted == true)
+        this->exit();
 }
 
 /*
@@ -20,12 +22,18 @@ IoTerminal::~IoTerminal(void)
  */
 void IoTerminal::boot(void)
 {
+    if (this->isBooted == true)
+        return ;
+    this->isBooted = true;
     this->stdoutCFd.capture(1);
     this->stderrCFd.capture(2);
 }
 
 void IoTerminal::exit(void)
 {
+    if (this->isBooted == false)
+        return ;
+    this->isBooted = false;
     this->getStderr();
     this->getStdout();
     this->stdoutCFd.unCapture();
