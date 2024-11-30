@@ -19,6 +19,9 @@
 /** string.h */
 char	*ms_strpbrk(const char *s, const char *accept);
 
+/** unistd.h */
+char	*ms_get_current_dir_name(void);
+
 /**
  * libms
  */

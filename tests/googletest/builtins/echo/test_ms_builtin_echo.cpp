@@ -113,6 +113,26 @@ TEST(builtin_echo, interpret_repeated_option)
     EXPECT_EQ(output, "hello");
 }
 
+/** 引数がなくても動作すること。 nオプション */
+TEST(builtin_echo, no_argument_n_opt)
+{
+	std::string output;
+	const char *args[] = {"echo", "-n", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "");
+}
+
+/** 引数がなくても動作すること。 */
+TEST(builtin_echo, no_argument)
+{
+	std::string output;
+	const char *args[] = {"echo", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "\n");
+}
+
 static std::string	ms_get_output(const char *args[])
 {
 	CaptureFd cap;
