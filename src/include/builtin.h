@@ -19,5 +19,7 @@ int	ms_builtin_echo(
 		const char *path, char *const argv[], char *const envp[]);
 int	ms_builtin_pwd(
 		const char *path, char *const argv[], char *const envp[]);
+int	ms_builtin_unset(
+		const char *path, char *const argv[], char *const envp[]);
 
 #endif
