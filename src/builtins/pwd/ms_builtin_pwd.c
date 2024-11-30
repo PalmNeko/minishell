@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:53:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/30 17:55:09 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:40:19 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ms_builtin_pwd(
 
 	(void)path;
 	(void)envp;
-	arg_head = ms_get_argument_head(argv, "n");
+	arg_head = ms_get_argument_head(argv, "");
 	if (arg_head == NULL)
 		return (1);
 	invalid_opt = ms_get_first_invalid_opt(argv, "");
