@@ -33,6 +33,8 @@ char	**ms_dup_ntp4(char *const ntp[]);
 void	ms_destroy_ntp(char *ntp[]);
 void	ms_destroy_ntp2(void **ntp, void (*fr)(void *));
 void	*ms_lst_to_ntp(t_list **lst, void *(*cp)(void *), void (*fr)(void *));
+size_t	ms_ntpsize(void **ntp);
+int		ms_get_interactive_stat(void);
 
 // environment variable
 char	*ms_getenv(const char *name);
