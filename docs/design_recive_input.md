@@ -20,13 +20,13 @@
 ``` c
 
 typedef struct s_delimita_list{
-	char *delimiter;
-	struct *delimiter_list
+	char *delimita;
+	struct *delimita_list
 }t_delimiter_list
 
 typedef struct s_heredoc{
 	size_t *heredoc_count;
-	t_delimiter *delimiter_list;
+	t_delimiter *delimita_list;
 }t_heredoc
 
 ```
