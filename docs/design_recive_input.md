@@ -19,9 +19,10 @@
 ### データ構造 
 ``` c
 
-typedef struct s_delimiter{
+typedef struct s_delimita_list{
 	char *delimiter;
-}t_delimiter
+	struct *delimiter_list
+}t_delimiter_list
 
 typedef struct s_heredoc{
 	size_t *heredoc_count;
@@ -40,7 +41,7 @@ typedef struct s_heredoc{
 	- heredoc中に入力された文字列を格納するリスト。
 	- t_heredocのheadが最初のheredocを指す。 
 
-	`t_delimiter_list`
+	`t_delimita_list`
 	- delimiterを格納するリスト。左から先頭に格納される。
 
 ### workflow
