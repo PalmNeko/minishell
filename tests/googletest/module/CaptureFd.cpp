@@ -1,5 +1,6 @@
 #include "CaptureFd.hpp"
 #include <string>
+#include <cstring>
 
 extern "C" {
     #include "ms_test.h"
@@ -12,9 +13,6 @@ extern "C" {
 CaptureFd::CaptureFd(void)
     : isCaptured(false)
 {}
-
-CaptureFd::CaptureFd(const CaptureFd& captureFd)
-{(void)captureFd;}
 
 CaptureFd::~CaptureFd(void)
 {
@@ -61,10 +59,19 @@ std::string CaptureFd::read(void)
 /*
  * operators
  */
-CaptureFd& CaptureFd::operator=(const CaptureFd& captureFd)
+CaptureFd& CaptureFd::operator=(CaptureFd& captureFd)
 {
     if (this != &captureFd)
     {
+        this->isCaptured = captureFd.isCaptured;
+        this->targetFd = captureFd.targetFd;
+        memmove(this->pipedFd, captureFd.pipedFd, sizeof(this->pipedFd));
+        this->storedFd = captureFd.storedFd;
+        captureFd.isCaptured = -1;
+        captureFd.targetFd = -1;
+        captureFd.pipedFd[0] = -1;
+        captureFd.pipedFd[1] = -1;
+        captureFd.storedFd = -1;
     }
     return *this;
 }
