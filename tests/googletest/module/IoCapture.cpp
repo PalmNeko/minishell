@@ -61,7 +61,6 @@ void IoCapture::exit(void)
     if (this->isBooted == false && this->pid != -1)
         return ;
     if (pid == 0) {
-        printf("wefuysdf\n");
         ::exit(0);
     }
     this->isBooted = false;

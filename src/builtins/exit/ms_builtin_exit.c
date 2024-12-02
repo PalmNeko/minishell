@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:10:41 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/01 19:22:55 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:42:28 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static int	ms_calc_exit_status(
 		const char *path, char *const argv[], char *const envp[])
 {
 	int		status;
-	char	**arg_head;
 	char	*endptr;
 	int		exit_status;
+	char	**arg_head;
 
 	status = ms_error_handling_exit(path, argv, envp);
 	if (status != 0)
@@ -51,14 +51,16 @@ static int	ms_calc_exit_status(
 	if (arg_head == NULL)
 		return (1);
 	errno = 0;
-	if (arg_head[1] == NULL)
+	if (arg_head[0] != NULL && ft_strcmp(arg_head[0], "--") == 0)
+		arg_head++;
+	if (arg_head[0] == NULL)
 		return (0);
-	exit_status = strtol(argv[0], &endptr, 10);
+	exit_status = ft_strtol(arg_head[0], &endptr, 10);
 	if (endptr[0] != '\0'
-		|| (argv[0][0] == '\0' && endptr[0] == '\0')
-		|| errno == ERANGE)
+		|| (arg_head[0][0] == '\0' && endptr[0] == '\0')
+		|| errno != 0)
 		return (ms_perror_cmd2(
-				"exit", argv[1], "numeric argument required"), 2);
+				"exit", arg_head[0], "numeric argument required"), 2);
 	return (exit_status);
 }
 
@@ -80,8 +82,10 @@ static int	ms_error_handling_exit(
 	arg_head = ms_get_argument_head(argv, valid_opt);
 	if (arg_head == NULL)
 		return (1);
+	if (arg_head[0] != NULL && ft_strcmp(arg_head[0], "--") == 0)
+		arg_head++;
 	argc = ms_ntpsize((void **)arg_head);
-	if (argc >= 3)
+	if (argc > 1)
 		return (ms_perror_cmd("exit", "too many arguments"), 1);
 	return (0);
 }
