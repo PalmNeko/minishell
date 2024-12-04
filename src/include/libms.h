@@ -44,6 +44,9 @@ int		ms_import_env(char *const envp[]);
 char	**ms_export_env(void);
 void	ms_clear_environ(void *unused);
 
+// environment variable
+char	**ms_get_pwd(void);
+
 // errors
 void	ms_perror_shell(const char *msg);
 void	ms_perror_cmd(const char *name, const char *msg);
