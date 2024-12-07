@@ -1,22 +1,25 @@
-# ms_setup
+# t_minishell *ms_setup(void);
+**説明**
 minishellを起動した際に行う処理。
+minishellで扱うデータの領域確保・初期化を行い、それを返す。
+**エラー**
+メモリの領域確保に失敗した時にエラーを返す。
+
 
 ## データ構造
 
 - minishellで扱うデータを格納する構造体
   ```c
-  typedef t_list ms_shell_var_list;
-  typedef t_list ms_env_list;
+  typedef t_list ms_var_list;
   typedef t_list ms_malloc_list;
 
   typedef struct minishell{
-	ms_shell_var_list *ms_shell_var;
-	ms_env_list *ms_env;
+	ms_var_list *ms_shell_var;
 	ms_malloc_list *ms_malloc_list;
   }t_minishell
   ```
 
-	- シェル変数・環境変数格納用構造体
+	- 状態管理用構造体
 	```c
 	typedef struct s_ms_var{
 		char *name;
@@ -31,48 +34,46 @@ minishellを起動した際に行う処理。
 	} t_ms_malloc
 	```
 
-### シェル変数
-PWD: 現在の作業ディレクトリ
-OLDPWD: 直前の作業ディレクトリ
-CDPATH: cd検索パス
-HISTCMD: 履歴番号
-HISTFILE: 履歴ファイルのパス
-HISTFILESIZE: 履歴ファイルのサイズ
-HISTSIZE: メモリ内の履歴サイズ
-TMPDIR: 一時ファイルのディレクトリ
-PATH: コマンド検索パス
-PS1: プライマリプロンプト(特殊文字考慮なし)
-PS2: セカンダリプロンプト(特殊文字考慮なし)
+### minishellの状態管理に用いる変数
+#### 環境変数
+- ①親プロセスから引き継いだ環境変数
+- ②minishell内において新たにエクスポートされた環境変数
+上記２種類の環境変数で構成される。
+
+#### シェル変数
+minishellの状態を表すための変数。説明は下記の通りである。
+| 変数名         | 説明                                         | 初期化時の挙動                                      |
+|:---------------|:---------------------------------------------|:--------------------------------------------------|
+| PWD            | 現在の作業ディレクトリ                       | 起動時のカレントディレクトリ                       |
+| OLDPWD         | 直前の作業ディレクトリ                       | 未設定("")                                        |
+| CDPATH         | `cd`コマンドの検索パス                       | 未設定("")                                        |
+| HISTCMD        | 履歴番号                                     | `1`                                              |
+| HISTFILE       | 履歴ファイルのパス                           | `~/.mnsh_history`                                |
+| HISTFILESIZE   | 履歴ファイルのサイズ                         | `HISTSIZEの値`                                   |
+| HISTSIZE       | メモリ内の履歴サイズ                         | `500`                                            |
+| TMPDIR         | 一時ファイルのディレクトリ                   | `/tmp`                                           |
+| PATH           | コマンド検索パス                             | **char environ(をminishell用に格納したもの)のPATHを継承** |
+| PS1            | プライマリプロンプト(特殊文字考慮なし)       | `minishell $ `                                   |
+| PS2            | セカンダリプロンプト(特殊文字考慮なし)       | `> `                                             |
+| MNSH_SUBSHELL  | サブシェルモードかどうかを示す変数           | `0`                                              |
+
+#### 変数の属性
+ATTR_NONE : 属性を持たない。
+ATTR_SHELL_VAR : シェル変数である。
+ATTR_ENV : minishell起動時にもともと存在していた環境変数である。
+ATTR_EXPORT : minishell内で新たにエクスポートされた変数である。
 
 ## 処理
 
 ### 1.シェルの初期化
-下記変数を初期化
-- 環境変数
-- シェル変数
-- 動的にメモリ確保する変数を管理する構造体変数
-#### ms_shell_var_list ms_initialize_shell_var(void);
+#### 状態管理用構造体変数の初期化
 **説明**
-- 各変数について、下記処理を行ったあとシェル変数用の構造体変数に格納し、それを返す。
+- 親プロセスより取得した環境変数を格納し、`ATTR_ENV`属性を設定。
+- (シェル変数)[シェル変数] の項目に書かれている変数を表に記載している初期化処理を行い格納した後、`ATTR_SHELL_VAR`属性を設定。
 
-#### ms_env_list *ms_initialize_env(void);
-**説明** 
-- 外部変数`char **environ`を環境変数用の構造体変数に格納し、それを返す。
-
-| 変数名 | 初期化時の挙動 |
-|:--|:--|
-| PWD | 起動時のカレントディレクトリ |
-| OLDPWD | 未設定("") |
-| CDPATH | 未設定("") |
-| HISTCMD | `1` |
-| HISTFILE | `~/.mnsh_history` |
-| HISTFILESIZE | `HISTSIZEの値` |
-| HISTSIZE | `500` |
-| TMPDIR | `/tmp` |
-| PATH | `**char environ(をminishell用に格納したもの)のPATHを継承` |
-| PS1 | `minishell $ ` |
-| PS2 | `> ` |
-| MNSH_SUBSHELL | `0` |
+#### 動的にメモリ確保する変数を管理する構造体変数
+**説明**
+- 構造体変数の領域を確保したのち、状態管理用構造体の確保に用いた動的メモリのポインタを登録する。
 
 ### 2.キー入力のハンドリング
 - シグナルの返り値 : 128+signo
