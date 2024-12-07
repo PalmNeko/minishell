@@ -12,7 +12,7 @@ minishellを起動した際に行う処理。
   typedef struct minishell{
 	ms_shell_var_list *ms_shell_var;
 	ms_env_list *ms_env;
-	ms_malloc_list;
+	ms_malloc_list *ms_malloc_list;
   }t_minishell
   ```
 
@@ -26,9 +26,8 @@ minishellを起動した際に行う処理。
 	```
 	- メモリの動的確保を管理する構造体変数
 	```c
-	typedef struct s_ms_malloc(){
+	typedef struct s_ms_malloc{
 		void *ptr;
-		struct s_malloc *next;
 	} t_ms_malloc
 	```
 
@@ -52,7 +51,6 @@ PS2: セカンダリプロンプト(特殊文字考慮なし)
 - 環境変数
 - シェル変数
 - 動的にメモリ確保する変数を管理する構造体変数
- 
 #### ms_shell_var_list ms_initialize_shell_var(void);
 **説明**
 - 各変数について、下記処理を行ったあとシェル変数用の構造体変数に格納し、それを返す。
