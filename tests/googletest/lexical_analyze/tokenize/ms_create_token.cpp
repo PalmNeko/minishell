@@ -55,8 +55,7 @@ TEST(TokenTest, AllTokenTypes)
 							test_case.end_pos);
 
 		// 基本的な検証
-		ASSERT_NE(token,
-			nullptr) << "Token creation failed for " << test_case.description;
+		ASSERT_NE(token, nullptr) << "Failed to create token for " << test_case.description;
 
 		// 各フィールドの検証
 		EXPECT_EQ(token->type,
