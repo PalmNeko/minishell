@@ -52,7 +52,7 @@ flowchart TD
 %%mainflow
 A[[init_part]]
 B[wait_input
-message -> PS2]
+message -> PS1]
 C{"input"}
 %%D{ms_closing_check}
 E["add_history"]
