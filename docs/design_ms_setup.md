@@ -58,10 +58,12 @@ minishellの状態を表すための変数。説明は下記の通りである�
 | MNSH_SUBSHELL  | サブシェルモードかどうかを示す変数           | `0`                                              |
 
 #### 変数の属性
-ATTR_NONE : 属性を持たない。
-ATTR_SHELL_VAR : シェル変数である。
-ATTR_ENV : minishell起動時にもともと存在していた環境変数である。
-ATTR_EXPORT : minishell内で新たにエクスポートされた変数である。
+|属性名 |説明 |
+|:--|:--|
+|ATTR_NONE | 属性を持たない。|
+| ATTR_SHELL_VAR | シェル変数である。|
+| ATTR_ENV | minishell起動時にもともと存在していた環境変数である。|
+| ATTR_EXPORT | minishell内で新たにエクスポートされた変数である。|
 
 ## 処理
 
