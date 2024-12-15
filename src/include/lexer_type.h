@@ -22,9 +22,9 @@ typedef enum e_token_type
 typedef struct s_token
 {
 	t_token_type	type;
-	char			*token;
-	int end_pos;   // 入力文字列に対する、トークン外の文字の開始位置
-	int start_pos; // 入力文字列に対する、トークンの開始位置
+	const char		*token;
+	int				start_pos;
+	int				end_pos;
 }					t_token;
 
 #endif
