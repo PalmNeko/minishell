@@ -5,7 +5,6 @@
 extern "C"
 {
 #include "lexer.h"
-#include "lexer_type.h"
 #include "ms_test.h"
 
 };
@@ -29,18 +28,18 @@ TEST(TokenTest, AllTokenTypes)
 		{(t_token_type)TK_BLANK, " \t", 0, 1, "Blank token"},
 		{(t_token_type)TK_NEWLINE, "\n", 0, 0, "Newline token"},
 		{(t_token_type)TK_VARIABLE, "$PATH", 0, 4, "Variable token"},
-		{(t_token_type)TK_PIPE, "|", 0, 0, "Pipe token"},
-		{(t_token_type)TK_EQUALS, "=", 0, 0, "Equals token"},
-		{(t_token_type)TK_SINGLE_QUOTE, "'", 0, 0, "Single quote token"},
-		{(t_token_type)TK_DOUBLE_QUOTE, "\"", 0, 0, "Double quote token"},
-		{(t_token_type)TK_REDIRECTION, "<", 0, 0, "Redirection input token"},
-		{(t_token_type)TK_REDIRECTION, "<<", 0, 1, "Redirection heredoc token"},
-		{(t_token_type)TK_REDIRECTION, ">", 0, 0, "Redirection output token"},
-		{(t_token_type)TK_REDIRECTION, ">>", 0, 1, "Redirection append token"},
-		{(t_token_type)TK_LEFT_PARENTHESIS, "(", 0, 0, "Left parenthesis token"},
-		{(t_token_type)TK_RIGHT_PARENTHESIS, ")", 0, 0, "Right parenthesis token"},
-		{(t_token_type)TK_LIST, "&&", 0, 1, "List AND token"},
-		{(t_token_type)TK_LIST, "||", 0, 1, "List OR token"}
+		{(t_token_type)TK_PIPE, "|", 0, 1, "Pipe token"},
+		{(t_token_type)TK_EQUALS, "=", 0, 1, "Equals token"},
+		{(t_token_type)TK_SINGLE_QUOTE, "'", 0, 1, "Single quote token"},
+		{(t_token_type)TK_DOUBLE_QUOTE, "\"", 0, 1, "Double quote token"},
+		{(t_token_type)TK_REDIRECTION, "<", 0, 1, "Redirection input token"},
+		{(t_token_type)TK_REDIRECTION, "<<", 0, 2, "Redirection heredoc token"},
+		{(t_token_type)TK_REDIRECTION, ">", 0, 1, "Redirection output token"},
+		{(t_token_type)TK_REDIRECTION, ">>", 0, 2, "Redirection append token"},
+		{(t_token_type)TK_LEFT_PARENTHESIS, "(", 0, 1, "Left parenthesis token"},
+		{(t_token_type)TK_RIGHT_PARENTHESIS, ")", 0, 1, "Right parenthesis token"},
+		{(t_token_type)TK_LIST, "&&", 0, 2, "List AND token"},
+		{(t_token_type)TK_LIST, "||", 0, 2, "List OR token"}
 	};
 
 	// 各テストケースを実行
