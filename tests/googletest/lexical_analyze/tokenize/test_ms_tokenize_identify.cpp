@@ -8,7 +8,7 @@ extern "C"
 	#include "lexer.h"
 };
 
-TEST(Identify_TEST, Success_Case)
+TEST(Tokenize, Identify_Success)
 {	
 	const t_token expect_tokens[] = {
 		{TK_IDENTIFY, "_test", 0, 5},// "_test"
@@ -23,13 +23,13 @@ TEST(Identify_TEST, Success_Case)
 	};
 
 	// execute the test
-	ms_tokenize_test_runner(
+	test_runner_of_tokenize(
 		ms_tokenize_identify, 
 		test_cases, 
 		sizeof(test_cases) / sizeof(test_cases[0]));
 }
 
-TEST(Identify_TEST, Failed_Case)
+TEST(Tokenize, Identify_Failed)
 {
 	const t_token expect_tokens[] = {
 		{TK_DECLINED, "", 0, 0}, // "5test"
@@ -42,7 +42,7 @@ TEST(Identify_TEST, Failed_Case)
 	};
 
 	// execute the test
-	ms_tokenize_test_runner(
+	test_runner_of_tokenize(
 		ms_tokenize_identify, 
 		test_cases, 
 		sizeof(test_cases) / sizeof(test_cases[0]));

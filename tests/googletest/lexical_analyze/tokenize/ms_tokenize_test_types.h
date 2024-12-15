@@ -13,8 +13,9 @@ struct				Tokenize_TestCase
 	const char		*description;
 };
 
-void				ms_tokenize_test_runner(const std::function<t_token *(const char *,
-							int)> &ms_tokenize_func,
-						const Tokenize_TestCase *test_cases, size_t size);
-
+void test_runner_of_tokenize(
+	const std::function<t_token *(const char *, int) > &ms_tokenize_func, 
+	const Tokenize_TestCase *test_cases,
+	size_t size
+);
 #endif

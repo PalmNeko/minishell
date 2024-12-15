@@ -9,7 +9,7 @@ extern "C"
 };
 
 // ms_tokenize_someをラップしてテストを実行するランナー
-void	ms_tokenize_test_runner(
+void	test_runner_of_tokenize(
 	const std::function<t_token *(const char *, int) > &ms_tokenize_func, 
 	const Tokenize_TestCase *test_cases,
 	size_t size
