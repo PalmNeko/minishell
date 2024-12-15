@@ -9,7 +9,7 @@ extern "C"
 
 };
 
-TEST(TokenTest, AllTokenTypes)
+TEST(Lexical_Token, CreateToken)
 {
 	// テストケースの定義
 	struct				TestCase

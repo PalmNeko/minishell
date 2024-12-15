@@ -8,7 +8,7 @@ extern "C"
 	#include "lexer.h"
 };
 
-TEST(Tokenize, Identify_Success)
+TEST(Lexical_Tokenize, Identify_Success)
 {	
 	const t_token expect_tokens[] = {
 		{TK_IDENTIFY, "_test", 0, 5},// "_test"
@@ -29,7 +29,7 @@ TEST(Tokenize, Identify_Success)
 		sizeof(test_cases) / sizeof(test_cases[0]));
 }
 
-TEST(Tokenize, Identify_Failed)
+TEST(Lexical_Tokenize, Identify_Failed)
 {
 	const t_token expect_tokens[] = {
 		{TK_DECLINED, "", 0, 0}, // "5test"
