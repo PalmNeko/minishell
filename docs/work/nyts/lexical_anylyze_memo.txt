@@ -1,0 +1,4 @@
+12/17 現在　ms_tokenize のこり
+- word
+- variable
+- list
