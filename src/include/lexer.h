@@ -18,5 +18,6 @@ t_token	*ms_tokenize_single_quote(const char *input, int pos);
 t_token	*ms_tokenize_redirection(const char *input, int pos);
 t_token	*ms_tokenize_blank(const char *input, int pos);
 t_token	*ms_tokenize_pipe(const char *input, int pos);
+t_token	*ms_tokenize_list(const char *input, int pos);
 
 #endif
