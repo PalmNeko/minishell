@@ -13,7 +13,7 @@ TEST(Lexical_Tokenize, Identify_Success)
 	const t_token expect_tokens[] = {
 		{TK_IDENTIFY, "_test", 0, 5},// "_test"
 		{TK_IDENTIFY, "test", 1, 5}, // "&test"
-		{TK_IDENTIFY, "es", 1, 3}, // "3es3#t"
+		{TK_IDENTIFY, "es3", 1, 4}, // "3es3#t"
 	};
 
 	const Tokenize_TestCase test_cases[] = {
