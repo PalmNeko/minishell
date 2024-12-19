@@ -17,14 +17,29 @@ typedef enum e_token_type
 	TK_SINGLE_QUOTE,      // '
 	TK_REDIRECTION,       // < << > >>
 	TK_VARIABLE,          // 変数
-}					t_token_type;
+}						t_token_type;
+
+typedef enum e_token_type_priority
+{
+	LOW = 0,
+	MEDIUM = 1,
+	HIGH = 2,
+}						t_token_priority;
+
+typedef struct s_token_info
+{
+	t_token_type type;         // トークンの種類
+	t_token_priority priority; // 優先度
+}						t_token_info;
 
 typedef struct s_token
 {
-	t_token_type	type;
-	const char		*token;
-	int				start_pos;
-	int				end_pos;
-}					t_token;
+	t_token_type		type;
+	const char			*token;
+	int					start_pos;
+	int					end_pos;
+}						t_token;
+
+typedef struct s_list	t_token_list;
 
 #endif
