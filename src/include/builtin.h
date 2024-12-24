@@ -25,5 +25,7 @@ int	ms_builtin_env(
 		const char *path, char *const argv[], char *const envp[]);
 int	ms_builtin_exit(
 		const char *path, char *const argv[], char *const envp[]);
+int	ms_builtin_cd(
+		const char *path, char *const argv[], char *const envp[]);
 
 #endif

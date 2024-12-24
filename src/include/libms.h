@@ -35,6 +35,13 @@ void	ms_destroy_ntp2(void **ntp, void (*fr)(void *));
 void	*ms_lst_to_ntp(t_list **lst, void *(*cp)(void *), void (*fr)(void *));
 size_t	ms_ntpsize(void **ntp);
 int		ms_get_interactive_stat(void);
+char	*ms_strdup_sep(const char *str, char sep);
+char	*ms_path_join(const char *base, const char *path);
+char	**ms_separate(const char *str, char sep);
+bool	ms_is_dir(const char *path);
+char	*ms_to_abs_path(const char *path);
+char	*ms_normalize_path(const char *path);
+char	*ms_get_full_path(const char *basedir, const char *path);
 
 // environment variable
 char	*ms_getenv(const char *name);
@@ -44,6 +51,8 @@ int		ms_import_env(char *const envp[]);
 char	**ms_export_env(void);
 void	ms_clear_environ(void *unused);
 
+// environment variable
+char	**ms_get_pwd(void);
 // errors
 void	ms_perror_shell(const char *msg);
 void	ms_perror_cmd(const char *name, const char *msg);
