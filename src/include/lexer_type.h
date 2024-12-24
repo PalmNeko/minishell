@@ -29,4 +29,6 @@ typedef struct s_token
 
 typedef struct s_list	t_token_list;
 
+typedef t_token			*(*t_tokenize_func)(const char *, int);
+
 #endif

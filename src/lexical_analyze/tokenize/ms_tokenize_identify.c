@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_tokenize_identify.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/25 07:38:18 by rnakatan          #+#    #+#             */
+/*   Updated: 2024/12/25 07:39:20 by rnakatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
@@ -6,18 +17,21 @@
 
 t_token	*ms_tokenize_identify(const char *input, int pos)
 {
-	int	i;
+	int		i;
+	t_token	*token;
 
+	input += pos;
 	i = 0;
-	if (input[pos] && ft_strchr(LETTER_CHARS, input[pos]))
+	if (ft_includes(input[i], LETTER_CHARS))
 	{
 		i++;
-		while (input[pos + i] && (ft_strchr(LETTER_CHARS, input[pos + i])
-				|| ft_strchr(DIGIT_CHARS, input[pos + i])))
+		while (ft_includes(input[i], IDENTIFY_CHARS))
 			i++;
-		return (ms_create_token(TK_IDENTIFY, input + pos, pos, pos + i));
+		token = ms_create_token(TK_IDENTIFY, input, pos, pos + i);
 	}
-	return (ms_create_token(TK_DECLINED, "", pos, pos));
+	else
+		token = ms_create_token(TK_DECLINED, "", pos, pos);
+	return (token);
 }
 
 // #include <stdio.h>

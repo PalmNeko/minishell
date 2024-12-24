@@ -84,7 +84,15 @@ TEST(LexicalAnalyseTest, SingleInput) {
 			{
 				{TK_LIST, "&&", 0, 2}
 			},
-			"Case 8 : Single list"
+			"Case 8 : Single list(&&)"
+		},
+		{
+			// ||
+			"||",
+			{
+				{TK_LIST, "||", 0, 2}
+			},
+			"Case 9 : Single list(||)"
 		},
 		{
 			// |
@@ -92,7 +100,7 @@ TEST(LexicalAnalyseTest, SingleInput) {
 			{
 				{TK_PIPE, "|", 0, 1}
 			},
-			"Case 9 : Single pipe"
+			"Case 10 : Single pipe"
 		},
 		{
 			// "
@@ -100,7 +108,7 @@ TEST(LexicalAnalyseTest, SingleInput) {
 			{
 				{TK_DOUBLE_QUOTE, "\"", 0, 1}
 			},
-			"Case 10 : Single double quote"
+			"Case 11 : Single double quote"
 		},
 		{
 			// '
@@ -108,7 +116,23 @@ TEST(LexicalAnalyseTest, SingleInput) {
 			{
 				{TK_SINGLE_QUOTE, "'", 0, 1}
 			},
-			"Case 11 : Single single quote"
+			"Case 12 : Single single quote"
+		},
+		{
+			// <
+			"<",
+			{
+				{TK_REDIRECTION, "<", 0, 1}
+			},
+			"Case 13 : Single redirection(<)"
+		},
+		{
+			// <<
+			"<<",
+			{
+				{TK_REDIRECTION, "<<", 0, 2}
+			},
+			"Case 14 : Single redirection(<<)"
 		},
 		{
 			// >
@@ -116,17 +140,26 @@ TEST(LexicalAnalyseTest, SingleInput) {
 			{
 				{TK_REDIRECTION, ">", 0, 1}
 			},
-			"Case 12 : Single redirection(>)"
+			"Case 15 : Single redirection(>)"
 		},
 		{
-			// $test
-			"$test",
+			// >>
+			">>",
 			{
-				{TK_VARIABLE, "$test", 0, 5}
+				{TK_REDIRECTION, ">>", 0, 2}
 			},
-			"Case 13 : Single variable"
+			"Case 16 : Single redirection(>>)"
 		},
+		{
+			// $PATH
+			"$PATH",
+			{
+				{TK_VARIABLE, "$PATH", 0, 5}
+			},
+			"Case 17 : Single variable"
+		}
 	};
+
 
 	test_runner_of_lexical_analize(
 		test_case_list,
@@ -301,7 +334,7 @@ TEST(LexicalAnalyseTest, MultipleInput_Simple) {
 TEST(LexicalAnalyseTest, MultipleInput_Complex) {
 	Lexical_TestCase test_case_list[] = {
 		{
-			"echo \"Hello World\" > file.txt",
+			"echo \"Hello World\" >  file.txt",
 			{
 				{TK_IDENTIFY, "echo", 0, 4},
 				{TK_BLANK, " ", 4, 5},
@@ -312,8 +345,8 @@ TEST(LexicalAnalyseTest, MultipleInput_Complex) {
 				{TK_DOUBLE_QUOTE, "\"", 17, 18},
 				{TK_BLANK, " ", 18, 19},
 				{TK_REDIRECTION, ">", 19, 20},
-				{TK_BLANK, " ", 20, 21},
-				{TK_WORD, "file.txt", 21, 29}
+				{TK_BLANK, "  ", 20, 22},
+				{TK_WORD, "file.txt", 22, 30}
 			},
 			"Case 1 : echo \"Hello World\" > file.txt"
 		},
