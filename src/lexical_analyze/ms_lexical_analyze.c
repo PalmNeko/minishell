@@ -60,9 +60,10 @@ static t_token	*get_token(const char *input, int pos)
 	t_token *(*ms_tokenize_func_list[13])(const char *,
 			int) = {ms_tokenize_word, ms_tokenize_identify,
 		ms_tokenize_right_parenthesis, ms_tokenize_left_parenthesis,
-		ms_tokenize_newline, ms_tokenize_equal, ms_tokenize_double_quote,
-		ms_tokenize_single_quote, ms_tokenize_redirection, ms_tokenize_blank,
-		ms_tokenize_pipe, ms_tokenize_list, ms_tokenize_variable};
+		ms_tokenize_newline, ms_tokenize_equal, ms_tokenize_list,
+		ms_tokenize_double_quote, ms_tokenize_single_quote,
+		ms_tokenize_redirection, ms_tokenize_blank, ms_tokenize_pipe,
+		ms_tokenize_variable};
 	i = 0;
 	token = NULL;
 	temp_token = NULL;

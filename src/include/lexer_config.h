@@ -7,7 +7,8 @@
 # define CATEGORY 1
 # define LETTER_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
 # define DIGIT_CHARS "0123456789"
-# define META_CHARS "<> \n\t=|()\"\'"
+# define META_CHARS "<> \n\t=|&()"
+# define QUOTE_CHARS "\"\'"
 # define REDIRECTION_CHARS "<>"
 # define BLANK_CHARS " \t"
 # define LIST_CHARS "&|"

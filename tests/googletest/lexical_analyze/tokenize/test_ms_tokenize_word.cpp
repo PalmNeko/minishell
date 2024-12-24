@@ -13,7 +13,6 @@ TEST(Lexical_Tokenize, Word_Success)
 		{TK_WORD, "hello", 0, 5},// "hello"
 		{TK_WORD, "%^" , 0, 2}, // "%^"
 		{TK_WORD, "$" , 0, 1}, // "$"
-		{TK_WORD, "&hhi" , 0, 4}, // "&hhi"
 		{TK_WORD, "hello", 0, 5}, // "hello world"
 		{TK_WORD, "world", 6, 11}, // "hello world"
 
@@ -23,9 +22,9 @@ TEST(Lexical_Tokenize, Word_Success)
 		{"hello", 0, &expect_tokens[0], "Case 1 : hello"},
 		{"%^", 0, &expect_tokens[1], "Case 2 : %^"},
 		{"$", 0, &expect_tokens[2], "Case 3 : $"},
-		{"&hhi", 0, &expect_tokens[3], "Case 4 : &hhi"},
-		{"hello world", 0, &expect_tokens[4], "Case 5 : hello world (hello)"},
-		{"hello world", 6, &expect_tokens[5], "Case 6 : hello world (world)"},
+		{"hello world", 0, &expect_tokens[3], "Case 4 : hello world (hello)"},
+		{"hello world", 6, &expect_tokens[4], "Case 5 : hello world (world)"},
+
 	};
 
 	// execute the test
