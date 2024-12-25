@@ -36,6 +36,7 @@ TEST(ms_builtin_env, equal_env_command)
 
 	term.boot();
 	status = ms_builtin_env(NULL, (char *const *)args, envp);
+	fflush(stdout);
 	term.exit();
 	ms_destroy_ntp(envp);
 	EXPECT_EQ(status, expect_status);
@@ -65,6 +66,7 @@ TEST(ms_builtin_env, error_on_invalid_opt)
 
 	term.boot();
 	status = ms_builtin_env(NULL, (char *const *)args, envp);
+	fflush(stdout);
 	term.exit();
 	ms_destroy_ntp(envp);
 	EXPECT_EQ(status, expect_status);
@@ -99,6 +101,7 @@ TEST(ms_builtin_env, ignore_argument)
 
 	term.boot();
 	status = ms_builtin_env(NULL, (char *const *)args, envp);
+	fflush(stdout);
 	term.exit();
 	ms_destroy_ntp(envp);
 	EXPECT_EQ(status, expect_status);
