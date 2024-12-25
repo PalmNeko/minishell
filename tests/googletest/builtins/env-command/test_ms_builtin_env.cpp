@@ -27,6 +27,7 @@ TEST(ms_builtin_env, equal_env_command)
 	envp_itr = envp;
 	while (*envp_itr != NULL)
 		printf("%s\n", *(envp_itr++));
+	fflush(stdout);
 	envTerm.exit();
 
 	expect_status = 0;
@@ -89,6 +90,7 @@ TEST(ms_builtin_env, ignore_argument)
 	envp_itr = envp;
 	while (*envp_itr != NULL)
 		printf("%s\n", *(envp_itr++));
+	fflush(stdout);
 	envTerm.exit();
 
 	expect_status = 0;
