@@ -15,6 +15,14 @@
 
 # include <stdbool.h>
 
+typedef int	(*builtin_func_t)(
+	const char *path, char *const argv[], char *const envp[]);
+typedef struct s_cmd_list{
+	char *cmd;
+	int (*func)();
+} t_cmd_list;
+
+int	ms_builtin(const char *path, char *const argv[], char *const envp[]);
 int	ms_builtin_echo(
 		const char *path, char *const argv[], char *const envp[]);
 int	ms_builtin_pwd(
