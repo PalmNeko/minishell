@@ -18,7 +18,7 @@
 
 char	*ms_get_cd_path(const char *arg_path)
 {
-	char *target_pathname;
+	char	*target_pathname;
 
 	target_pathname = NULL;
 	if (arg_path == NULL)

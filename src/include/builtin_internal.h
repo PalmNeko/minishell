@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:53:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/23 15:12:16 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:59:33 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char	*ms_get_cdwd(void);
 void	ms_set_cdwd(const char *cdwd);
 
 // cd
-int ms_error_handling_cd(
-		const char *path, char *const argv[], char *const envp[]);
+int		ms_error_handling_cd(
+			const char *path, char *const argv[], char *const envp[]);
 char	*ms_get_opt_lp(char *const argv[]);
 bool	ms_is_unresolve_symlink(char *const argv[]);
 bool	ms_is_resolve_symlink(char *const argv[]);
 void	ms_perror_cd(const char *type);
-void	ms_perror_cd_cwd();
+void	ms_perror_cd_cwd(void);
 
 #endif

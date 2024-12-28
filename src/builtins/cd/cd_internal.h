@@ -23,7 +23,7 @@ bool	ms_is_cwd_check(char *const argv[]);
 bool	ms_is_resolve_symlink(char *const argv[]);
 bool	ms_is_unresolve_symlink(char *const argv[]);
 bool	ms_is_use_cdpath(const char *path);
-void	ms_perror_cd_cwd();
+void	ms_perror_cd_cwd(void);
 void	ms_print_usage_env(void);
 char	*ms_resolve_with_cdpath(const char *path);
 char	*ms_search_with_cdpath(const char *path);

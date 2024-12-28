@@ -16,7 +16,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-char *ms_resolve_with_cdpath(const char *path)
+char	*ms_resolve_with_cdpath(const char *path)
 {
 	char	*resolved_path;
 

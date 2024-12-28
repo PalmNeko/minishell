@@ -12,7 +12,7 @@
 
 #include "builtin_internal.h"
 
-void	ms_perror_cd_cwd()
+void	ms_perror_cd_cwd(void)
 {
 	ms_perror_cd("error retrieving current directory: "
 		"getcwd: cannot access parent directories");

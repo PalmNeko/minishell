@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:10:41 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/02 16:42:28 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:01:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static int	ms_error_handling_exit(
 				const char *path, char *const argv[], char *const envp[]);
 static int	ms_calc_exit_status(
-		const char *path, char *const argv[], char *const envp[]);
+				const char *path, char *const argv[], char *const envp[]);
 static int	ms_cleanup_and_exit_dummy(int status);
 
 int	ms_builtin_exit(

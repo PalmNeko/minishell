@@ -16,7 +16,7 @@
 
 bool	ms_is_resolve_symlink(char *const argv[])
 {
-	char 	*opt;
+	char	*opt;
 
 	opt = ms_get_opt_lp(argv);
 	if (*opt == 'P')

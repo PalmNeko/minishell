@@ -13,10 +13,11 @@
 #include "libft.h"
 #include "libms.h"
 
-bool ms_is_use_cdpath(const char *path)
+bool	ms_is_use_cdpath(const char *path)
 {
-	char	*text = (char *)path;
+	char	*text;
 
+	text = (char *)path;
 	if (text == NULL)
 		return (false);
 	if (ft_strmatch("/.*", text))

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int ms_check_opt(char *const argv[], const char *valid_opt)
+int	ms_check_opt(char *const argv[], const char *valid_opt)
 {
 	(void)argv;
 	(void)valid_opt;

@@ -12,7 +12,7 @@
 
 #include "libms.h"
 
-int ms_check_arg_num(char *const argv[], int min, int max)
+int	ms_check_arg_num(char *const argv[], int min, int max)
 {
 	size_t	len;
 

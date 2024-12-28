@@ -45,7 +45,7 @@ char	**ms_separate(const char *str, char sep)
 			return (ms_destroy_ntp(separated), NULL);
 		itr = ft_strchr(itr, sep);
 		if (itr == NULL)
-			break;
+			break ;
 	}
 	return (separated);
 }

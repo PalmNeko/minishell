@@ -43,7 +43,7 @@ char	*ms_normalize_path(const char *path)
 	return (ms_normalize_pathlst_join(lst));
 }
 
-int ms_normalize_path_join(t_list **lst, char *path)
+int	ms_normalize_path_join(t_list **lst, char *path)
 {
 	t_list	*tmp;
 

@@ -27,13 +27,13 @@ static char	*ms_create_newpwd(
 				const char *curdir,
 				const char *chdir_pathname);
 static char	*ms_get_chdir_path(char *const argv[]);
-static int		ms_setnewpwd(char *const argv[], const char *chdir_pathname);
+static int	ms_setnewpwd(char *const argv[], const char *chdir_pathname);
 
 int	ms_builtin_cd(
 		const char *path, char *const argv[], char *const envp[])
 {
-	int status;
-	char *chdir_pathname;
+	int		status;
+	char	*chdir_pathname;
 
 	status = ms_error_handling_cd(path, argv, envp);
 	if (status != 0)

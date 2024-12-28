@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-int ms_error_handling_cd(
+int	ms_error_handling_cd(
 		const char *path, char *const argv[], char *const envp[])
 {
 	(void)path;

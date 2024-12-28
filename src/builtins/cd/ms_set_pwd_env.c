@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int ms_set_pwd_env(const char *new_path)
+int	ms_set_pwd_env(const char *new_path)
 {
 	char	*old_cdwd;
 	int		result;
