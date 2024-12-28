@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:12:23 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/29 19:36:00 by tookuyam         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:52:20 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "builtin_internal.h"
 #include <stddef.h>
 
-char	*ms_strunpbrk(const char *str, const char *accept);
+static char	*ms_strunpbrk(const char *str, const char *accept);
 
 char	*ms_get_first_invalid_opt(char *const argv[], const char *valid_opts)
 {

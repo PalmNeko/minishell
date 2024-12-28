@@ -15,10 +15,10 @@
 #include "libft.h"
 #include <stdio.h>
 
-char	**ms_export_environs(void);
-void	ms_sort_environs(char *const envp[]);
-void	ms_print_export_environs(char *const envp[]);
-int		ms_strptrcmp(const char **s1, const char **s2);
+static char	**ms_export_environs(void);
+static void	ms_sort_environs(char *const envp[]);
+static void	ms_print_export_environs(char *const envp[]);
+static int	ms_strptrcmp(const char **s1, const char **s2);
 
 int	ms_export_print_command(void)
 {
@@ -33,7 +33,7 @@ int	ms_export_print_command(void)
 	return (0);
 }
 
-char	**ms_export_environs(void)
+static char	**ms_export_environs(void)
 {
 	char	**envptr;
 
@@ -41,13 +41,13 @@ char	**ms_export_environs(void)
 	return (envptr);
 }
 
-void	ms_sort_environs(char *const envp[])
+static void	ms_sort_environs(char *const envp[])
 {
 	ft_selection_sort((void *)envp, ms_ntpsize((void **)envp), sizeof(char *),
 		(int (*)(const void *, const void *))ms_strptrcmp);
 }
 
-void	ms_print_export_environs(char *const envp[])
+static void	ms_print_export_environs(char *const envp[])
 {
 	char		**envitr;
 	t_ms_var	*ms_var;
@@ -64,7 +64,7 @@ void	ms_print_export_environs(char *const envp[])
 	}
 }
 
-int		ms_strptrcmp(const char **s1, const char **s2)
+static int	ms_strptrcmp(const char **s1, const char **s2)
 {
 	return (ft_strcmp(*s1, *s2));
 }

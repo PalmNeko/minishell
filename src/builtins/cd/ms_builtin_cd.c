@@ -22,9 +22,12 @@
 
 #include <stdio.h>
 
-char	*ms_create_newpwd(char *const argv[], const char *curdir, const char *chdir_pathname);
-char	*ms_get_chdir_path(char *const argv[]);
-int		ms_setnewpwd(char *const argv[], const char *chdir_pathname);
+static char	*ms_create_newpwd(
+				char *const argv[],
+				const char *curdir,
+				const char *chdir_pathname);
+static char	*ms_get_chdir_path(char *const argv[]);
+static int		ms_setnewpwd(char *const argv[], const char *chdir_pathname);
 
 int	ms_builtin_cd(
 		const char *path, char *const argv[], char *const envp[])
@@ -48,7 +51,7 @@ int	ms_builtin_cd(
 	return (status);
 }
 
-char	*ms_get_chdir_path(char *const argv[])
+static char	*ms_get_chdir_path(char *const argv[])
 {
 	char	*chdir_pathname;
 	char	*target_pathname;
@@ -65,7 +68,7 @@ char	*ms_get_chdir_path(char *const argv[])
 	return (chdir_pathname);
 }
 
-int	ms_setnewpwd(char *const argv[], const char *chdir_pathname)
+static int	ms_setnewpwd(char *const argv[], const char *chdir_pathname)
 {
 	char	*new_pwd;
 	char	*curdir;
@@ -90,7 +93,10 @@ int	ms_setnewpwd(char *const argv[], const char *chdir_pathname)
 	return (0);
 }
 
-char	*ms_create_newpwd(char *const argv[], const char *curdir, const char *chdir_pathname)
+static char	*ms_create_newpwd(
+				char *const argv[],
+				const char *curdir,
+				const char *chdir_pathname)
 {
 	char	*old_cdwd;
 	char	*abs_path;

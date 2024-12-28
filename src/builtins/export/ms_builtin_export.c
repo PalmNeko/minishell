@@ -20,11 +20,11 @@
  * TODO: テストの作成
  */
 
-int ms_error_handling_export(
-		const char *path, char *const argv[], char *const envp[]);
+static int	ms_error_handling_export(
+				const char *path, char *const argv[], char *const envp[]);
 
 int	ms_builtin_export(
-		const char *path, char *const argv[], char *const envp[])
+				const char *path, char *const argv[], char *const envp[])
 {
 	int		status;
 
@@ -35,8 +35,8 @@ int	ms_builtin_export(
 	return (0);
 }
 
-int ms_error_handling_export(
-		const char *path, char *const argv[], char *const envp[])
+static int	ms_error_handling_export(
+				const char *path, char *const argv[], char *const envp[])
 {
 	(void)path;
 	(void)argv;
