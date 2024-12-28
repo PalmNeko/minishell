@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_ntpsize.c                                       :+:      :+:    :+:   */
+/*   ms_lexical_analyze_destory_token.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 15:19:32 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:07:52 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/12/25 07:37:25 by rnakatan          #+#    #+#             */
+/*   Updated: 2024/12/25 07:39:41 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-#include <stdint.h>
+#include "lexer.h"
+#include <stdlib.h>
 
-size_t	ms_ntpsize(void **ntp)
+void	ms_lexical_analyze_destroy_token(t_token *token)
 {
-	size_t	size;
-
-	size = 0;
-	if (ntp == NULL)
-		return (0);
-	while (*ntp != NULL && size < SIZE_MAX)
+	if (token)
 	{
-		size++;
-		ntp++;
+		free((void *)token->token);
+		free(token);
 	}
-	return (size);
 }

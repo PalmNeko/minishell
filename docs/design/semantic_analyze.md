@@ -24,7 +24,6 @@ typedef enum e_lsa_list_type {
 	LSA_LIST_ALWAYS, // ;
 	LSA_LIST_AND, // &&
 	LSA_LIST_OR, // ||
-	LSA_LIST_COMPOUND_LIST // (list)
 }	t_lsa_list_type;
 
 typedef enum e_lsa_redirection_type {
@@ -65,8 +64,10 @@ typedef struct s_lsa_pipeline {
 typedef struct s_lsa_list t_lsa_list;
 typedef struct s_lsa_list {
 	t_lsa_list_type type;
-	t_lsa_pipeline *pipeline;
-	t_lsa_list *compound_list;
+	// pipelineとcompound_listのどちらかにしか入らない。
+	// 片方がNULLならもう片方はnon-NULL。
+	t_lsa_pipeline *pipeline;	// パイプライン
+	t_lsa_list **compound_list; // NULL終端の配列
 }	t_lsa_list;
 
 typedef struct s_lsa {
