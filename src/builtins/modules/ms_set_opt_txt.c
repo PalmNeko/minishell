@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_set_opt_txt.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/30 16:25:01 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/30 17:20:04 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libms.h"
 
-void	ft_bzero(void *s, size_t n)
+char	*ms_set_opt_txt(char buf[3], char invalid_opt)
 {
-	unsigned char	*sp;
-	size_t			set_count;
-
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
+	buf[0] = '-';
+	buf[1] = invalid_opt;
+	buf[2] = '\0';
+	return (buf);
 }

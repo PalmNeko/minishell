@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_int_import_on_initial.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/28 15:05:30 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/28 15:15:23 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libms.h"
+#include "libms_internal.h"
 
-void	ft_bzero(void *s, size_t n)
+int	ms_int_import_on_initial(void)
 {
-	unsigned char	*sp;
-	size_t			set_count;
+	t_list		**env_list;
+	extern char	**environ;
 
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
+	env_list = ms_int_get_environ_variable();
+	if (*env_list != NULL)
+		return (0);
+	return (ms_import_env(environ));
 }

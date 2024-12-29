@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_perror_shell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/29 10:32:36 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/12/02 16:47:24 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "ft_printf.h"
+#include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ms_perror_shell(const char *msg)
 {
-	unsigned char	*sp;
-	size_t			set_count;
-
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
+	ft_putstr_fd("minishell: ", 2);
+	ft_putendl_fd((char *)msg, 2);
 	return ;
 }

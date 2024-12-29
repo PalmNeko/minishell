@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_strpbrk.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/29 11:57:25 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/29 16:42:59 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdbool.h>
 #include <stddef.h>
+#include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+/**
+ * see strpbrk(3)
+ */
+char	*ms_strpbrk(const char *s, const char *accept)
 {
-	unsigned char	*sp;
-	size_t			set_count;
+	bool	accept_set[256];
 
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
+	ft_memset(accept_set, false, sizeof(accept_set));
+	while (*accept != '\0')
+	{
+		accept_set[(int)*accept] = true;
+		accept++;
+	}
+	while (*s != '\0')
+	{
+		if (accept_set[(int)*s] == true)
+			return ((char *)s);
+		s++;
+	}
+	return (NULL);
 }

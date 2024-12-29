@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_int_destroy_ms_var.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/27 16:00:01 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/28 15:01:04 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libms_internal_type.h"
+#include <stdlib.h>
 
-void	ft_bzero(void *s, size_t n)
+void	ms_int_destroy_ms_var(t_ms_var *ms_var)
 {
-	unsigned char	*sp;
-	size_t			set_count;
-
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
+	if (ms_var == NULL)
+		return ;
+	free(ms_var->name);
+	free(ms_var->value);
+	free(ms_var);
 	return ;
 }

@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_ntpsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/12/01 15:19:32 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/12/28 19:07:52 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdint.h>
 
-void	ft_bzero(void *s, size_t n)
+size_t	ms_ntpsize(void **ntp)
 {
-	unsigned char	*sp;
-	size_t			set_count;
+	size_t	size;
 
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
+	size = 0;
+	if (ntp == NULL)
+		return (0);
+	while (*ntp != NULL && size < SIZE_MAX)
+	{
+		size++;
+		ntp++;
+	}
+	return (size);
 }

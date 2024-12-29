@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_set_character_map.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/29 12:22:41 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/29 16:35:59 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <stdbool.h>
 
-void	ft_bzero(void *s, size_t n)
+void	ms_set_character_map(const char *str, bool map[256])
 {
-	unsigned char	*sp;
-	size_t			set_count;
-
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
+	while (*str != '\0')
+	{
+		map[(int)*str] = true;
+		str++;
+	}
 }

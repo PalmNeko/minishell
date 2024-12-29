@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_get_argument_head.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/29 19:13:44 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/12/28 19:00:47 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtin_internal.h"
 #include <stddef.h>
 
-void	ft_bzero(void *s, size_t n)
+char	**ms_get_argument_head(char *const argv[], const char *valid_opts)
 {
-	unsigned char	*sp;
-	size_t			set_count;
-
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
+	if (argv[0] == NULL)
+		return (NULL);
+	argv++;
+	while (*argv != NULL)
+	{
+		if (ms_validate_opts(*argv, valid_opts) == false)
+			return ((char **)argv);
+		argv++;
+	}
+	return ((char **)argv);
 }

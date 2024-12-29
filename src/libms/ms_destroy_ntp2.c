@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ms_destroy_ntp2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/29 17:16:17 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/12/28 19:06:35 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdlib.h>
 
-void	ft_bzero(void *s, size_t n)
+/**
+ * release any ntp
+ * @param ntp null terminated array
+ * @param fr release function
+ */
+void	ms_destroy_ntp2(void **ntp, void (*fr)(void *))
 {
-	unsigned char	*sp;
-	size_t			set_count;
+	size_t	index;
 
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
+	if (ntp == NULL)
+		return ;
+	index = 0;
+	while (ntp[index] != NULL)
+	{
+		fr(ntp[index]);
+		index++;
+	}
+	free(ntp);
 }

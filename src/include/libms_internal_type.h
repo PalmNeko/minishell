@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   libms_internal_type.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:05:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/11/27 12:44:16 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/11/27 12:44:17 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef LIBMS_INTERNAL_TYPE_H
+# define LIBMS_INTERNAL_TYPE_H
 
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*sp;
-	size_t			set_count;
+typedef struct ms_var {
+	char	*name;
+	char	*value;
+}	t_ms_var;
 
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
-}
+#endif
