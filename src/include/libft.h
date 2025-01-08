@@ -3,72 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:49:45 by tookuyam          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/15 08:50:36 by tookuyam         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/28 19:04:42 by tookuyam         ###   ########.fr       */
->>>>>>> origin/main
+/*   Updated: 2025/01/08 12:12:34 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-<<<<<<< HEAD
-=======
 # include "libft_type.h"
->>>>>>> origin/main
 # include <stddef.h>
 # include <stdbool.h>
 # include <unistd.h>
 # include <stdint.h>
 
-<<<<<<< HEAD
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-	struct s_list	*prev;
-}	t_list;
-
-typedef struct s_free_args
-{
-	void	(*free_func)();
-	void	*arg;
-}	t_free_args;
-
-typedef struct s_iter
-{
-	void	*current;
-	void	*end;
-	void	*start;
-	void	*(*next)(struct s_iter *itr);
-	bool	(*has_next)(struct s_iter * itr);
-	size_t	index;
-}	t_iter;
-
-/**
- * @param key search keywoad pointer
- * @param base search array (must sorted)
- * @param nmemb base array count
- * @param size one element size of "base" param
- * @param compar compare function.
- * must return left < right then negative, left > right then positive or
- * left == right then 0(zero).
-*/
-typedef struct s_bsearch_arg {
-	const void	*key;
-	const void	*base;
-	size_t		nmemb;
-	size_t		size;
-	int			(*compar)(const void *, const void *);
-}	t_bsearch_arg;
-
-=======
->>>>>>> origin/main
 bool		ft_includes(char c, char *sets);
 bool		ft_replace_last_newline(char *str);
 bool		ft_strmatch(char *pattern, char *text);
@@ -112,11 +62,7 @@ int			ft_lstsize(t_list *lst);
 int			ft_max(int a, int b);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 int			ft_min(int a, int b);
-<<<<<<< HEAD
-int			ft_mkostemp(char *template, int flags);
-=======
 int			ft_mkostemp(char *temp, int flags);
->>>>>>> origin/main
 int			ft_nop(void);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -157,13 +103,8 @@ void		*ft_realloc(void *ptr, size_t old_size, size_t size);
 void		ft_bzero(void *s, size_t n);
 void		ft_clear_errinfo(void);
 void		ft_free_iter(t_free_args *free_args, size_t size);
-<<<<<<< HEAD
-void		ft_lstadd_back(t_list **lst, t_list *new);
-void		ft_lstadd_front(t_list **lst, t_list *new);
-=======
 void		ft_lstadd_back(t_list **lst, t_list *new_lst);
 void		ft_lstadd_front(t_list **lst, t_list *new_lst);
->>>>>>> origin/main
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstdel_content(
 				t_list **root, void *content, void (*del)(void *));

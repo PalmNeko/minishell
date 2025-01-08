@@ -10,14 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-<<<<<<< HEAD:src/builtins/echo/ms_has_opt.c
-#include "ms_int_echo.h"
-#include "libft.h"
-=======
 #include "libft.h"
 #include "libms.h"
 #include "builtin_internal.h"
->>>>>>> origin/main:src/builtins/modules/ms_has_opt.c
 #include <stdbool.h>
 #include <stddef.h>
 

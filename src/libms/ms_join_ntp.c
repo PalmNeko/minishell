@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-<<<<<<< HEAD:src/builtins/echo/ms_join_ntp.c
-#include "ms_int_echo.h"
-=======
->>>>>>> origin/main:src/libms/ms_join_ntp.c
 #include "libft.h"
 #include <stddef.h>
 
@@ -41,11 +37,7 @@ char	*ms_join_ntp(const char *ntp[], const char *sep)
 	while (ntp[index] != NULL)
 	{
 		if (index != 0)
-<<<<<<< HEAD:src/builtins/echo/ms_join_ntp.c
-			ft_strlcat(joined, pad, total_len + 1);
-=======
 			ft_strlcat(joined, sep, total_len + 1);
->>>>>>> origin/main:src/libms/ms_join_ntp.c
 		ft_strlcat(joined, ntp[index], total_len + 1);
 		index++;
 	}

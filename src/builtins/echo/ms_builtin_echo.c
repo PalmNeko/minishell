@@ -10,13 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-<<<<<<< HEAD
-#include "ms_int_echo.h"
-=======
 #include "builtin.h"
 #include "builtin_internal.h"
 #include "libms.h"
->>>>>>> origin/main
 #include "libft.h"
 #include <limits.h>
 #include <stdbool.h>
