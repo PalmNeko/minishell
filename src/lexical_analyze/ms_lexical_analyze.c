@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lexical_analyze.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
 /*   Updated: 2024/12/25 07:44:41 by rnakatan         ###   ########.fr       */
+=======
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
+/*   Updated: 2024/12/28 18:18:22 by tookuyam         ###   ########.fr       */
+>>>>>>> origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +21,20 @@
 #include "libft.h"
 #include <stdlib.h>
 
+<<<<<<< HEAD
 static const t_tokenize_func	g_ms_tokenize_func_list[13] = {ms_tokenize_word,
+=======
+static const t_tokenize_func	g_ms_tokenize_func_list[14] = {ms_tokenize_word,
+>>>>>>> origin/main
 	ms_tokenize_identify, ms_tokenize_right_parenthesis,
 	ms_tokenize_left_parenthesis, ms_tokenize_newline, ms_tokenize_equal,
 	ms_tokenize_double_quote, ms_tokenize_single_quote,
 	ms_tokenize_redirection, ms_tokenize_blank, ms_tokenize_pipe,
+<<<<<<< HEAD
 	ms_tokenize_list, ms_tokenize_variable};
+=======
+	ms_tokenize_list, ms_tokenize_variable, NULL};
+>>>>>>> origin/main
 static t_token					**convert_to_array(t_token_list *lst);
 static t_token					*get_token(const char *input, int pos);
 static int						compare_priority(t_token *temp_token,

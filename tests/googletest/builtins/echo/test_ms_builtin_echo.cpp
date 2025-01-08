@@ -4,6 +4,7 @@
 
 extern "C" {
     #include "builtin.h"
+	#include "libms.h"
 	#include "ms_test.h"
 	#include <unistd.h>
 	#include <fcntl.h>
@@ -11,8 +12,6 @@ extern "C" {
 };
 
 static std::string	ms_get_output(const char *args[]);
-static char	**ms_dup_ntp(const char *const ntp[]);
-static void	ms_destroy_ntp(char *ntp[]);
 
 /** 引数がないときは改行のみを出力する */
 TEST(builtin_echo, single_newline_when_no_arg)
@@ -84,6 +83,55 @@ TEST(builtin_echo, must_print_hyphen_and_n)
     EXPECT_EQ(output, "sba -n abs");
 }
 
+/** オプションじゃないオプションを含む場合は、そのまま出力する */
+TEST(builtin_echo, must_print_including_non_options)
+{
+	std::string output;
+	const char *args[] = {"echo", "-na", "abs", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "-na abs\n");
+}
+
+/** --は引数として扱う。 */
+TEST(builtin_echo, must_print_double_hyphen)
+{
+	std::string output;
+	const char *args[] = {"echo", "--", "-n", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "-- -n\n");
+}
+
+/** オプションが繰り返し指定されても正しく認識する。 */
+TEST(builtin_echo, interpret_repeated_option)
+{
+	std::string output;
+	const char *args[] = {"echo", "-nnnnnnnn", "hello", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "hello");
+}
+
+/** 引数がなくても動作すること。 nオプション */
+TEST(builtin_echo, no_argument_n_opt)
+{
+	std::string output;
+	const char *args[] = {"echo", "-n", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "");
+}
+
+/** 引数がなくても動作すること。 */
+TEST(builtin_echo, no_argument)
+{
+	std::string output;
+	const char *args[] = {"echo", NULL};
+
+	output = ms_get_output(args);
+    EXPECT_EQ(output, "\n");
+}
 
 static std::string	ms_get_output(const char *args[])
 {
@@ -101,42 +149,4 @@ static std::string	ms_get_output(const char *args[])
 	cap.unCapture();
 	ms_destroy_ntp(duped_args);
 	return (output);
-}
-
-static char	**ms_dup_ntp(const char *const ntp[])
-{
-	size_t	index;
-	char	**duped_ntp;
-
-	index = 0;
-	while (ntp[index] != NULL)
-		index++;
-	duped_ntp = (char **)calloc((index + 1), sizeof(char *));
-	if (duped_ntp == NULL)
-		return (NULL);
-	index = 0;
-	while (ntp[index] != NULL)
-	{
-		duped_ntp[index] = strdup(ntp[index]);
-		if (duped_ntp[index] == NULL)
-			return (ms_destroy_ntp(duped_ntp), nullptr);
-		index++;
-	}
-	duped_ntp[index] = NULL;
-	return (duped_ntp);
-}
-
-static void	ms_destroy_ntp(char *ntp[])
-{
-	size_t	index;
-
-	if (ntp == NULL)
-		return ;
-	index = 0;
-	while (ntp[index] != NULL)
-	{
-		free(ntp[index]);
-		index++;
-	}
-	free(ntp);
 }

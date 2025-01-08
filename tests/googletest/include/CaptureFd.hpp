@@ -15,13 +15,12 @@ class CaptureFd
     public:
         // special member functions
         CaptureFd(void); // default constructor
-        CaptureFd(const CaptureFd& captureFd); // copy constructor
         ~CaptureFd(void); // destructor
         int capture(int fd);
         int unCapture(void);
         std::string read(void);
         // operators
-        CaptureFd& operator=(const CaptureFd& captureFd); // operator=
+        CaptureFd& operator=(CaptureFd& captureFd); // operator=
         // others
     private:
 };
