@@ -14,7 +14,7 @@ void ms_syntax_node_destroy(t_syntax_node *node);
 TEST(Syntax_Analyze_Parse, SY_DOUBLE_QUOTE_single_token)
 {
 	t_token **tokens = ms_lexical_analyze("\"");
-	t_syntax_node *node = ms_parse_double_quote(tokens[0], 0);
+	t_syntax_node *node = ms_parse_double_quote(tokens, 0);
 	ASSERT_NE(node, nullptr);
 	EXPECT_EQ(node->type, SY_DOUBLE_QUOTE);
 	EXPECT_EQ(node->start_pos, 0);
