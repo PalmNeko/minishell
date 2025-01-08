@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_has_opt.c                                       :+:      :+:    :+:   */
+/*   ms_get_pwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 01:51:43 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/16 01:51:43 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/12/04 15:45:17 by tookuyam          #+#    #+#             */
+/*   Updated: 2024/12/04 15:45:17 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
-#include "libft.h"
-#include <stdbool.h>
-#include <stddef.h>
+#include "libms.h"
 
-bool	ms_has_opt(char *const argv[], const char *opt)
+static char	*g_pwd;
+
+char	**ms_get_pwd(void)
 {
-	while (*argv != NULL)
-	{
-		if (ft_strcmp(*argv, opt) == 0)
-			return (true);
-		argv++;
-	}
-	return (false);
+	if (g_pwd == NULL)
+		g_pwd = ms_get_current_dir_name();
+	return (&g_pwd);
 }

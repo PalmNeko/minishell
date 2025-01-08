@@ -10,11 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_int_echo.h"
 #include "libft.h"
 #include <stddef.h>
 
-char	*ms_join_ntp(char *const ntp[], const char *pad)
+/**
+ * join ntp strings with sep.
+ * @param ntp null terminated strings
+ * @param sep separating string
+ */
+char	*ms_join_ntp(const char *ntp[], const char *sep)
 {
 	size_t	total_len;
 	size_t	index;
@@ -25,7 +29,7 @@ char	*ms_join_ntp(char *const ntp[], const char *pad)
 	while (ntp[index] != NULL)
 		total_len += ft_strlen(ntp[index++]);
 	if (index >= 2)
-		total_len += ft_strlen(pad) * (index - 1);
+		total_len += ft_strlen(sep) * (index - 1);
 	joined = (char *)ft_calloc(total_len + 1, sizeof(char));
 	if (joined == NULL)
 		return (NULL);
@@ -33,7 +37,7 @@ char	*ms_join_ntp(char *const ntp[], const char *pad)
 	while (ntp[index] != NULL)
 	{
 		if (index != 0)
-			ft_strlcat(joined, pad, total_len + 1);
+			ft_strlcat(joined, sep, total_len + 1);
 		ft_strlcat(joined, ntp[index], total_len + 1);
 		index++;
 	}

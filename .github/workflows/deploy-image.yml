@@ -20,7 +20,7 @@ jobs:
           test -f docker/ubuntu/Dockerfile
       - name: Build image
         run: |
-          docker build docker/ubuntu -t "${IMAGE_NAME}:${IMAGE_TAG}"
+          bash scripts/build_minishell-ubuntu.sh
       - name: Login to Github Packages Registry
         run: |
           echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${GITHUB_REPOSITORY_OWNER} --password-stdin
