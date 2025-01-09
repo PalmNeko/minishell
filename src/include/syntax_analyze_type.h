@@ -2,6 +2,7 @@
 # define SYNATX_ANALYZE_TYPE_H
 
 #include "lexer.h"
+#include "libft.h"
 
 typedef enum e_syntax_type
 {
@@ -34,15 +35,18 @@ typedef enum e_syntax_type
 	SY_INSTRUCTION,
 }						t_syntax_type;
 
-typedef struct s_syntax_node	t_syntax_node;
+typedef t_list t_syntax_node_list;
 
 typedef struct s_syntax_node
 {
 	t_syntax_type		type;
 	t_token				*token;
-	t_syntax_node		**children;
+	struct s_syntax_node		**children;
 	int start_pos;
 	int end_pos;
 }						t_syntax_node;
+
+// typedef struct s_syntax_node	t_syntax_node;
+// typedef t_syntax_node *(*t_parse_func)(t_token **tokens, int pos);
 
 #endif // SYNATX_ANALYZE_TYPE_H
