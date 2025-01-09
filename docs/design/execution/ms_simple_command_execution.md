@@ -214,7 +214,7 @@ typedef struct s_environ_memento {
  - **引数**:
 	 - **args**: NULL終端の配列
  - **戻り値**
-	 - **126**: execveが次のerrnoで失敗した場合。127番以外の理由で失敗したとき。
+	 - **126**: execveがerrno, ENOENT, EFAULT以外で失敗したとき。
 	 - **127**: 次の場合にこの番号で終了します。
 		 - ENOENT, EFAULTで失敗したとき。
 		 - コマンドのパスをPATH変数を使って展開した場合に、ファイルが存在しなかった場合。
