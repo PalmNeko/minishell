@@ -16,7 +16,7 @@ if ! docker container ls | grep minishell; then
 		eval `cat "$HOME"/.ssh/ssh-agent` > /dev/null
 		ssh-add "$HOME"/.ssh/* 2> /dev/null
 	fi
-	bash scripts/build_minishell-ubuntu.sh
+	bash scripts/build_minishell-dev.sh
 	docker run \
 		--rm \
 		--init \
@@ -28,7 +28,9 @@ if ! docker container ls | grep minishell; then
 		-u 0 \
 		-it \
 		-d \
-		ghcr.io/palmneko/minishell-ubuntu:22.04 cat
+		--cap-add=SYS_PTRACE \
+		--security-opt seccomp=unconfined \
+		ghcr.io/palmneko/minishell-dev:22.04 cat
 	docker exec minishell git config --global user.email "$(git config user.email)"
 	docker exec minishell git config --global user.name "$(git config user.name)"
 fi

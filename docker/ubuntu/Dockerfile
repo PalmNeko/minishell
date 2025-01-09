@@ -7,7 +7,8 @@ apt install -y \
 	gcc \
 	valgrind \
 	python3-pip \
-	git
+	git \
+	libreadline-dev
 pip install pytest
 EOF
 
@@ -40,10 +41,28 @@ RUN adduser \
     --gecos "" \
     --uid "${UID}" \
     minishell
-USER minishell
 
 COPY --from=build googletest/googlemock/include/gmock /usr/local/include/gmock
 COPY --from=build googletest/googletest/include/gtest /usr/local/include/gtest
 COPY --from=build googletest/build/lib/*.a /usr/local/lib/
 
+
+# テスト用の環境
+FROM final AS test
+
+USER minishell
 WORKDIR /home/minishell
+
+# デバッグ用の環境
+FROM final AS debug
+
+ARG NORM_VERSION=3.3.51
+
+RUN <<EOF
+apt-get update -y
+apt-get upgrade -y
+apt-get install -y \
+	lldb
+pip install \
+	norminette==${NORM_VERSION}
+EOF
