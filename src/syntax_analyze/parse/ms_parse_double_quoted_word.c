@@ -1,63 +1,65 @@
-// #include "syntax_analyze.h"
-// #include <stdlib.h>
+#include "syntax_analyze.h"
+#include <stdlib.h>
 
-// static t_syntax_node **ms_parse_create_double_quoted_word_children(t_token **token, int start_pos, int end_pos);
+t_syntax_node *ms_parse_double_quoted_word(t_token **tokens, int pos)
+{
+	t_syntax_node *node;
+	t_syntax_node *child;
+	t_syntax_node_list *temp;
+	t_syntax_node_list *child_lst;
+	const int start_pos = pos;
 
-// t_syntax_node *ms_parse_double_quoted_word(t_token **tokens, int pos)
-// {
-// 	t_syntax_node *node;
-// 	t_syntax_node **children;
-// 	const int start_pos = pos;
+	child_lst = NULL;
+	child = ms_parse_double_quote(tokens, pos);
+	if (child == NULL)
+		return (NULL);
+	if(child->token->type != TK_DOUBLE_QUOTE)
+	{
+		ms_syntax_node_destroy(child);
+		return (ms_parse_declined(tokens, pos));
+	}
+	temp = ft_lstnew(child);
+	if (temp == NULL)
+		return(ms_syntax_node_destroy(child), NULL);
+	ft_lstadd_back(&child_lst, temp);
+	pos++;
+	while(tokens[pos])
+	{
+		if(tokens[pos]->type == TK_DOUBLE_QUOTE)
+			break;
+		child = ms_parse_all(tokens, pos);
+		if (child == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		temp = ft_lstnew(child);
+		if (temp == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		ft_lstadd_back(&child_lst, temp);
+		pos++;
+	}
+	if(tokens[pos] == NULL)
+	{
+		ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper);
+		return (ms_parse_declined(tokens, start_pos));
+	}
+	child = ms_parse_double_quote(tokens, pos);
+	if (child == NULL)
+		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	temp = ft_lstnew(child);
+	if (temp == NULL)
+		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	ft_lstadd_back(&child_lst, temp);
+	node = ms_syntax_node_create(SY_DOUBLE_QUOTED_WORD);
+	if (node == NULL)
+		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	node = ms_syntax_node_set_of_children(node, &child_lst);
+	if (node == NULL)
+		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	node->start_pos = start_pos;
+	node->end_pos = pos + 1;
+	return (node);
+}
 
-// 	pos++;
-// 	while (tokens[pos] && tokens[pos]->type != TK_DOUBLE_QUOTE)
-// 		pos++;
-// 	pos++;
-// 	node = ms_syntax_node_create(SY_DOUBLE_QUOTED_WORD, start_pos, pos);
-// 	if (node == NULL)
-// 		return (NULL);
-// 	children = ms_parse_create_double_quoted_word_children(tokens, start_pos, pos);
-// 	if (children == NULL)
-// 	{
-// 		ms_syntax_node_destroy(node);
-// 		return (NULL);
-// 	}
-// 	node->children = children;
-// 	return (node);
-// }
 
-// static t_syntax_node **ms_parse_create_double_quoted_word_children(t_token **tokens, int start_pos, int end_pos)
-// {
-// 	t_syntax_node **children;
-// 	int i;
-// 	int pos;
-
-// 	children = (t_syntax_node **)malloc(sizeof(t_syntax_node *) * (end_pos - start_pos + 1));
-// 	if (children == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	pos = start_pos;
-// 	while (pos < end_pos)
-// 	{
-// 		if(i > 0 && i < end_pos - start_pos - 1)
-// 			children[i] = ms_parse_all(tokens, pos);
-// 		else if(tokens[pos])
-// 			children[i] = ms_parse_double_quote(tokens, pos);
-// 		else
-// 			children[i] = ms_parse_decliend(tokens, pos - 1);
-// 		if (children[i] == NULL)
-// 		{
-// 			while (--i >= 0)
-// 				ms_syntax_node_destroy(children[i]);
-// 			free(children);
-// 			return (NULL);
-// 		}
-// 		i++;
-// 		pos++;
-// 	}
-// 	children[i] = NULL;
-// 	return (children);
-// }
 
 // // #include <stdio.h>
 // // #include <readline/readline.h>
