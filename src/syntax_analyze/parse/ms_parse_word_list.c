@@ -1,108 +1,77 @@
-// #include "syntax_analyze.h"
-// #include <stdlib.h>
 
-// static const t_token_type g_word_list_types[5] = {
-// 	TK_WORD,
-// 	TK_SINGLE_QUOTE,
-// 	TK_DOUBLE_QUOTE,
-// 	TK_VARIABLE,
-// 	TK_IDENTIFY,
-// };
+#include "syntax_analyze.h"
+#include <stdlib.h>
 
-// static const t_parse_func g_parse_funcs[6] = {
-// 	ms_parse_word,
-// 	ms_parse_single_quoted_word,
-// 	ms_parse_double_quoted_word,
-// 	ms_parse_variable,
-// 	ms_parse_identify,
-// 	NULL
-// };
+static const t_parse_func	g_ms_parse_wordlist_func_list[5] = {
+	ms_parse_identify, 
+	ms_parse_word, 
+	ms_parse_single_quoted_word,
+	ms_parse_double_quoted_word, 
+	NULL
+};
 
-// static t_syntax_node **ms_parse_create_word_list_children(t_token **tokens, int *pos);
-// static void **convert_to_array(t_token_list *lst);
+static t_syntax_node *ms_parse_worditem(t_token **tokens, int pos);	
 
-// t_syntax_node *ms_parse_word_list(t_token **tokens, int pos)
-// {
-// 	t_syntax_node *node;
-// 	t_syntax_node **children;
+t_syntax_node *ms_parse_word_list(t_token **tokens, int pos)
+{
+	t_syntax_node_list *child_lst;
+	t_syntax_node_list *temp;
+	t_syntax_node *child;
+	t_syntax_node *node;
+	const int start_pos = pos;
 
-// 	node = ms_syntax_node_create(SY_WORD_LIST, pos, pos);
-// 	if (node == NULL)
-// 		return (NULL);
-// 	children = ms_parse_create_word_list_children(tokens, &pos);
-// 	if (children == NULL)
-// 	{
-// 		ms_syntax_node_destroy(node);
-// 		return (NULL);
-// 	}
-// 	node->children = children;
-// 	node->end_pos = pos;
-// 	return (node);
-// }
+	child_lst = NULL;
+	child = ms_parse_worditem(tokens, pos);
+	if (child == NULL)
+		return (NULL);
+	if(child->type == SY_DECLINED)
+		return(ms_syntax_node_destroy(child),ms_parse_declined(tokens, pos));
+	temp = ft_lstnew(child);
+	if (temp == NULL)
+		return(ms_syntax_node_destroy(child), NULL);
+	ft_lstadd_back(&child_lst, temp);
+	pos = child->end_pos;
+	while(tokens[pos] && child->type != SY_DECLINED)
+	{
+		child = ms_parse_worditem(tokens, pos);
+		if (child == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		if(child->type == SY_DECLINED)
+			break;
+		temp = ft_lstnew(child);
+		if (temp == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		ft_lstadd_back(&child_lst, temp);
+		pos = child->end_pos;
+	}
+	if(tokens[pos] == NULL)
+		pos--;
+	node = ms_syntax_node_create(SY_WORD_LIST);
+	if (node == NULL)
+		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	node = ms_syntax_node_set_of_children(node, &child_lst);
+	if (node == NULL)
+		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	node->start_pos = start_pos;
+	node->end_pos = pos + 1;
+	return (node);
+}
 
-// #include <stdio.h>
+static t_syntax_node *ms_parse_worditem(t_token **tokens, int pos)
+{
+	t_syntax_node *node;
+	int i;
 
-// static t_syntax_node **ms_parse_create_word_list_children(t_token **tokens, int *pos)
-// {
-// 	t_syntax_node **children;
-// 	t_syntax_node *child;
-// 	t_syntax_node_list *new_lst;
-// 	t_syntax_node_list *lst;
-// 	int i;
-
-// 	lst = NULL;
-// 	while (tokens[*pos])
-// 	{
-// 		i = 0;
-// 		while (g_parse_funcs[i] && g_word_list_types[i] != tokens[*pos]->type)
-// 			i++;
-// 		if (g_parse_funcs[i] == NULL)
-// 			break;
-// 		child = g_parse_funcs[i](tokens, *pos);
-// 		if (child == NULL)
-// 			return (NULL);
-// 		new_lst = ft_lstnew(child);
-// 		if (new_lst == NULL)
-// 			return (NULL);
-// 		ft_lstadd_back(&lst, new_lst);
-// 		printf("child->end_pos - child->start_pos: %d\n", child->end_pos - child->start_pos);
-// 		*pos += (child->end_pos - child->start_pos);
-// 	}
-// 	children = (t_syntax_node **)convert_to_array(lst);
-// 	if (children == NULL)
-// 	{
-// 		while (lst)
-// 		{
-// 			new_lst = lst;
-// 			lst = lst->next;
-// 			free(new_lst);
-// 		}
-// 		return (NULL);
-// 	}
-// 	return (children);
-// }
-
-// static void	**convert_to_array(t_token_list *lst)
-// {
-// 	t_list	*temp;
-// 	void			**contents;
-// 	size_t			size;
-// 	size_t			i;
-
-// 	size = ft_lstsize(lst);
-// 	contents = (void **)malloc(sizeof(void *) * (size + 1));
-// 	if (!contents)
-// 		return (NULL);
-// 	i = 0;
-// 	while (lst)
-// 	{
-// 		temp = lst;
-// 		contents[i] = lst->content;
-// 		lst = lst->next;
-// 		free(temp);
-// 		i++;
-// 	}
-// 	contents[i] = NULL;
-// 	return (contents);
-// }
-
+	i = 0;
+	while(g_ms_parse_wordlist_func_list[i])
+	{
+		node = g_ms_parse_wordlist_func_list[i](tokens, pos);
+		if(node == NULL)
+			return (NULL);
+		if(node->type != SY_DECLINED)
+			return (node);
+		i++;
+		free(node);
+	}
+	return (ms_parse_declined(tokens, pos));
+}

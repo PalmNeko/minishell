@@ -28,8 +28,7 @@ t_syntax_node *ms_parse_right_parenthesis(t_token **tokens, int start_pos);
 
 t_syntax_node *ms_parse_double_quoted_word(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_single_quoted_word(t_token **tokens, int start_pos);
-
-// t_syntax_node *ms_parse_word_list(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_word_list(t_token **tokens, int start_pos);
 
 int ms_parse_is_word_list(t_token_type type);
 

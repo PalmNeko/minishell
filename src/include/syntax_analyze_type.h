@@ -47,6 +47,6 @@ typedef struct s_syntax_node
 }						t_syntax_node;
 
 // typedef struct s_syntax_node	t_syntax_node;
-// typedef t_syntax_node *(*t_parse_func)(t_token **tokens, int pos);
+typedef t_syntax_node *(*t_parse_func)(t_token **tokens, int pos);
 
 #endif // SYNATX_ANALYZE_TYPE_H
