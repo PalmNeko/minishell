@@ -1,10 +1,9 @@
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
-#include <stdio.h>
 
 static const t_parse_func g_ms_parse_simple_command_func_list[3] = {
-	ms_parse_assignment_word,
+	ms_parse_redirection_word,
 	ms_parse_word_list,
 	NULL
 };
@@ -22,7 +21,6 @@ t_syntax_node *ms_parse_simple_command(t_token **tokens, int pos)
 
 	child_lst = NULL;
 	//parse_simple_command_item
-	printf("pos = %d\n", pos);
 	child = ms_parse_simple_command_item(tokens, pos);
 	if (child == NULL)
 		return (NULL);

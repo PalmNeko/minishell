@@ -309,3 +309,97 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS)
 	ms_syntax_node_destroy(expect);
 	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
+
+//----------------------------------------
+// SY_ASSIGNMENT_COMMAND
+//----------------------------------------
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_COMMAND_SUCCESS)
+{
+	const char *str = "test=word test2=word";
+
+	// 期待値用トークンを作る
+	t_token **expect_tokens = ms_lexical_analyze(str);
+
+	// 期待ノードの子配列
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 4);
+	expect_children[0] = ms_parse_assignment_word(expect_tokens, 0);
+	expect_children[1] = ms_parse_blank(expect_tokens, 3);
+	expect_children[2] = ms_parse_assignment_word(expect_tokens, 4);
+	expect_children[3] = NULL;
+
+	// 期待ノード本体 (SY_ASSIGNMENT_COMMAND)
+	t_syntax_node *expect = ms_syntax_node_create(SY_ASSIGNMENT_COMMAND);
+
+	expect->children  = expect_children;
+	expect->start_pos = 0;
+	expect->end_pos   = 7;
+	
+	// 実際のパース結果
+	t_syntax_node *actual = ms_parse_assignment_command(expect_tokens, 0);
+	
+	// 比較
+	test_runner_of_ms_parse(expect, str, actual);
+
+	// 後片付け
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+}
+
+//----------------------------------------
+// SY_COMMAND
+//----------------------------------------
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_COMMAND_SUCCESS)
+{
+	//simple command
+	const char *str = "test word";
+
+	// 期待値用トークンを作る
+	t_token **expect_tokens = ms_lexical_analyze(str);
+
+	// 期待ノードの子配列
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 2);
+	expect_children[0] = ms_parse_simple_command(expect_tokens, 0);
+	expect_children[1] = NULL;
+
+	// 期待ノード本体 (SY_COMMAND)
+	t_syntax_node *expect = ms_syntax_node_create(SY_COMMAND);
+	expect->children  = expect_children;
+	expect->start_pos = 0;
+	expect->end_pos   = 3;
+
+	// 実際のパース結果
+	t_syntax_node *actual = ms_parse_command(expect_tokens, 0);
+
+	// 比較
+	test_runner_of_ms_parse(expect, str, actual);
+
+	// 後片付け
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	//assignment command
+	const char *str2 = "test=word";
+
+	// 期待値用トークンを作る
+	t_token **expect_tokens2 = ms_lexical_analyze(str2);
+
+	// 期待ノードの子配列
+	t_syntax_node **expect_children2 = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 2);
+	expect_children2[0] = ms_parse_assignment_command(expect_tokens2, 0);
+	expect_children2[1] = NULL;
+
+	// 期待ノード本体 (SY_COMMAND)
+	t_syntax_node *expect2 = ms_syntax_node_create(SY_COMMAND);
+	expect2->children  = expect_children2;
+	expect2->start_pos = 0;
+	expect2->end_pos   = 3;
+	
+	// 実際のパース結果
+	t_syntax_node *actual2 = ms_parse_command(expect_tokens2, 0);
+
+	// 比較
+	test_runner_of_ms_parse(expect2, str2, actual2);
+
+	// 後片付け
+	ms_syntax_node_destroy(expect2);
+	ms_destroy_ntp2((void**)expect_tokens2, ms_lexical_analyze_destroy_token_wrapper);
+}
