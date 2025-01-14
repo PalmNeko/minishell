@@ -9,7 +9,10 @@ extern "C"
 	#include "libms.h"
 };
 
-void ms_lexical_analyze_destroy_token_wrapper(void *token);
+void ms_lexical_analyze_destroy_token_wrapper(void *token)
+{
+	ms_lexical_analyze_destroy_token((t_token*)token);
+}
 
 void test_runner_of_ms_parse(
     t_syntax_node *expect,

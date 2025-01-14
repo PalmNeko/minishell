@@ -29,8 +29,17 @@ t_syntax_node *ms_parse_right_parenthesis(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_double_quoted_word(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_single_quoted_word(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_word_list(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_assignment_word(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_redirection_word(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_simple_command(t_token **tokens, int start_pos);
+// t_syntax_node *ms_parse_pipeline(t_token **tokens, int start_pos);
+// t_syntax_node *ms_parse_list(t_token **tokens, int start_pos);
+// t_syntax_node *ms_parse_compound_list(t_token **tokens, int start_pos);
+// t_syntax_node *ms_parse_user_input(t_token **tokens, int start_pos);
+// t_syntax_node *ms_parse_instruction(t_token **tokens, int start_pos);
 
-int ms_parse_is_word_list(t_token_type type);
+
+
 
 
 
