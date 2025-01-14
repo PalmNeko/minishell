@@ -13,19 +13,22 @@
 <word_item> ::= <identify> | <word> | <double_quoted_word> | <single_quoted_word> | <variable>
 
 <pipeline> ::= <blank>? <command> <blank>? { <pipe> <blank>? <command> <blank>?}
-<command> ::= <simple_command> | <assignment_command>
+
+<command> ::= <command_item>
+<command_item> ::= <simple_command> | <assignment_command>
 
 <assignment_command> ::= <assignment_word> {<blank> <assignment_word>}
 <assignment_word> ::= <identify> <equals> <word_list>
 
 <simple_command> ::= <simple_command_item> {<blank> <simple_command_item>}
 <simple_command_item> ::= <word_list> | <redirection_word>
+
 <redirection_word> ::= <redirection> <blank>? <word_list>
 
-<list> ::= <pipeline> | <pipeline> <list_token> <pipeline> | <compound_list>
+<list> ::= <pipeline> {<list_token> <pipeline>} | <compound_list>
 <compound_list> ::= <left_parenthesis> <list> <right_parenthesis>
 
-<user_input> ::= <all> | <all> <user_input>
+<user_input> ::= <all> {<all>}
 
 <instruction>   ::= <list> { <newline> { <user_input> } }
 ```
