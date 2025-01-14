@@ -43,6 +43,11 @@ char	*ms_to_abs_path(const char *path);
 char	*ms_normalize_path(const char *path);
 char	*ms_get_full_path(const char *basedir, const char *path);
 
+void *ms_identify(void *arg);
+void ms_noop_del(void *arg);
+
+void ms_lstappend_tail(t_list **lst, void *content, void (*fr)(void *));
+
 // environment variable
 char	*ms_getenv(const char *name);
 int		ms_setenv(const char *name, const char *value, int overwrite);

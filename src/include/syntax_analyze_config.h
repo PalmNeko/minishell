@@ -1,0 +1,5 @@
+#ifndef SYNATX_ANALYZE_TYPE_H
+# define SYNATX_ANALYZE_TYPE_H
+
+#endif
+
