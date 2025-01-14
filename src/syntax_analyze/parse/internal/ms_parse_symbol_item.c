@@ -1,5 +1,7 @@
 #include "syntax_analyze.h"
 
+
+#include <stdio.h>
 t_syntax_node *ms_parse_symbol_item(t_token **tokens,int pos, const t_parse_func *func_list)
 {
 	t_syntax_node *node;
@@ -12,8 +14,8 @@ t_syntax_node *ms_parse_symbol_item(t_token **tokens,int pos, const t_parse_func
 			return (NULL);
 		if(node->type != SY_DECLINED)
 			return (node);
-		i++;
 		ms_syntax_node_destroy(node);
+		i++;
 	}
 	return (ms_parse_declined(tokens, pos));
 }

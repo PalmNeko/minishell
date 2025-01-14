@@ -20,7 +20,9 @@ TEST(Syntax_Analyze_Parse_Terminal, SY_DECLINED_SUCESS)
 	test_runnner_of_ms_parse_terminal(node, SY_DECLINED, tokens, 0);
 }
 
+//----------------------------------------
 // SY_IDENTIFY
+//----------------------------------------
 TEST(Syntax_Analyze_Parse_Terminal, SY_IDENTIFY_SUCCESS)
 {
 	t_token **tokens = ms_lexical_analyze("test");
@@ -35,7 +37,9 @@ TEST(Syntax_Analyze_Parse_Terminal, SY_IDENTIFY_FAIL)
 	test_runnner_of_ms_parse_terminal(node, SY_DECLINED, tokens, 0);
 }
 
+//----------------------------------------
 // SY_WORD
+//----------------------------------------
 TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_SUCESS)
 {
 	t_token **tokens = ms_lexical_analyze("tehst%");
@@ -110,7 +114,7 @@ TEST(Syntax_Analyze_Parse_Terminal, SY_LIST_TOKEN_SUCCESS)
 
 TEST(Syntax_Analyze_Parse_Terminal, SY_LIST_TOKEN_FAIL)
 {
-	t_token **tokens = ms_lexical_analyze("1");
+	t_token **tokens = ms_lexical_analyze("(");
 	t_syntax_node *node = ms_parse_list_token(tokens, 0);
 	test_runnner_of_ms_parse_terminal(node, SY_DECLINED, tokens, 0);
 }

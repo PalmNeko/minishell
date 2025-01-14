@@ -2,7 +2,6 @@
 #include "libms.h"
 #include <stdlib.h>
 
-
 static const t_parse_func g_ms_parse_simple_command_func_list[3] = {
 	ms_parse_redirection_word,
 	ms_parse_word_list,
@@ -32,20 +31,27 @@ t_syntax_node *ms_parse_simple_command(t_token **tokens, int pos)
 		child = ms_parse_blank(tokens, pos);
 		if (child == NULL)
 			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		if(child->type == SY_DECLINED)
+		{
+			ms_syntax_node_destroy(child);
+			break;
+		}
 		child2 = ms_parse_symbol_item(tokens, child->end_pos, g_ms_parse_simple_command_func_list);
 		if (child2 == NULL)
-			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), ms_syntax_node_destroy(child), NULL);
-		if(child2 != SY_DECLINED)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		if(child2->type == SY_DECLINED)
 		{
-			ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
-			if(child_lst == NULL)
-				return(ms_syntax_node_destroy(child), NULL);
-			ms_lstappend_tail(&child_lst, child2, ms_syntax_node_destroy_wrapper);
-			if(child_lst == NULL)
-				return(ms_syntax_node_destroy(child), NULL);
-			pos = child2->end_pos;
-		}else
+			ms_syntax_node_destroy(child);
+			ms_syntax_node_destroy(child2);
 			break;
+		}
+		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
+		if(child_lst == NULL)
+			return(ms_syntax_node_destroy(child), NULL);
+		ms_lstappend_tail(&child_lst, child2, ms_syntax_node_destroy_wrapper);
+		if(child_lst == NULL)
+			return(ms_syntax_node_destroy(child), NULL);
+		pos = child2->end_pos;
 	}
 	node = ms_syntax_node_create(SY_SIMPLE_COMMAND);
 	if (node == NULL)

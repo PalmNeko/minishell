@@ -38,10 +38,10 @@ void test_runner_of_ms_parse(
     else {
         ASSERT_TRUE(expect->children != NULL);
         ASSERT_TRUE(actual->children != NULL);
-
-        for (int i = 0; expect->children[i]; i++) {
+		int i = 0;
+        for (i = 0; expect->children[i]; i++) {
             ASSERT_TRUE(actual->children[i] != NULL);
-
+			
             EXPECT_EQ(expect->children[i]->type,      actual->children[i]->type);
             EXPECT_EQ(expect->children[i]->start_pos, actual->children[i]->start_pos);
             EXPECT_EQ(expect->children[i]->end_pos,   actual->children[i]->end_pos);
@@ -52,6 +52,8 @@ void test_runner_of_ms_parse(
                 EXPECT_STREQ(expect->children[i]->token->token, actual->children[i]->token->token);
             }
         }
+		EXPECT_EQ(expect->children[i], actual->children[i]);
+		
     }
 
     // テストに使用したノード等を破棄

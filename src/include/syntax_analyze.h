@@ -34,11 +34,11 @@ t_syntax_node *ms_parse_redirection_word(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_simple_command(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_assignment_command(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_command(t_token **tokens, int start_pos);
-// t_syntax_node *ms_parse_pipeline(t_token **tokens, int start_pos);
-// t_syntax_node *ms_parse_list(t_token **tokens, int start_pos);
-// t_syntax_node *ms_parse_compound_list(t_token **tokens, int start_pos);
-// t_syntax_node *ms_parse_user_input(t_token **tokens, int start_pos);
-// t_syntax_node *ms_parse_instruction(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_pipeline(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_list(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_compound_list(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_user_input(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_instruction(t_token **tokens, int start_pos);
 
 // internal function
 t_syntax_node *ms_parse_symbol_item(t_token **tokens, int pos, const t_parse_func *func_list);
