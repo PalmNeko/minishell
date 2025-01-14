@@ -27,6 +27,8 @@ t_syntax_node *ms_parse_compound_list(t_token **tokens,int pos)
 		return (ms_parse_declined(tokens, pos));
 	}
 	pos = child2->end_pos;
+	if(tokens[pos] == NULL)
+		return (ms_syntax_node_destroy(child), ms_syntax_node_destroy(child2), ms_parse_declined(tokens, pos - 1));
 	child3 = ms_parse_right_parenthesis(tokens, child2->end_pos);
 	if (child3 == NULL)
 		return (ms_syntax_node_destroy(child), ms_syntax_node_destroy(child2), NULL);

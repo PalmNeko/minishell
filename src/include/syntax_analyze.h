@@ -4,6 +4,8 @@
 #include "syntax_analyze_type.h"
 #include "syntax_analyze_config.h"
 
+t_syntax_node *ms_syntax_analyze(t_token **tokens);
+
 t_syntax_node *ms_syntax_node_create(t_syntax_type type);
 void ms_syntax_node_destroy(t_syntax_node *node);
 void ms_syntax_node_destroy_wrapper(void *node);
