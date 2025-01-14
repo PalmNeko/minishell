@@ -1,0 +1,4 @@
+#ifndef SEMANTIC_ANALYZE_CONFIG_H
+#define SEMANTIC_ANALYZE_CONFIG_H
+
+#endif

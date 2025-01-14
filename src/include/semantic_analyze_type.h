@@ -1,0 +1,4 @@
+#ifndef SEMANTIC_ANALYZE_TYPE_H
+#define SEMANTIC_ANALYZE_TYPE_H
+
+#endif
