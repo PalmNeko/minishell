@@ -35,6 +35,7 @@ void	ms_input(t_minishell mnsh)
 		status = ms_execution(line);
 		free(line);
 	}
+	(void)status;
 	printf("exit\n");
 	return ;
 }
