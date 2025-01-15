@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_get_raw_cdwd.c                                  :+:      :+:    :+:   */
+/*   ms_clean_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 15:11:37 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/07 15:11:37 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/11 12:47:32 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/11 12:47:32 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static char	*g_cdwd;
+#include "libft.h"
+#include "input.h"
+#include <stdlib.h>
 
-char	**ms_get_raw_cdwd(void)
+void	ms_finalize_heredoc(t_heredoc *heredoc)
 {
-	return (&g_cdwd);
-
+	heredoc->delimita_count = 0;
+	ft_lstclear(&heredoc->delimita_list, free);
+	heredoc->delimita_list = NULL;
 }

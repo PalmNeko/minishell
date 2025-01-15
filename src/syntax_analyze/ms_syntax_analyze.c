@@ -10,6 +10,6 @@ t_syntax_node *ms_syntax_analyze(t_token **tokens)
 	if (node == NULL)
 		return (NULL);
 	if (node->type == SY_DECLINED)
-		printf("error at %d\n", node->start_pos);
+		printf("minishell: syntax error near unexpected token `%s\'\n", node->token->token);
 	return(node);
 }
