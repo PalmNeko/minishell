@@ -42,6 +42,7 @@ bool	ms_is_dir(const char *path);
 char	*ms_to_abs_path(const char *path);
 char	*ms_normalize_path(const char *path);
 char	*ms_get_full_path(const char *basedir, const char *path);
+char	*ms_replace_joined_str(char **left, char *right);
 
 void *ms_identify(void *arg);
 void ms_noop_del(void *arg);
