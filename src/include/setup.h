@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   setup.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 17:00:05 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/08 12:18:40 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/15 17:15:23 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef SETUP_H
+# define SETUP_H
 
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*sp;
-	size_t			set_count;
+# include "libft.h"
+# include "setup_type.h"
 
-	sp = s;
-	set_count = 0;
-	while (set_count < n)
-		sp[set_count++] = 0;
-	return ;
-}
+t_minishell	*ms_setup(void);
+void		ms_cleanup_and_exit(int status);
+
+#endif
