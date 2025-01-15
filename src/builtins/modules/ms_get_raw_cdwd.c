@@ -15,5 +15,4 @@ static char	*g_cdwd;
 char	**ms_get_raw_cdwd(void)
 {
 	return (&g_cdwd);
-
 }
