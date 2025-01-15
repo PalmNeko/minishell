@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_argument_head.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 19:13:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 19:00:47 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:14:19 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

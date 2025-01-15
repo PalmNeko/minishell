@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lexical_analyze.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
-/*   Updated: 2024/12/28 18:18:22 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:16:02 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
