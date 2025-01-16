@@ -1,10 +1,30 @@
 {
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": "."
-	},
+	"dockerComposeFile": [
+		"./docker-compose.yml"
+	],
+	"service": "dev",
+	"workspaceFolder": "/app",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
-	"remoteUser": "minishell"
+	"mounts": [
+		{ "source": "..", "target": "/app", "type": "bind" }
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"kube.42header",
+				"MariusvanWijk-JoppeKoers.codam-norminette-3",
+				"ms-vscode.cpptools",
+				"ms-vscode.cpptools",
+				"streetsidesoftware.code-spell-checker",
+				"mhutchie.git-graph",
+				"donjayamanne.githistory",
+				"GitHub.copilot",
+				"bierner.markdown-mermaid",
+				"christian-kohler.path-intellisense"
+			]
+		}
+	},
+	"remoteUser": "root"
 }
