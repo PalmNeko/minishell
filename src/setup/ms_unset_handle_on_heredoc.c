@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_setup.c                                         :+:      :+:    :+:   */
+/*   ms_unset_handle_on_heredoc.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:29:00 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/15 13:41:28 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/16 06:55:54 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/16 07:02:27 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "setup.h"
+#include <readline/readline.h>
 
-t_minishell	*ms_setup(void)
+int	ms_unset_handle_on_heredoc(void)
 {
-	return (NULL);
+	const int	disable_sigint = 0;
+
+	rl_persistent_signal_handlers = disable_sigint;
+	return (0);
 }
