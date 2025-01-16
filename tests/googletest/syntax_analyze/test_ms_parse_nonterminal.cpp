@@ -263,7 +263,9 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_WORD_SUCCESS)
 	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
+//----------------------------------------
 // SY_REDIRECTION_WORD
+//----------------------------------------
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS)
 {
 	const char *str = ">> word";
@@ -295,6 +297,44 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS)
 	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
+// many redireciton
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_FAIL)
+{
+	const char *str = ">>>";
+
+	// create expect tokens
+	t_token **expect_tokens = ms_lexical_analyze(str);
+
+	t_syntax_node *actual = ms_parse_redirection_word(expect_tokens, 0);
+
+	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
+	expect->token = expect_tokens[1];
+	expect->start_pos = 1;
+	expect->end_pos   = 2;
+
+	test_runner_of_ms_parse(expect, str, actual);
+
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+
+	const char *str2 = ">><><";
+
+	// create expect tokens
+	t_token **expect_tokens2 = ms_lexical_analyze(str);
+
+	t_syntax_node *actual2 = ms_parse_redirection_word(expect_tokens2, 0);
+
+	t_syntax_node *expect2 = ms_syntax_node_create(SY_DECLINED);
+	expect2->token = expect_tokens2[1];
+	expect2->start_pos = 1;
+	expect2->end_pos   = 2;
+
+	test_runner_of_ms_parse(expect2, str2, actual2);
+
+	ms_syntax_node_destroy(expect2);
+	ms_destroy_ntp2((void**)expect_tokens2, ms_lexical_analyze_destroy_token_wrapper);
+	
+}
 //----------------------------------------
 // SY_SIMPLE_COMMAND
 //----------------------------------------

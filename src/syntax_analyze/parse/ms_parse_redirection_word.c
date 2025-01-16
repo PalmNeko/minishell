@@ -38,6 +38,8 @@ t_syntax_node *ms_parse_redirection_word(t_token **tokens,int pos)
 	child = ms_parse_word_list(tokens, pos);
 	if (child == NULL)
 		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	if(child->type == SY_DECLINED)
+		return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), ms_syntax_node_destroy(child), ms_parse_declined(tokens, pos));
 	ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
 	if(child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);

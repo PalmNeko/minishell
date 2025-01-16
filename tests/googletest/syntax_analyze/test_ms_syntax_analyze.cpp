@@ -45,6 +45,12 @@ TEST(Syntax_Analyze, FAIL_CASE_3)
 	test_runnner_of_syntax_analyze_fail(str, 2);
 }
 
+TEST(Syntax_Analyze, FAIL_CASE_4)
+{
+	const char *str = "test >>>";
+	test_runnner_of_syntax_analyze_fail(str, 2);
+}
+
 void test_runnner_of_syntax_analyze_fail(
 	const char *str,
 	const int pos
