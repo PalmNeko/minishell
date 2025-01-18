@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_strrep_chr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/18 18:04:30 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/18 18:12:58 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/18 18:19:36 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include "libft.h"
 
-# include "libft.h"
-# include "setup_type.h"
+int	ms_trim_end_newline(char *str)
+{
+	char	*chr;
 
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+	chr = ft_strrchr(str, '\n');
+	if (chr == NULL)
+		return (1);
+	*chr = '\0';
+	return (0);
+}

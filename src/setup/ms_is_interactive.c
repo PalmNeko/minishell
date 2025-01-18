@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_is_interactive.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/18 18:04:30 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/18 17:26:34 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/18 18:32:36 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include <unistd.h>
+#include <stdbool.h>
 
-# include "libft.h"
-# include "setup_type.h"
-
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+bool	ms_is_interactive(void)
+{
+	return (isatty(STDIN_FILENO) && isatty(STDERR_FILENO));
+}
