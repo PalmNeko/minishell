@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_setup.c                                         :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:29:00 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/15 13:41:28 by tookuyam         ###   ########.fr       */
+/*   Created: 2024/03/21 19:20:47 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/18 18:09:18 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "setup.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-t_minishell	*ms_setup(void)
+# include <stddef.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+typedef struct s_gnl_node
 {
-	return (NULL);
-}
+	int		fd;
+	char	*carry_up;
+}	t_gnl_node;
+
+typedef void	(*t_free)(void *);
+
+char	*get_next_line(int fd);
+char	*get_next_line2(int fd, char **carry_up);
+
+#endif
