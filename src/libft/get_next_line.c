@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 21:49:59 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/18 18:07:50 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/19 07:14:00 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ char	*get_next_line(int fd)
 		if (itr == NULL || (ft_lstadd_back(&ft_lst, itr), 0))
 			return (gnl_del(now), ft_lstclear(&ft_lst, (t_free)gnl_del), NULL);
 	}
-	now = itr->content;
-	line = get_next_line2(fd, &now->carry_up);
+	line = get_next_line2(fd, &((t_gnl_node *)itr->content)->carry_up);
 	if (line == NULL && itr == ft_lst)
 		ft_lst = ft_lst->next;
-	return ((line == NULL && (ft_lstdelone(itr, (t_free)gnl_del), 0)),
-		(errno != 0 && (ft_lstclear(&ft_lst, (t_free)gnl_del), 0)), line);
+	if ((line == NULL && (ft_lstdelone(itr, (t_free)gnl_del), 0))
+		|| (errno != 0 && (ft_lstclear(&ft_lst, (t_free)gnl_del), 0)) || 1)
+		return (line);
 }
 
 void	gnl_del(t_gnl_node *node)
