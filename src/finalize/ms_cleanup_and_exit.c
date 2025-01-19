@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 10:50:27 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:03:35 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ms_cleanup_and_exit(int status)
 	if (ms_is_interactive())
 	{
 		printf("exit\n");
-		ms_add_history("exit");
+		ms_add_mnsh_history("exit");
 	}
 	ms_export_history();
 	ms_clear_environ(NULL);
@@ -39,7 +39,7 @@ void	ms_export_history(void)
 
 	if (ms_getenv("HISTFILE") == NULL)
 		return ;
-	ms_write_history(ms_getenv("HISTFILE"));
+	ms_append_history(ms_unstifle_history(), ms_getenv("HISTFILE"));
 	if (ms_getenv("HISTFILESIZE") == NULL)
 		return ;
 	histfilesize_str = ms_getenv("HISTFILESIZE");

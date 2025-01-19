@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_write_history_history.c                         :+:      :+:    :+:   */
+/*   ms_append_history_history.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 10:01:09 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 12:09:34 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 11:46:28 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 11:58:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "history_internal.h"
 #include "libms.h"
@@ -16,10 +17,13 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-static int	ms_save_history(t_history *history, const char *filename);
-static int	ms_save_history_fd(t_history *history, int fd);
+static int	ms_append_save_history(
+				t_history *history, int nelements, const char *filename);
+static int	ms_append_save_history_fd(
+				t_history *history, int nelements, int fd);
 
-int	ms_write_history_history(t_history *history, const char *filename)
+int	ms_append_history_history(
+		t_history *history, int nelements, const char *filename)
 {
 	char	*save_filename;
 	char	*tilde_expansion_path;
@@ -32,28 +36,36 @@ int	ms_write_history_history(t_history *history, const char *filename)
 	tilde_expansion_path = ms_tilde_expansion(save_filename);
 	if (tilde_expansion_path == NULL)
 		return (errno);
-	eno = ms_save_history(history, tilde_expansion_path);
+	eno = ms_append_save_history(history, nelements, tilde_expansion_path);
 	free(tilde_expansion_path);
 	return (eno);
 }
 
-static int	ms_save_history(t_history *history, const char *filename)
+static int	ms_append_save_history(
+		t_history *history, int nelements, const char *filename)
 {
 	int	fd;
 
-	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+	fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0666);
 	if (fd == -1)
 		return (errno);
-	ms_save_history_fd(history, fd);
+	ms_append_save_history_fd(history, nelements, fd);
 	close(fd);
 	return (0);
 }
 
-static int	ms_save_history_fd(t_history *history, int fd)
+static int	ms_append_save_history_fd(
+				t_history *history, int nelements, int fd)
 {
 	t_list	*history_list;
+	int		skip_size;
 
 	history_list = history->history;
+	skip_size = history->history_length - nelements;
+	if (skip_size < 0)
+		skip_size = 0;
+	while (skip_size-- > 0)
+		history_list = history_list->next;
 	while (history_list != NULL)
 	{
 		ft_putendl_fd(history_list->content, fd);

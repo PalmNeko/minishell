@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_add_history_history.c                           :+:      :+:    :+:   */
+/*   ms_add_mnsh_history.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 09:26:55 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 12:06:52 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 11:29:03 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 12:08:31 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "internal/history_internal.h"
 #include "history.h"
-#include "history_internal.h"
+#include "libms.h"
 
-void	ms_add_history_history(t_history *history, const char *string)
+void	ms_add_mnsh_history(const char *string)
 {
-	t_list	*new;
-
-	new = ft_lstnew(ft_strdup(string));
-	if (new == NULL)
+	ms_update_history_variable();
+	if (ms_unstifle_history() == 0)
 		return ;
-	ft_lstadd_back(&history->history, new);
-	history->history_length++;
-	if (history->history_max_entries >= 0)
-		ms_truncate_history_history(history, history->history_max_entries);
+	ms_add_history(string);
 }

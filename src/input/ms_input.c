@@ -30,7 +30,7 @@ void	ms_input(t_minishell mnsh)
 		if (line == NULL)
 			break ;
 		ft_strrchr(line, '\n')[0] = '\0';
-		ms_add_history(line);
+		ms_add_mnsh_history(line);
 		ms_execution(line);
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 12:13:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 10:49:57 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:00:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	ms_stifle_history(int max);
 int		ms_unstifle_history(void);
 int		ms_history_truncate_file(const char *filename, int nlines);
 void	ms_clear_history(void);
+void	ms_update_history_variable(void);
+void	ms_add_mnsh_history(const char *string);
+int		ms_append_history(int nelements, const char *filename);
 
 /**
  * variables

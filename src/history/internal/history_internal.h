@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 07:22:08 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 11:10:08 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:10:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int			ms_unstifle_history_history(t_history *history);
 int			ms_read_history_history(t_history *history, const char *filename);
 int			ms_write_history_history(t_history *history, const char *filename);
 void		ms_init_history(t_history *history);
-
+int			ms_append_history_history(
+				t_history *history, int nelements, const char *filename);
 /**
  * variable
  */
