@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_add_history.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 07:38:08 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 10:07:06 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "internal/history_internal.h"
+#include <readline/history.h>
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
-
-int	main(void)
+void	ms_add_history(const char *string)
 {
-	t_minishell	*mnsh;
+	t_history	history;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+	history = ms_history();
+	ms_add_history_history(&history, string);
+	add_history(string);
+	ms_set_history(&history);
 }

@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_var_minishell.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 06:51:12 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 11:19:27 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "setup.h"
-#include "input.h"
-#include <stdio.h>
 
-int	main(void)
+static t_minishell	g_minishell;
+
+void	ms_set_minishell(t_minishell *ms)
 {
-	t_minishell	*mnsh;
+	g_minishell = *ms;
+}
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+t_minishell	*ms_get_minishell(void)
+{
+	return (&g_minishell);
 }

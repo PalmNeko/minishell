@@ -6,13 +6,11 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 05:55:29 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/16 09:23:40 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/19 11:18:50 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 199309L
-
-#include <signal.h>
+#include "signal_header.h"
 #include <readline/readline.h>
 #include <stdlib.h>
 

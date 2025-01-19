@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   history_internal_type.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 07:25:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 09:34:58 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef HISTORY_INTERNAL_TYPE_H
+# define HISTORY_INTERNAL_TYPE_H
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
+# include "libft.h"
 
-int	main(void)
+typedef struct s_history
 {
-	t_minishell	*mnsh;
+	t_list	*history;
+	int		history_length;
+	int		history_max_entries;
+}	t_history;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
-}
+#endif

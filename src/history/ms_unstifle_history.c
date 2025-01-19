@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_unstifle_history.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 08:14:06 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 10:12:57 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "internal/history_internal.h"
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
-
-int	main(void)
+int	unstifle_history(void)
 {
-	t_minishell	*mnsh;
+	t_history	history;
+	int			max_entries;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+	history = ms_history();
+	max_entries = ms_unstifle_history_history(&history);
+	return (max_entries);
 }

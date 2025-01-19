@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 09:28:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 11:02:06 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "history_internal_type.h"
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
+static t_history	g_history = {
+	.history = NULL,
+	.history_length = 0,
+	.history_max_entries = 0,
+};
 
-int	main(void)
+t_history	ms_history(void)
 {
-	t_minishell	*mnsh;
-
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+	return (g_history);
 }
+
+void	ms_set_history(const t_history *history)
+{
+	g_history = *history;
+}
+// (t_history) $14 = {
+//   history = 0x00005555555852b0
+//   history_length = 1
+//   history_max_entries = 0
+// }
