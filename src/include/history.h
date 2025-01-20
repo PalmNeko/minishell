@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 12:13:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 12:00:07 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/20 05:51:30 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,5 @@ int		ms_history_length(void);
 int		ms_history_max_entries(void);
 void	ms_set_history_length(int length);
 void	ms_set_history_max_entries(int max_entries);
-
 
 #endif
