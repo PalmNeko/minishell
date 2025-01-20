@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libms_internal_type.h                              :+:      :+:    :+:   */
+/*   ms_find_ms_var.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 12:44:16 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/20 08:28:51 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:11:03 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 08:44:24 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBMS_INTERNAL_TYPE_H
-# define LIBMS_INTERNAL_TYPE_H
+#include "libft.h"
+#include "libms_internal.h"
 
-# include "libms_type.h"
+t_ms_var	*ms_find_ms_var(const char *name)
+{
+	t_list		**environ_lst;
+	t_list		*itr;
+	t_ms_var	*ms_var;
 
-typedef struct ms_var {
-	char			*name;
-	char			*value;
-	t_ms_var_type	attr;
-}	t_ms_var;
-
-#endif
+	environ_lst = ms_int_get_environ_variable();
+	itr = *environ_lst;
+	while (itr != NULL)
+	{
+		ms_var = itr->content;
+		if (ft_strcmp(ms_var->name, name) == 0)
+			return (ms_var);
+		itr = itr->next;
+	}
+	return (NULL);
+}

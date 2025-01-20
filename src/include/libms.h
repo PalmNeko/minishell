@@ -14,6 +14,7 @@
 # define LIBMS_H
 
 # include "libft_type.h"
+# include "libms_type.h"
 # include <stddef.h>
 
 /** string.h */
@@ -63,6 +64,12 @@ int		ms_unsetenv(const char *name);
 int		ms_import_env(char *const envp[]);
 char	**ms_export_env(void);
 void	ms_clear_environ(void *unused);
+
+int				ms_add_envattr(const char *name, t_ms_var_type attr);
+int				ms_set_envattr(const char *name, t_ms_var_type attr);
+int				ms_remove_envattr(const char *name, t_ms_var_type attr);
+bool			ms_has_envattr(const char *name, t_ms_var_type attr);
+t_ms_var_type	ms_get_envattr(const char *name);
 
 // environment variable
 char	**ms_get_pwd(void);
