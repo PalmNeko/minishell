@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 12:13:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/20 05:51:30 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/20 06:20:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ms_clear_history(void);
 void	ms_update_history_variable(void);
 void	ms_add_mnsh_history(const char *string);
 int		ms_append_history(int nelements, const char *filename);
+void	ms_reset_histcmd(void);
+int		ms_get_histcmd(void);
 
 /**
  * variables

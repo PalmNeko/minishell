@@ -42,6 +42,7 @@ char	*ms_get_user_input(t_minishell mnsh)
 	char	*line;
 	char	*heredoc_input;
 
+	ms_update_history_variable();
 	while (1)
 	{
 		line = readline("bulitin> ");
