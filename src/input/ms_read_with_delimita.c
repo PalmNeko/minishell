@@ -30,7 +30,7 @@ char	*ms_read_with_delimita(char *delimita)
 		return (NULL);
 	while (1)
 	{
-		readline_input = readline(" > "); // PS2
+		readline_input = ms_readline(ms_getenv("PS2"));
 		if (!readline_input)
 		{
 			ms_print_heredoc_eof_warning();

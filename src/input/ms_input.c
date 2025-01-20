@@ -45,7 +45,7 @@ char	*ms_get_user_input(t_minishell mnsh)
 	ms_update_history_variable();
 	while (1)
 	{
-		line = readline("bulitin> ");
+		line = ms_readline(ms_getenv("PS1"));
 		if (!line)
 			return (NULL);
 		if (line[0] != '\0')

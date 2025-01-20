@@ -6,14 +6,17 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:29:38 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/18 18:34:16 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/20 10:12:44 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
+#include "setup.h"
+
+void	ms_setup_only_interactive_var(void);
 
 /**
- * PWD の値を設定
+ * setup environment variable.
  */
 void	ms_setup_variable(void)
 {
@@ -22,6 +25,12 @@ void	ms_setup_variable(void)
 	cwd = ms_get_current_dir_name();
 	if (cwd != NULL)
 		ms_setenv("PWD", cwd, 1);
+	if (ms_is_interactive() == true)
+		ms_setup_only_interactive_var();
+}
+
+void	ms_setup_only_interactive_var(void)
+{
 	ms_setenv("HISTCMD", "1", 0);
 	ms_setenv("HISTSIZE", "500", 0);
 	ms_setenv("HISTFILESIZE", "500", 0);
