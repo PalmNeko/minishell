@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_setup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/15 13:29:00 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 11:19:12 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "setup.h"
-#include "input.h"
-#include <stdio.h>
+#include "setup_internal.h"
 
-int	main(void)
+t_minishell	*ms_setup(void)
 {
-	t_minishell	*mnsh;
+	t_minishell	*ms;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+	ms_setup_variable();
+	ms_setup_history();
+	ms_set_handle();
+	ms = ms_get_minishell();
+	*ms = (t_minishell){
+		.ms_malloc_list = NULL,
+		.ms_shell_var = NULL,
+	};
+	return (ms);
 }

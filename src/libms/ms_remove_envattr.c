@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_remove_envattr.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:22:43 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 08:44:09 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "libms_internal.h"
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
-
-int	main(void)
+/**
+ * remove environment variable attribute.
+ * @param name variable name
+ * @param attr attribute
+ * @return zero on success. -1 on variable is not found.
+ */
+int	ms_remove_envattr(const char *name, t_ms_var_type attr)
 {
-	t_minishell	*mnsh;
+	t_ms_var	*ms_var;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
+	ms_var = ms_find_ms_var(name);
+	if (ms_var == NULL)
+		return (-1);
+	ms_var->attr &= ~attr;
 	return (0);
 }

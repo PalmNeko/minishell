@@ -14,6 +14,7 @@
 # define LIBMS_H
 
 # include "libft_type.h"
+# include "libms_type.h"
 # include <stddef.h>
 
 /** string.h */
@@ -43,6 +44,9 @@ char	*ms_to_abs_path(const char *path);
 char	*ms_normalize_path(const char *path);
 char	*ms_get_full_path(const char *basedir, const char *path);
 char	*ms_replace_joined_str(char **left, char *right);
+char	*ms_tilde_expansion(const char *path);
+int		ms_trim_end_newline(char *str);
+char	*ms_readline(const char *prompt);
 
 void *ms_identify(void *arg);
 void ms_noop_del(void *arg);
@@ -61,6 +65,12 @@ int		ms_unsetenv(const char *name);
 int		ms_import_env(char *const envp[]);
 char	**ms_export_env(void);
 void	ms_clear_environ(void *unused);
+
+int				ms_add_envattr(const char *name, t_ms_var_type attr);
+int				ms_set_envattr(const char *name, t_ms_var_type attr);
+int				ms_remove_envattr(const char *name, t_ms_var_type attr);
+bool			ms_has_envattr(const char *name, t_ms_var_type attr);
+t_ms_var_type	ms_get_envattr(const char *name);
 
 // environment variable
 char	**ms_get_pwd(void);

@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_set_handle_on_heredoc.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/16 06:54:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/16 07:20:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <readline/readline.h>
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
-
-int	main(void)
+int	ms_set_handle_on_heredoc(void)
 {
-	t_minishell	*mnsh;
+	const int	enable_sigint = 1;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
+	rl_persistent_signal_handlers = enable_sigint;
 	return (0);
 }

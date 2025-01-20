@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_get_envattr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:18:47 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 08:43:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "libms_internal.h"
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
-
-int	main(void)
+/**
+ * get environment variable attribute.
+ * @param name variable name
+ * @return variable attributes on success. ATTR_NONE on variable is not found.
+ */
+t_ms_var_type	ms_get_envattr(const char *name)
 {
-	t_minishell	*mnsh;
+	t_ms_var	*ms_var;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+	ms_var = ms_find_ms_var(name);
+	if (ms_var == NULL)
+		return (ATTR_NONE);
+	return (ms_var->attr);
 }

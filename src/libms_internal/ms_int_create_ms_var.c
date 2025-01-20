@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:57:57 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/28 13:03:14 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/20 08:10:06 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ t_ms_var	*ms_int_create_ms_var(const char *name, const char *value)
 	new_var->value = ft_strdup(value);
 	if (new_var->value == NULL)
 		return (ms_int_destroy_ms_var(new_var), NULL);
+	new_var->attr = ATTR_NONE;
 	return (new_var);
 }

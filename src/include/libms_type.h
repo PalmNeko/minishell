@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   libms_type.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:28:18 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 08:28:59 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LIBMS_TYPE_H
+# define LIBMS_TYPE_H
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
+typedef enum e_ms_var_type {
+	ATTR_NONE = 0,
+	ATTR_SHELL_VAR = 1,
+	ATTR_ENV = 2,
+	ATTR_EXPORT = 4,
+}	t_ms_var_type;
 
-int	main(void)
-{
-	t_minishell	*mnsh;
-
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
-}
+#endif

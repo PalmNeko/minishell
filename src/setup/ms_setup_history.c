@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_setup_history.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/18 12:14:00 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/18 18:04:37 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "setup.h"
-#include "input.h"
+#include "libms.h"
+#include "history.h"
 #include <stdio.h>
 
-int	main(void)
+int	ms_setup_history(void)
 {
-	t_minishell	*mnsh;
+	char	*filename;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
+	filename = ms_getenv("HISTFILE");
+	if (filename == NULL)
+		filename = "~/.mnsh_history";
+	ms_read_history(filename);
 	return (0);
 }

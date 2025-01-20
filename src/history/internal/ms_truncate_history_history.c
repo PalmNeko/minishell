@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_truncate_history_history.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 09:36:22 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 11:16:38 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "history_internal.h"
+#include <stdlib.h>
 
-#include "setup.h"
-#include "input.h"
-#include <stdio.h>
-
-int	main(void)
+void	ms_truncate_history_history(t_history *history, int nlines)
 {
-	t_minishell	*mnsh;
+	t_list	*poped;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+	if (nlines < 0)
+		return ;
+	while (history->history_length > nlines)
+	{
+		poped = ft_lstpop(&history->history);
+		ft_lstdelone(poped, free);
+		history->history_length--;
+	}
+	return ;
 }

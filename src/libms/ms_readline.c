@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 17:30:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/19 10:53:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:38:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 10:07:18 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#define _DEFAULT_SOURCE
+#include "libms.h"
 #include "setup.h"
-#include "input.h"
-#include <stdio.h>
+#include <readline/readline.h>
+#include <unistd.h>
 
-int	main(void)
+char	*ms_readline(const char *prompt)
 {
-	t_minishell	*mnsh;
+	char	*line;
+	int 	dupped_fd;
 
-	mnsh = ms_setup();
-	if (mnsh == NULL)
-		return (1);
-	ms_input(*mnsh);
-	ms_cleanup_and_exit(0);
-	return (0);
+	if (ms_is_interactive())
+		return (readline(prompt));
+	dupped_fd = dup(1);
+	if (dupped_fd == -1)
+		return (NULL);
+	close(1);
+	line = readline(NULL);
+	dup2(dupped_fd, 1);
+	return (line);
 }
