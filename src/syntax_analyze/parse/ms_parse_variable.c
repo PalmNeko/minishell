@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_parse_variable.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 23:39:44 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/21 23:39:45 by rnakatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
-t_syntax_node *ms_parse_variable(t_token **tokens, int pos)
+t_syntax_node	*ms_parse_variable(t_token **tokens, int pos)
 {
-	t_syntax_node *node;
+	t_syntax_node	*node;
 
 	if (tokens[pos]->type != TK_VARIABLE)
 		return (ms_parse_declined(tokens, pos));
