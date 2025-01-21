@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_parse_assignment_command.c                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 23:40:11 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/22 00:16:33 by rnakatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "syntax_analyze.h"
 
-t_syntax_node *ms_parse_assignment_command(t_token **tokens, int pos)
+t_syntax_node	*ms_parse_assignment_command(t_token **tokens, int pos)
 {
-	t_syntax_node *node;
-	t_syntax_node *child;
-	t_syntax_node *child2;
-	t_syntax_node_list *temp;
-	t_syntax_node_list *child_lst;
-	const int start_pos = pos;
+	t_syntax_node		*node;
+	t_syntax_node		*child;
+	t_syntax_node		*child2;
+	t_syntax_node_list	*temp;
+	t_syntax_node_list	*child_lst;
+	const int			start_pos = pos;
 
 	child_lst = NULL;
 	child = ms_parse_assignment_word(tokens, pos);
@@ -20,28 +32,32 @@ t_syntax_node *ms_parse_assignment_command(t_token **tokens, int pos)
 		return (ms_syntax_node_destroy(child), NULL);
 	ft_lstadd_back(&child_lst, temp);
 	pos = child->end_pos;
-	while(tokens[pos])
+	while (tokens[pos])
 	{
 		child = ms_parse_blank(tokens, pos);
 		if (child == NULL)
-			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
+				NULL);
 		child2 = ms_parse_assignment_word(tokens, child->end_pos);
 		if (child2 == NULL)
-			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
+				NULL);
 		if (child2->type != SY_DECLINED)
 		{
 			temp = ft_lstnew(child);
 			if (temp == NULL)
-				return (ms_syntax_node_destroy(child), ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+				return (ms_syntax_node_destroy(child), ft_lstclear(&child_lst,
+						ms_syntax_node_destroy_wrapper), NULL);
 			ft_lstadd_back(&child_lst, temp);
 			temp = ft_lstnew(child2);
 			if (temp == NULL)
-				return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+				return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
+					NULL);
 			ft_lstadd_back(&child_lst, temp);
 			pos = child2->end_pos;
 		}
 		else
-			break;
+			break ;
 	}
 	node = ms_syntax_node_create(SY_ASSIGNMENT_COMMAND);
 	if (node == NULL)
@@ -53,4 +69,3 @@ t_syntax_node *ms_parse_assignment_command(t_token **tokens, int pos)
 	node->end_pos = pos;
 	return (node);
 }
-

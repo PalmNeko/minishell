@@ -133,23 +133,25 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SINGLE_QUOTED_WORD_FAIL)
 //----------------------------------------
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_SUCCESS)
 {
-    const char *str = "\"word\"\"word\"";
+    const char *str = "$hoge\"word\"!test\'word\'hoge";
 
     // 期待値用トークンを作る
     t_token **expect_tokens = ms_lexical_analyze(str);
 
     // 期待ノードの子配列
-    t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 3);
-	expect_children[0] = ms_parse_double_quoted_word(expect_tokens, 0);
-	expect_children[1] = ms_parse_double_quoted_word(expect_tokens, 3);
-	expect_children[2] = NULL;
-
+    t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 6);
+	expect_children[0] = ms_parse_variable(expect_tokens, 0);
+	expect_children[1] = ms_parse_double_quoted_word(expect_tokens, 1);
+	expect_children[2] = ms_parse_word(expect_tokens, 4);
+	expect_children[3] = ms_parse_single_quoted_word(expect_tokens, 5);
+	expect_children[4] = ms_parse_identify(expect_tokens, 8);
+	expect_children[5] = NULL;
 
 	// 期待ノード本体 (SY_WORD_LIST)
 	t_syntax_node *expect = ms_syntax_node_create(SY_WORD_LIST);
 	expect->children  = expect_children;
 	expect->start_pos = 0;
-	expect->end_pos   = 6;
+	expect->end_pos   = 9;
 
     // 実際のパース結果
     t_syntax_node *actual = ms_parse_word_list(expect_tokens, 0);
@@ -241,7 +243,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_WORD_SUCCESS)
 
 	// children of expect node
 	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 4);
-	expect_children[0] = ms_parse_identify(expect_tokens, 0);
+	expect_children[0] = ms_parse_word_list(expect_tokens, 0);
 	expect_children[1] = ms_parse_equal(expect_tokens, 1);
 	expect_children[2] = ms_parse_word_list(expect_tokens, 2);
 	expect_children[3] = NULL;

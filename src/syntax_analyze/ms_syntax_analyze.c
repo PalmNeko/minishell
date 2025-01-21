@@ -1,15 +1,27 @@
-#include <syntax_analyze.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_syntax_analyze.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 23:28:00 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/22 00:14:26 by rnakatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdio.h>
+#include <syntax_analyze.h>
 
-t_syntax_node *ms_syntax_analyze(t_token **tokens)
+t_syntax_node	*ms_syntax_analyze(t_token **tokens)
 {
-	t_syntax_node *node;
+	t_syntax_node	*node;
 
 	node = ms_parse_instruction(tokens, 0);
 	if (node == NULL)
 		return (NULL);
 	if (node->type == SY_DECLINED)
-		printf("error at %d\n", node->start_pos);
-	return(node);
+		printf("minishell: syntax error near unexpected token `%s\'\n",
+			node->token->token);
+	return (node);
 }

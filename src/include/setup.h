@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_syntax_node_destroy_wrapper.c                   :+:      :+:    :+:   */
+/*   setup.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 23:28:32 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:15:08 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/15 17:15:23 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
+#ifndef SETUP_H
+# define SETUP_H
 
-void	ms_syntax_node_destroy_wrapper(void *node)
-{
-	t_syntax_node	*syntax_node;
+# include "libft.h"
+# include "setup_type.h"
 
-	syntax_node = (t_syntax_node *)node;
-	ms_syntax_node_destroy(syntax_node);
-}
+t_minishell	*ms_setup(void);
+void		ms_cleanup_and_exit(int status);
+
+#endif
