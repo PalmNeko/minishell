@@ -37,35 +37,32 @@ TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE1){
 	ms_syntax_node_destroy(command_node);
 }
 
-// Parser部分で不具合あり
-// TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE2){
-// 	t_lsa_command	*expect;
-// 	t_lsa_command	*actual;
-// 	t_syntax_node	*command_node;
-// 	t_token			**tokens;
-// 	const char		*str;
+TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE2){
+	t_lsa_command	*expect;
+	t_lsa_command	*actual;
+	t_syntax_node	*command_node;
+	t_token			**tokens;
+	const char		*str;
 
-// 	str = "PATH=$PATH:/usr/bin HOGE=piyo";
-// 	tokens = ms_lexical_analyze(str);
+	str = "PATH=$PATH:/usr/bin HOGE=piyo";
+	tokens = ms_lexical_analyze(str);
 
-// 	command_node = ms_parse_command(tokens, 0);
-// 	printf("command_node->children[0]->children[0]: %p\n", command_node->children[0]->children[0]);
-// 	printf("command_node->children[0]->children[1]: %p\n", command_node->children[0]->children[1]);
+	command_node = ms_parse_command(tokens, 0);
 
-// 	expect = (t_lsa_command *)malloc(sizeof(t_lsa_command));
-// 	expect->args = NULL;
-// 	expect->assignments = (t_lsa_assignment **)malloc(sizeof(t_lsa_assignment *) * 3);
-// 	expect->assignments[0] = ms_lsa_assignment(command_node->children[0]->children[0]);
-// 	expect->assignments[1] = ms_lsa_assignment(command_node->children[0]->children[2]);
-// 	expect->assignments[2] = NULL;
-// 	expect->redirects = NULL;
+	expect = (t_lsa_command *)malloc(sizeof(t_lsa_command));
+	expect->args = NULL;
+	expect->assignments = (t_lsa_assignment **)malloc(sizeof(t_lsa_assignment *) * 3);
+	expect->assignments[0] = ms_lsa_assignment(command_node->children[0]->children[0]);
+	expect->assignments[1] = ms_lsa_assignment(command_node->children[0]->children[2]);
+	expect->assignments[2] = NULL;
+	expect->redirects = NULL;
 
-// 	actual = ms_lsa_command(command_node);
+	actual = ms_lsa_command(command_node);
 
-// 	test_runner_of_lsa_command(expect, actual);
+	test_runner_of_lsa_command(expect, actual);
 
-// 	ms_syntax_node_destroy(command_node);
-// }
+	ms_syntax_node_destroy(command_node);
+}
 
 void test_runner_of_lsa_command(t_lsa_command *expect,  t_lsa_command *actual)
 {
