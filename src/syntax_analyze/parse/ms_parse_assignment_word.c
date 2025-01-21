@@ -9,11 +9,9 @@ t_syntax_node *ms_parse_assignment_word(t_token **tokens, int pos)
 	const int start_pos = pos;
 
 	child_lst = NULL;
-	child = ms_parse_identify(tokens, pos);
-	if (child == NULL)
-		return (NULL);
-	if(child->token->type != TK_IDENTIFY)
-		return(ms_syntax_node_destroy(child), ms_parse_declined(tokens, pos));
+	if(tokens[pos]->type != TK_IDENTIFY)
+		return (ms_parse_declined(tokens, pos));
+	child = ms_parse_word_list(tokens, pos);
 	temp = ft_lstnew(child);
 	if (temp == NULL)
 		return(ms_syntax_node_destroy(child), NULL);
