@@ -44,7 +44,9 @@ typedef struct s_lsa_assignment {
 
 typedef struct s_lsa_redirection {
 	t_lsa_redirection_type type;
-	t_lsa_word_list *filename_or_delimiter;
+	//どちらかがNULL
+	t_lsa_word_list *filename;
+	t_lsa_word_list *delimiter;
 	t_syntax_node **heredoc_input; // ヒアドクの入力
 	bool is_expansion; // 変数展開するかどうか
 }	t_lsa_redirection;
