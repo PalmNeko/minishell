@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_init_history.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 06:54:23 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 11:08:23 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 06:28:30 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include "history_internal.h"
 
-# include "libft.h"
-# include "setup_type.h"
-
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-t_minishell	*ms_get_minishell(void);
-void		ms_set_minishell(t_minishell *ms);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+void	ms_init_history(t_history *history)
+{
+	history->history = NULL;
+	history->history_length = 0;
+	history->history_max_entries = 0;
+	history->history_cmd = 1;
+	history->enable_history_cmd = true;
+}

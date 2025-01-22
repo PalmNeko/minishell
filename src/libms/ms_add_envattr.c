@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_add_envattr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 06:54:23 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:17:50 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 08:43:46 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include "libft.h"
+#include "libms_internal.h"
 
-# include "libft.h"
-# include "setup_type.h"
+/**
+ * add environment variable attribute.
+ * @param name variable name
+ * @param attr attribute
+ * @return zero on success. -1 on variable is not found.
+ */
+int	ms_add_envattr(const char *name, t_ms_var_type attr)
+{
+	t_ms_var	*ms_var;
 
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-t_minishell	*ms_get_minishell(void);
-void		ms_set_minishell(t_minishell *ms);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+	ms_var = ms_find_ms_var(name);
+	if (ms_var == NULL)
+		return (-1);
+	ms_var->attr |= attr;
+	return (0);
+}

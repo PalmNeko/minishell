@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_truncate_history.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 06:54:23 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/19 09:20:13 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/19 11:16:22 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include "internal/history_internal.h"
+#include "history.h"
+#include "libft.h"
+#include <stdlib.h>
 
-# include "libft.h"
-# include "setup_type.h"
+void	ms_truncate_history(int nlines)
+{
+	t_history	history;
 
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-t_minishell	*ms_get_minishell(void);
-void		ms_set_minishell(t_minishell *ms);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+	history = ms_history();
+	ms_truncate_history_history(&history, nlines);
+	ms_set_history(&history);
+	return ;
+}

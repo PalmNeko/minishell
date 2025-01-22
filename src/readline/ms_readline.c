@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 06:54:23 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:38:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/22 11:00:09 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include "libms.h"
+#include "setup.h"
+#include <readline/readline.h>
+#include <unistd.h>
 
-# include "libft.h"
-# include "setup_type.h"
+char	*ms_readline(const char *prompt)
+{
+	char	*line;
+	int		dupped_fd;
 
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-t_minishell	*ms_get_minishell(void);
-void		ms_set_minishell(t_minishell *ms);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+	if (ms_is_interactive())
+		return (readline(prompt));
+	dupped_fd = dup(1);
+	if (dupped_fd == -1)
+		return (NULL);
+	close(1);
+	line = readline(NULL);
+	dup2(dupped_fd, 1);
+	return (line);
+}

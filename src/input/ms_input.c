@@ -12,17 +12,17 @@
 
 #include "input.h"
 #include "libms.h"
+#include "readline.h"
 #include "execution.h"
-#include <readline/history.h>
+#include "history.h"
 #include <readline/readline.h>
 #include <stdlib.h>
 
-char	*ms_get_user_input(t_minishell mnsh);
+static char	*ms_get_user_input(t_minishell mnsh);
 
 void	ms_input(t_minishell mnsh)
 {
 	char	*line;
-	int	status;
 
 	(void)mnsh;
 	while (1)
@@ -31,23 +31,25 @@ void	ms_input(t_minishell mnsh)
 		if (line == NULL)
 			break ;
 		ft_strrchr(line, '\n')[0] = '\0';
-		add_history(line);
-		status = ms_execution(line);
+		if (! g_rl_is_sigint)
+		{
+			ms_add_mnsh_history(line);
+			ms_execution(line);
+		}
 		free(line);
 	}
-	(void)status;
-	printf("exit\n");
 	return ;
 }
 
-char	*ms_get_user_input(t_minishell mnsh)
+static char	*ms_get_user_input(t_minishell mnsh)
 {
 	char	*line;
 	char	*heredoc_input;
 
+	ms_update_history_variable();
 	while (1)
 	{
-		line = readline("bulitin> ");
+		line = ms_readline(ms_getenv("PS1"));
 		if (!line)
 			return (NULL);
 		if (line[0] != '\0')

@@ -10,7 +10,8 @@ TEST(ms_int_ms_var_to_string, basic)
 {
 	t_ms_var ms_var = {
 		.name = (char *)"name",
-		.value = (char *)"value"
+		.value = (char *)"value",
+		.attr = ATTR_NONE,
 	};
 	char	*str;
 
