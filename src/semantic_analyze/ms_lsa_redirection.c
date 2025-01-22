@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_lsa_redirection.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 09:14:07 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/22 09:15:35 by rnakatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "semantic_analyze.h"
 #include <stdlib.h>
 
@@ -21,8 +33,8 @@ t_lsa_redirection	*ms_lsa_redirection(const t_syntax_node *redirection_node)
 			lsa_redirection->filename = ms_lsa_word_list(redirection_node->children[1]);
 		else
 			lsa_redirection->filename = ms_lsa_word_list(redirection_node->children[2]);
-		if(lsa_redirection->filename == NULL)
-			return(free(lsa_redirection), NULL);
+		if (lsa_redirection->filename == NULL)
+			return (free(lsa_redirection), NULL);
 	}
 	return (lsa_redirection);
 }

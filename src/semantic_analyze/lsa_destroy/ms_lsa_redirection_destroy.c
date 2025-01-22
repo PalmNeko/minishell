@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_lsa_redirection_destroy.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 09:13:08 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/22 09:13:09 by rnakatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "semantic_analyze.h"
 #include "semantic_analyze_internal.h"
 #include <stdlib.h>
 
 /*notes
-* not yet about heredoc.
-*/
-void ms_lsa_redirection_destroy(t_lsa_redirection *redirection)
+ * not yet about heredoc.
+ */
+void	ms_lsa_redirection_destroy(t_lsa_redirection *redirection)
 {
 	if (redirection == NULL)
 		return ;
