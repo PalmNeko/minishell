@@ -6,11 +6,10 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 08:38:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:13:06 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/22 11:00:09 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _DEFAULT_SOURCE
 #include "libms.h"
 #include "setup.h"
 #include <readline/readline.h>
@@ -19,7 +18,7 @@
 char	*ms_readline(const char *prompt)
 {
 	char	*line;
-	int 	dupped_fd;
+	int		dupped_fd;
 
 	if (ms_is_interactive())
 		return (readline(prompt));
