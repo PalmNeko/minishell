@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   semantic_analyze.c                                 :+:      :+:    :+:   */
+/*   ms_lsa_pipeline_destroy.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 09:14:17 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 09:14:17 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/01/22 09:12:59 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/22 09:13:03 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libms.h"
 #include "semantic_analyze.h"
+#include "semantic_analyze_internal.h"
 #include <stdlib.h>
 
-/* notes
- * not yet about heredoc.
- */
-t_lsa	*semantic_analyze(t_syntax_node *node)
-{
-	t_lsa		*lsa;
-	t_lsa_list	**lists;
+static void	ms_lsa_command_destroy_wrapper(void *command);
 
-	lsa = malloc(sizeof(t_lsa));
-	if (lsa == NULL)
-		return (NULL);
-	lists = ms_lsa_lists(node->children[0]);
-	if (lists == NULL)
-		return (NULL);
-	// heredoc用の処理も必要
-	lsa->lists = lists;
-	return (lsa);
+void	ms_lsa_pipeline_destroy(t_lsa_pipeline *pipeline)
+{
+	if (pipeline == NULL)
+		return ;
+	if (pipeline->commands != NULL)
+		ms_destroy_ntp2((void **)pipeline->commands,
+			ms_lsa_command_destroy_wrapper);
+	free(pipeline);
+}
+
+void	ms_lsa_command_destroy_wrapper(void *command)
+{
+	ms_lsa_command_destroy((t_lsa_command *)command);
 }

@@ -1,7 +1,19 @@
-#include <syntax_analyze.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_syntax_node_create.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 23:28:20 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/22 00:14:47 by rnakatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_syntax_node *ms_syntax_node_create(t_syntax_type type)
+#include <stdlib.h>
+#include <syntax_analyze.h>
+
+t_syntax_node	*ms_syntax_node_create(t_syntax_type type)
 {
 	t_syntax_node	*node;
 

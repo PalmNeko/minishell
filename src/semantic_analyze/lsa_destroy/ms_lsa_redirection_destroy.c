@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   semantic_analyze.c                                 :+:      :+:    :+:   */
+/*   ms_lsa_redirection_destroy.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 09:14:17 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 09:14:17 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/01/22 09:13:08 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/22 09:13:09 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "semantic_analyze.h"
+#include "semantic_analyze_internal.h"
 #include <stdlib.h>
 
-/* notes
+/*notes
  * not yet about heredoc.
  */
-t_lsa	*semantic_analyze(t_syntax_node *node)
+void	ms_lsa_redirection_destroy(t_lsa_redirection *redirection)
 {
-	t_lsa		*lsa;
-	t_lsa_list	**lists;
-
-	lsa = malloc(sizeof(t_lsa));
-	if (lsa == NULL)
-		return (NULL);
-	lists = ms_lsa_lists(node->children[0]);
-	if (lists == NULL)
-		return (NULL);
-	// heredoc用の処理も必要
-	lsa->lists = lists;
-	return (lsa);
+	if (redirection == NULL)
+		return ;
+	if (redirection->filename != NULL)
+		ms_lsa_wordlist_destroy(redirection->filename);
+	if (redirection->delimiter != NULL)
+		ms_lsa_wordlist_destroy(redirection->delimiter);
+	// if (redirection->heredoc_input != NULL)
+	// 	ms_syntax_node_destroy(redirection->heredoc_input);
+	free(redirection);
 }
