@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 
-char	*ms_read_with_heredoc(t_heredoc *heredoc);
+static	char	*ms_read_with_heredoc(t_heredoc *heredoc);
 
 char	*ms_input_heredoc(t_minishell mnsh, char *input)
 {
@@ -35,7 +35,7 @@ char	*ms_input_heredoc(t_minishell mnsh, char *input)
 	return (heredoc_input);
 }
 
-char	*ms_read_with_heredoc(t_heredoc *heredoc)
+static	char	*ms_read_with_heredoc(t_heredoc *heredoc)
 {
 	char			*readline_input;
 	char			*input;
