@@ -38,6 +38,7 @@ char	*ms_read_with_delimita(char *delimita)
 			break ;
 		}
 		is_break = ft_strcmp(readline_input, delimita) == 0;
+		is_break |= g_rl_is_sigint;
 		is_break |= ms_append_with_newline(&input, readline_input) == NULL;
 		free(readline_input);
 		if (is_break)

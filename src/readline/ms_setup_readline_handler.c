@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 05:55:29 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:12:57 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:31:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static void	ms_handle_sigint(int sig)
 	if (sig == SIGINT)
 	{
 		rl_replace_line("", 0);
+		printf("\n");
+		rl_on_new_line();
 		g_rl_is_sigint = 1;
 		rl_done = 1;
 	}

@@ -13,6 +13,7 @@
 #include "setup.h"
 #include "input.h"
 #include "libms.h"
+#include "readline.h"
 #include <stdlib.h>
 #include <readline/readline.h>
 
@@ -51,6 +52,7 @@ char	*ms_read_with_heredoc(t_heredoc *heredoc)
 		if (readline_input == NULL)
 			return (input);
 		is_break = ms_replace_joined_str(&input, readline_input) == NULL;
+		is_break |= g_rl_is_sigint;
 		free(readline_input);
 		if (is_break)
 			break ;

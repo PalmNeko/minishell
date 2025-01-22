@@ -31,8 +31,11 @@ void	ms_input(t_minishell mnsh)
 		if (line == NULL)
 			break ;
 		ft_strrchr(line, '\n')[0] = '\0';
-		ms_add_mnsh_history(line);
-		ms_execution(line);
+		if (! g_rl_is_sigint)
+		{
+			ms_add_mnsh_history(line);
+			ms_execution(line);
+		}
 		free(line);
 	}
 	return ;
