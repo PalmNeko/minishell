@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 09:55:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 10:51:51 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/22 05:53:57 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-int	ms_load_history_history(t_history *history, const char *filename);
-int	ms_load_history_history_fd(t_history *history, int fd);
+static int	ms_load_history_history(t_history *history, const char *filename);
+static int	ms_load_history_history_fd(t_history *history, int fd);
 
 /**
  * Add the contents of filename to the history list, a line at a time.
@@ -41,7 +41,7 @@ int	ms_read_history_history(t_history *history, const char *filename)
 	return (ret_errno);
 }
 
-int	ms_load_history_history(t_history *history, const char *filename)
+static int	ms_load_history_history(t_history *history, const char *filename)
 {
 	int		fd;
 	int		ret_errno;
@@ -58,7 +58,7 @@ int	ms_load_history_history(t_history *history, const char *filename)
 	return (ret_errno);
 }
 
-int	ms_load_history_history_fd(t_history *history, int fd)
+static int	ms_load_history_history_fd(t_history *history, int fd)
 {
 	char	*line;
 	char	*carry_up;

@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 11:20:46 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/20 07:13:19 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/22 05:53:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 
-void	ms_update_histsize(void);
-void	ms_update_histcmd(void);
+static void	ms_update_histsize(void);
+static void	ms_update_histcmd(void);
 
 void	ms_update_history_variable(void)
 {
@@ -26,7 +26,7 @@ void	ms_update_history_variable(void)
 	ms_update_histcmd();
 }
 
-void	ms_update_histsize(void)
+static void	ms_update_histsize(void)
 {
 	char		*histsize_str;
 	int			histsize;
@@ -38,7 +38,7 @@ void	ms_update_histsize(void)
 	ms_stifle_history(histsize);
 }
 
-void	ms_update_histcmd(void)
+static void	ms_update_histcmd(void)
 {
 	t_history	history;
 	char		*histcmd_str;

@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 12:03:35 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/22 05:56:03 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	ms_export_history(void);
+static void	ms_export_history(void);
 
 void	ms_cleanup_and_exit(int status)
 {
@@ -30,7 +30,7 @@ void	ms_cleanup_and_exit(int status)
 	exit(status);
 }
 
-void	ms_export_history(void)
+static void	ms_export_history(void)
 {
 	const int	base = 10;
 	int			histfilesize;

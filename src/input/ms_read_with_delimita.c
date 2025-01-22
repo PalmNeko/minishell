@@ -17,7 +17,7 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 
-void	ms_print_heredoc_eof_warning(void);
+static void	ms_print_heredoc_eof_warning(void);
 
 char	*ms_read_with_delimita(char *delimita)
 {
@@ -45,7 +45,7 @@ char	*ms_read_with_delimita(char *delimita)
 	return (input);
 }
 
-void	ms_print_heredoc_eof_warning(void)
+static void	ms_print_heredoc_eof_warning(void)
 {
 	ms_perror_cmd2("minishell", "warning",
 		"here-document delimited by end-of-file (wanted `EOF')");

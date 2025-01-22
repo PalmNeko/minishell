@@ -6,14 +6,14 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:29:38 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/20 10:12:44 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/22 06:04:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 #include "setup.h"
 
-void	ms_setup_only_interactive_var(void);
+static void	ms_setup_only_interactive_var(void);
 
 /**
  * setup environment variable.
@@ -29,7 +29,7 @@ void	ms_setup_variable(void)
 		ms_setup_only_interactive_var();
 }
 
-void	ms_setup_only_interactive_var(void)
+static void	ms_setup_only_interactive_var(void)
 {
 	ms_setenv("HISTCMD", "1", 0);
 	ms_setenv("HISTSIZE", "500", 0);
