@@ -13,6 +13,7 @@
 #include "libms.h"
 #include "libft.h"
 #include "input.h"
+#include "readline.h"
 #include <unistd.h>
 #include <readline/readline.h>
 #include <stdlib.h>

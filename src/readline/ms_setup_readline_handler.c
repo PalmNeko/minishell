@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_set_handle.c                                    :+:      :+:    :+:   */
+/*   ms_setup_readline_handler.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 05:55:29 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 09:14:33 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:12:57 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ms_startup_hook_handler(void);
 static int	ms_event_hook_handler(void);
 static void	ms_handle_sigint(int sig);
 
-int	ms_set_handle(void)
+int	ms_setup_readline_handler(void)
 {
 	rl_startup_hook = ms_startup_hook_handler;
 	rl_event_hook = ms_event_hook_handler;

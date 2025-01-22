@@ -12,6 +12,7 @@
 
 #include "input.h"
 #include "libms.h"
+#include "readline.h"
 #include "execution.h"
 #include "history.h"
 #include <readline/readline.h>

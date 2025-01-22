@@ -46,7 +46,6 @@ char	*ms_get_full_path(const char *basedir, const char *path);
 char	*ms_replace_joined_str(char **left, char *right);
 char	*ms_tilde_expansion(const char *path);
 int		ms_trim_end_newline(char *str);
-char	*ms_readline(const char *prompt);
 
 void *ms_identify(void *arg);
 void ms_noop_del(void *arg);

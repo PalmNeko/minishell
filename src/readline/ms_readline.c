@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_internal.h                                   :+:      :+:    :+:   */
+/*   ms_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 08:13:10 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:20:14 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:38:39 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/22 10:13:06 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_INTERNAL_H
-# define SETUP_INTERNAL_H
+#define _DEFAULT_SOURCE
+#include "libms.h"
+#include "setup.h"
+#include <readline/readline.h>
+#include <unistd.h>
 
-#endif
+char	*ms_readline(const char *prompt)
+{
+	char	*line;
+	int 	dupped_fd;
+
+	if (ms_is_interactive())
+		return (readline(prompt));
+	dupped_fd = dup(1);
+	if (dupped_fd == -1)
+		return (NULL);
+	close(1);
+	line = readline(NULL);
+	dup2(dupped_fd, 1);
+	return (line);
+}
