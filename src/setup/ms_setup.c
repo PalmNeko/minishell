@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_setup.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 06:54:23 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/15 13:29:00 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/22 10:18:58 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include "setup.h"
+#include "setup_internal.h"
+#include "readline.h"
 
-# include "libft.h"
-# include "setup_type.h"
+t_minishell	*ms_setup(void)
+{
+	t_minishell	*ms;
 
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-t_minishell	*ms_get_minishell(void);
-void		ms_set_minishell(t_minishell *ms);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+	ms_setup_variable();
+	ms_setup_history();
+	ms_setup_readline_handler();
+	ms = ms_get_minishell();
+	*ms = (t_minishell){
+		.ms_malloc_list = NULL,
+		.ms_shell_var = NULL,
+	};
+	return (ms);
+}

@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.h                                            :+:      :+:    :+:   */
+/*   ms_find_ms_var.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 06:54:23 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/01/20 08:11:03 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/20 08:44:24 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETUP_H
-# define SETUP_H
+#include "libft.h"
+#include "libms_internal.h"
 
-# include "libft.h"
-# include "setup_type.h"
+t_ms_var	*ms_find_ms_var(const char *name)
+{
+	t_list		**environ_lst;
+	t_list		*itr;
+	t_ms_var	*ms_var;
 
-t_minishell	*ms_setup(void);
-void		ms_cleanup_and_exit(int status);
-t_minishell	*ms_get_minishell(void);
-void		ms_set_minishell(t_minishell *ms);
-
-// internal 行き
-void		ms_setup_variable(void);
-int			ms_setup_history(void);
-bool		ms_is_interactive(void);
-
-#endif
+	environ_lst = ms_int_get_environ_variable();
+	itr = *environ_lst;
+	while (itr != NULL)
+	{
+		ms_var = itr->content;
+		if (ft_strcmp(ms_var->name, name) == 0)
+			return (ms_var);
+		itr = itr->next;
+	}
+	return (NULL);
+}
