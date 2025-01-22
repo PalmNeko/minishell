@@ -2,8 +2,10 @@
 
 extern "C" {
 	#include "semantic_analyze.h"
+	#include "semantic_analyze_internal.h"
 	#include "syntax_analyze.h"
 	#include "lexer.h"
+	#include "libms.h"
 }
 
 TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS)
@@ -29,7 +31,10 @@ TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS)
 	EXPECT_EQ(expect->commands[0]->args[1]->word_list->children[0]->token->token, actual->commands[0]->args[1]->word_list->children[0]->token->token);
 	EXPECT_EQ(expect->commands[0]->redirects[0]->filename->word_list->children[0]->token->token, actual->commands[0]->redirects[0]->filename->word_list->children[0]->token->token);
 
+	ms_lsa_pipeline_destroy(expect);
+	ms_lsa_pipeline_destroy(actual);
 	ms_syntax_node_destroy(pipeline_node);
+	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
 TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS_CASE2)
@@ -57,5 +62,8 @@ TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS_CASE2)
 	EXPECT_EQ(expect->commands[0]->redirects[0]->filename->word_list->children[0]->token->token, actual->commands[0]->redirects[0]->filename->word_list->children[0]->token->token);
 	EXPECT_EQ(expect->commands[1]->args[0]->word_list->children[0]->token->token, actual->commands[1]->args[0]->word_list->children[0]->token->token);
 
+	ms_lsa_pipeline_destroy(expect);
+	ms_lsa_pipeline_destroy(actual);
 	ms_syntax_node_destroy(pipeline_node);
+	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
 }

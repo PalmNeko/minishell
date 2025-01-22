@@ -2,8 +2,10 @@
 
 extern "C" {
 	#include "semantic_analyze.h"
+	#include "semantic_analyze_internal.h"
 	#include "syntax_analyze.h"
 	#include "lexer.h"
+	#include "libms.h"
 }
 
 void test_runner_of_ms_lsa_redirection(t_lsa_redirection *expect,  t_lsa_redirection *actual);
@@ -32,7 +34,10 @@ TEST(Semantic_Analyze, REDIRECTION_SUCCESS)
 
 	test_runner_of_ms_lsa_redirection(expect, actual);
 
+	ms_lsa_redirection_destroy(expect);
+	ms_lsa_redirection_destroy(actual);
 	ms_syntax_node_destroy(redirection_node);
+	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
 void test_runner_of_ms_lsa_redirection(t_lsa_redirection *expect,  t_lsa_redirection *actual)

@@ -2,8 +2,10 @@
 
 extern "C" {
 	#include "semantic_analyze.h"
+	#include "semantic_analyze_internal.h"
 	#include "syntax_analyze.h"
 	#include "lexer.h"
+	#include "libms.h"
 }
 
 void test_runner_of_lsa_command(t_lsa_command *expect,  t_lsa_command *actual);
@@ -35,6 +37,7 @@ TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE1){
 	test_runner_of_lsa_command(expect, actual);
 
 	ms_syntax_node_destroy(command_node);
+	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
 TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE2){
@@ -62,6 +65,7 @@ TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE2){
 	test_runner_of_lsa_command(expect, actual);
 
 	ms_syntax_node_destroy(command_node);
+	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
 void test_runner_of_lsa_command(t_lsa_command *expect,  t_lsa_command *actual)
@@ -105,4 +109,8 @@ void test_runner_of_lsa_command(t_lsa_command *expect,  t_lsa_command *actual)
 	}else{
 		ASSERT_EQ(expect->redirects, actual->redirects);
 	}
+
+	ms_lsa_command_destroy(expect);
+	ms_lsa_command_destroy(actual);
+
 }

@@ -2,9 +2,10 @@
 
 extern "C" {
 	#include "semantic_analyze.h"
+	#include "semantic_analyze_internal.h"
 	#include "syntax_analyze.h"
 	#include "lexer.h"
-	#include <string.h>
+	#include "libms.h"
 }
 
 TEST(Semantic_Analyze, LSA_ASSIGNMENT_SUCCESS)
@@ -30,10 +31,12 @@ TEST(Semantic_Analyze, LSA_ASSIGNMENT_SUCCESS)
 	EXPECT_STREQ(expect->name->word_list->children[0]->token->token, actual->name->word_list->children[0]->token->token);
 	EXPECT_STREQ(expect->value->word_list->children[0]->token->token, actual->value->word_list->children[0]->token->token);
 
+	ms_lsa_assignment_destroy(expect);
+	ms_lsa_assignment_destroy(actual);
 	ms_syntax_node_destroy(assignment_word_node);
+	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
-// Parser部分で不具合あり
 TEST(Semantic_Analyze, LSA_ASIGNMENT_SUCCESS_CASE2)
 {
 	t_lsa_assignment	*expect;
@@ -57,5 +60,8 @@ TEST(Semantic_Analyze, LSA_ASIGNMENT_SUCCESS_CASE2)
 	EXPECT_STREQ(expect->name->word_list->children[0]->token->token, actual->name->word_list->children[0]->token->token);
 	EXPECT_STREQ(expect->value->word_list->children[0]->token->token, actual->value->word_list->children[0]->token->token);
 
+	ms_lsa_assignment_destroy(expect);
+	ms_lsa_assignment_destroy(actual);
 	ms_syntax_node_destroy(assignment_word_node);
+	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
