@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_execute_from_lsa.c                              :+:      :+:    :+:   */
+/*   ms_count_ntp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 02:26:10 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/26 21:31:31 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/01/23 05:18:13 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/23 05:25:39 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include <stddef.h>
 
-int	ms_execute_from_lsa(t_lsa *lsa)
+size_t ms_count_ntp(void **ntp)
 {
-	int	ret;
+	size_t	index;
 
-	ret = ms_execute_lists(lsa->lists);
-	return (ret);
+	if (ntp == NULL)
+		return (0);
+	index = 0;
+	while (ntp[index] != NULL)
+		index++;
+	return (index);
 }
