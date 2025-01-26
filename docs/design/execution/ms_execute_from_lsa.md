@@ -35,7 +35,7 @@ int	ms_execute_from_lsa(t_lsa *lsa);
  int ms_execute_list(t_lsa_list *list);
  ```
  - **説明**:
-	 - list->typeの値によって、終了ステータスを確認して、条件に合えば、pipelineもしくはcompound_listを実行する。
+	 - list->typeの値によって、終了ステータスを確認して、条件に合えば、pipelineもしくはcompound_listを実行する。(->listsで実行直前のコマンド終了ステータスを確認している)
 	 - pipelineがNULLでなければ、pipelineを、compound_listがNULL出なければ、compound_listを再帰的に順次実行する。
 	 - compound_listを実行するときは、`ms_execute_compound_lists`を呼び出し実行する。
 
@@ -88,6 +88,8 @@ int	ms_execute_from_lsa(t_lsa *lsa);
  ```
  - **説明**:
 	 - 連続したコマンドの入出力をpipeした環境で、各単純コマンドを実行する。
+	 - 単コマンド・複数コマンド・無コマンドの３種類で処理を分岐させる
+	 	- 単コマンドかつビルトインの時はpipe&forkをしない
  - **引数**:
  - **戻り値**
 	 - **成功時**: 最後に実行した単純コマンドの終了ステータス
