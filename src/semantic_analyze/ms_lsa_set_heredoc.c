@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 05:22:50 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/29 13:13:15 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:35:52 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ms_lsa_set_heredoc(
 	return (-1);
 }
 
-int	ms_lsa_set_heredoc_input(
+static int	ms_lsa_set_heredoc_input(
 		t_lsa_redirection *lsa_redirection, const char *delimiter)
 {
 	t_list			*heredoc_lst;
@@ -55,7 +55,7 @@ int	ms_lsa_set_heredoc_input(
 	return (0);
 }
 
-t_list	*ms_lsa_get_heredoc_input_lst(const char *delimiter)
+static t_list	*ms_lsa_get_heredoc_input_lst(const char *delimiter)
 {
 	t_list	*heredoc_lst;
 	t_list	*line_lst;
@@ -84,7 +84,7 @@ t_list	*ms_lsa_get_heredoc_input_lst(const char *delimiter)
 	return (heredoc_lst);
 }
 
-char	*ms_lst_node_to_string(t_list *lst)
+static char	*ms_lst_node_to_string(t_list *lst)
 {
 	char			*output;
 	t_syntax_node	*node;

@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 07:31:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/29 12:59:40 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:36:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	*ms_word_list_to_delimiter_string(t_lsa_word_list *word_list)
 /**
  * @param right expected type: SYNGLE_QUOTED_WORD or DOUBLE_QUOTED_WORD
  */
-int	ms_replace_joined_str_quoted_word(char **left, const t_syntax_node *right)
+static int	ms_replace_joined_str_quoted_word(
+				char **left, const t_syntax_node *right)
 {
 	char			*quoted_word;
 	int				pos;

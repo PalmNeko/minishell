@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:52:26 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/29 13:16:07 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:34:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ static void	ms_print_indent(int depth)
 	printf("%*s", depth * 2, "");
 }
 
-void	ms_print_token(const char *token)
+static void	ms_print_token(const char *token)
 {
 	while (*token != '\0')
 	{
@@ -194,7 +194,7 @@ void	ms_print_token(const char *token)
 	}
 }
 
-char	*ms_syntax_node_type_to_string(t_syntax_type type)
+static char	*ms_syntax_node_type_to_string(t_syntax_type type)
 {
 	size_t	i;
 
@@ -208,7 +208,7 @@ char	*ms_syntax_node_type_to_string(t_syntax_type type)
 	return ("UNKNOWN_TYPE");
 }
 
-char	*ms_syntax_node_type_to_color(t_syntax_type type)
+static char	*ms_syntax_node_type_to_color(t_syntax_type type)
 {
 	size_t	i;
 
