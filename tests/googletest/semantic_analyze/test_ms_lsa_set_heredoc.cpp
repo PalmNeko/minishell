@@ -24,7 +24,6 @@ TEST(ms_lsa_set_heredoc, basic)
 	EXPECT_NE(lsa_redirection->delimiter, nullptr);
 	EXPECT_NE(lsa_redirection->heredoc_input, nullptr);
 
-	ms_syntax_node_print(lsa_redirection->heredoc_input[0]);
 	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
 	ms_syntax_node_destroy(syntax_analyzed);
 	ms_lsa_destroy(lsa);
