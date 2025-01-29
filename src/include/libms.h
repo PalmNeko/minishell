@@ -44,7 +44,7 @@ bool			ms_is_dir(const char *path);
 char			*ms_to_abs_path(const char *path);
 char			*ms_normalize_path(const char *path);
 char			*ms_get_full_path(const char *basedir, const char *path);
-char			*ms_replace_joined_str(char **left, char *right);
+char			*ms_replace_joined_str(char **left, const char *right);
 char			*ms_tilde_expansion(const char *path);
 int				ms_trim_end_newline(char *str);
 
