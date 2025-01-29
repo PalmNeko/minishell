@@ -58,6 +58,7 @@ void *ms_identify(void *arg);
 void ms_noop_del(void *arg);
 
 void ms_lstappend_tail(t_list **lst, void *content, void (*fr)(void *));
+void			ms_lst_print(t_list *lst, void (*print)(void *));
 
 // environment variable
 char			*ms_getenv(const char *name);

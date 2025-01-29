@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lsa_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:14:07 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 09:15:35 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:10:19 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "semantic_analyze_internal.h"
 #include "semantic_analyze.h"
 #include <stdlib.h>
 
@@ -20,12 +21,17 @@ t_lsa_redirection	*ms_lsa_redirection(const t_syntax_node *redirection_node)
 {
 	t_lsa_redirection_type	type;
 	t_lsa_redirection		*lsa_redirection;
+	int						pos;
 
 	type = ms_lsa_redirection_type(redirection_node->children[0]->token->token);
 	lsa_redirection = ms_lsa_redirection_create(type);
 	if (lsa_redirection->type == LSA_RD_HEREDOC)
 	{
-		// get of heredoc_input
+		pos = 1;
+		if (redirection_node->children[pos]->type == SY_BLANK)
+			pos++;
+		if (ms_lsa_set_heredoc(lsa_redirection, redirection_node->children[pos]) != 0)
+			return (ms_lsa_redirection_destroy(lsa_redirection), NULL);
 	}
 	else
 	{
@@ -34,7 +40,7 @@ t_lsa_redirection	*ms_lsa_redirection(const t_syntax_node *redirection_node)
 		else
 			lsa_redirection->filename = ms_lsa_word_list(redirection_node->children[2]);
 		if (lsa_redirection->filename == NULL)
-			return (free(lsa_redirection), NULL);
+			return (free(lsa_redirection), NULL); // TODO: i think we should use ms_lsa_redirection_destroy
 	}
 	return (lsa_redirection);
 }
