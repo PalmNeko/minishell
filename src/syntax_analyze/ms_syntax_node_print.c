@@ -6,13 +6,12 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:52:26 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/29 10:04:14 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:16:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "syntax_analyze.h"
 #include <stdio.h>
-
 
 static void	**g_list[] = {
 	(void *[]){

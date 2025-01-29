@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:14:17 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/29 10:41:12 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:15:42 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_lsa	*semantic_analyze(t_syntax_node *node)
 	ms_unset_readnodestream();
 	if (lists == NULL)
 		return (NULL);
-	// heredoc用の処理も必要
 	lsa->lists = lists;
 	return (lsa);
 }

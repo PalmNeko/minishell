@@ -6,10 +6,9 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 07:31:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/28 08:15:13 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:59:40 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "syntax_analyze.h"
 #include "semantic_analyze.h"
