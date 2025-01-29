@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:14:07 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/29 12:10:19 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:58:03 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_lsa_redirection	*ms_lsa_redirection(const t_syntax_node *redirection_node)
 		else
 			lsa_redirection->filename = ms_lsa_word_list(redirection_node->children[2]);
 		if (lsa_redirection->filename == NULL)
-			return (free(lsa_redirection), NULL); // TODO: i think we should use ms_lsa_redirection_destroy
+			return (free(lsa_redirection), NULL);
 	}
 	return (lsa_redirection);
 }
