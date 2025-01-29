@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/26 21:39:01 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:09:07 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libms.h"
 #include "semantic_analyze.h"
 #include "syntax_analyze.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /*notes
@@ -38,6 +39,6 @@ int	ms_execution(const char *input)
 	else
 		ret = 1;
 	ms_syntax_node_destroy(node);
-	ms_destroy_ntp2((void **)tokens, free);
+	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
 	return (ret);
 }
