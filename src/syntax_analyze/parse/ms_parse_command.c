@@ -16,6 +16,7 @@ t_syntax_node *ms_parse_command(t_token **tokens, int pos)
 	const int start_pos = pos;
 
 	child_lst = NULL;
+	//call mkmemscorp
 	child = ms_parse_symbol_item(tokens, pos, g_ms_parse_command_func_list);
 	if (child == NULL)
 		return (NULL);

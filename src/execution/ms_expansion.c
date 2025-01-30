@@ -1,43 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_execution.c                                     :+:      :+:    :+:   */
+/*   ms_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 21:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/26 21:39:01 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/01/26 21:32:03 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/01/26 21:32:03 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "lexer.h"
 #include "libms.h"
-#include "semantic_analyze.h"
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
-/*notes
- * ENOMEMエラー時の処理を追加する必要あり
- */
-int	ms_execution(const char *input)
+char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 {
-	t_token			**tokens;
-	t_syntax_node	*node;
-	t_lsa			*lsa;
-	int				ret;
+	char	**expanded_texts;
+	char	*expanded_text;
+	size_t	i;
 
-	tokens = ms_lexical_analyze(input);
-	node = ms_syntax_analyze(tokens);
-	if (node->type != SY_DECLINED)
+	i = 0;
+	while (lsa_word_list->word_list->children[i])
+		i++;
+	expanded_texts = (char **)malloc(sizeof(char *) * (i + 1));
+	if (expanded_texts == NULL)
+		return (NULL);
+	i = 0;
+	while (lsa_word_list->word_list->children[i])
 	{
-		lsa = semantic_analyze(node);
-		ret = ms_execute_from_lsa(lsa);
-		ms_lsa_destroy(lsa);
+		expanded_text = (char *)lsa_word_list->word_list->children[i]->token->token;
+		expanded_texts[i] = expanded_text;
+		i++;
 	}
-	else
-		ret = 1;
-	ms_syntax_node_destroy(node);
-	ms_destroy_ntp2((void **)tokens, free);
-	return (ret);
+	expanded_texts[i] = NULL;
+	return (expanded_texts);
 }

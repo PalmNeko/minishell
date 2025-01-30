@@ -47,12 +47,7 @@ char			*ms_get_full_path(const char *basedir, const char *path);
 char			*ms_replace_joined_str(char **left, char *right);
 char			*ms_tilde_expansion(const char *path);
 int				ms_trim_end_newline(char *str);
-
-void			*ms_identify(void *arg);
-void			ms_noop_del(void *arg);
-
-void			ms_lstappend_tail(
-					t_list **lst, void *content, void (*fr)(void *));
+size_t		ms_count_ntp(void **ntp);
 
 void *ms_identify(void *arg);
 void ms_noop_del(void *arg);

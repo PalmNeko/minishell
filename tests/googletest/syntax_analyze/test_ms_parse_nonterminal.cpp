@@ -297,6 +297,30 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS)
 	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS3)
+{
+	const char *str = ">>word>word";
+
+	t_token **expect_tokens = ms_lexical_analyze(str);
+
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 3);
+	expect_children[0] = ms_parse_redirection(expect_tokens, 2);
+	expect_children[1] = ms_parse_word_list(expect_tokens, 3);
+	expect_children[2] = NULL;
+
+	t_syntax_node *expect = ms_syntax_node_create(SY_REDIRECTION_WORD);
+	expect->children  = expect_children;
+	expect->start_pos = 2;
+	expect->end_pos   = 4;
+
+	t_syntax_node *actual = ms_parse_redirection_word(expect_tokens, 2);
+
+	test_runner_of_ms_parse(expect, str, actual);
+
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+}
+
 //----------------------------------------
 // SY_SIMPLE_COMMAND
 //----------------------------------------
@@ -355,7 +379,33 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS)
 	// clean up
 	ms_syntax_node_destroy(expect2);
 	ms_destroy_ntp2((void**)expect_tokens2, ms_lexical_analyze_destroy_token_wrapper);
-	
+}
+
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS2)
+{
+	const char *str = "test > word >> word ";
+
+	t_token **expect_tokens = ms_lexical_analyze(str);
+
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 6);
+	expect_children[0] = ms_parse_word_list(expect_tokens, 0);
+	expect_children[1] = ms_parse_blank(expect_tokens, 1);
+	expect_children[2] = ms_parse_redirection_word(expect_tokens, 2);
+	expect_children[3] = ms_parse_blank(expect_tokens, 5);
+	expect_children[4] = ms_parse_redirection_word(expect_tokens, 6);
+	expect_children[5] = NULL;
+
+	t_syntax_node *expect = ms_syntax_node_create(SY_SIMPLE_COMMAND);
+	expect->children  = expect_children;
+	expect->start_pos = 0;
+	expect->end_pos   = 9;
+
+	t_syntax_node *actual = ms_parse_simple_command(expect_tokens, 0);
+
+	test_runner_of_ms_parse(expect, str, actual);
+
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
 //----------------------------------------

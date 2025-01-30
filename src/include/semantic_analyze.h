@@ -5,6 +5,7 @@
 #include "semantic_analyze_type.h"
 
 t_lsa *semantic_analyze(t_syntax_node *node);
+void ms_lsa_destroy(t_lsa *lsa);
 
 t_lsa_command *ms_lsa_command(t_syntax_node *command_node);
 t_lsa_assignment *ms_lsa_assignment(const t_syntax_node *assignment_word_node);
