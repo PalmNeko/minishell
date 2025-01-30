@@ -8,8 +8,6 @@
 cd "$(dirname $0)"
 . "../../../test_prepare.sh"
 
-PROG="bash" # for debug
-
 # ディレクトリの作成
 mkdir -p physical_dir
 ln -s physical_dir symbolic_dir
