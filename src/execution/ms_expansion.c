@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:32:03 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 13:38:22 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 23:58:00 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,47 @@
 char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 {
 	char	**expanded_texts;
-	t_list	*expand_itr;
 	char	*expanded_text;
+	char *temp;
+	char *token;
 	size_t	i;
+	size_t	j;
 
-	expand_itr = NULL;
 	lsa_word_list->word_list = ms_execution_tilde_expantion(lsa_word_list->word_list);
 	lsa_word_list->word_list = ms_parameter_expansion(lsa_word_list->word_list);
-	// lsa_word_list->word_list = ms_pathname_expansion(lsa_word_list->word_list);s
+	lsa_word_list->word_list = ms_pathname_expansion(lsa_word_list->word_list);
 	lsa_word_list->word_list = ms_quote_removal(lsa_word_list->word_list);
 	i = 0;
+	expanded_text = ft_strdup("");
+	if (expanded_text == NULL)
+		return (NULL);
 	while (lsa_word_list->word_list->children[i])
 	{
-		expanded_text = ft_strdup(lsa_word_list->word_list->children[i]->token->token);
-		if (expanded_text == NULL)
-			return (NULL);
-		ms_lstappend_tail(&expand_itr, expanded_text, free);
-		if (expand_itr == NULL)
-			return (NULL);
+		j = 0;
+		if(lsa_word_list->word_list->children[i]->children != NULL)
+		{
+			while(lsa_word_list->word_list->children[i]->children[j] != NULL)
+			{
+				token = (char *)lsa_word_list->word_list->children[i]->children[j]->token->token;
+				temp = ft_strjoin(expanded_text, token);
+				if (temp == NULL)
+					return (NULL);
+				free(expanded_text);
+				expanded_text = temp;
+				j++;
+			}
+		}else{
+			token = (char *)lsa_word_list->word_list->children[i]->token->token;
+			temp = ft_strjoin(expanded_text, token);
+			if (temp == NULL)
+				return (NULL);
+			free(expanded_text);
+			expanded_text = temp;
+		}
 		i++;
 	}
-	expanded_texts = (char **)ms_lst_to_ntp(&expand_itr, ms_identify,
-			ms_noop_del);
+	expanded_texts = ft_split(expanded_text, ' ');
+	free(expanded_text);
 	if (expanded_texts == NULL)
 		return (NULL);
 	return (expanded_texts);
