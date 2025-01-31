@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 19:27:53 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/01 00:30:03 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/01 00:38:14 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ static t_syntax_node *ms_expand_path(t_syntax_node *word)
 		child = ms_syntax_node_create(SY_WORD);
 		if(child == NULL)
 			return (NULL);
-		child->token = expand_tokens[i];
+		child->token = ms_dup_token(expand_tokens[i]);
 		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
 		i++;
 	}
+	ms_destroy_ntp2((void **)expand_tokens, ms_lexical_analyze_destroy_token_wrapper);
 	new_word_list = ms_syntax_node_create(SY_WORD_LIST);
 	if(new_word_list == NULL)
 		return (NULL);

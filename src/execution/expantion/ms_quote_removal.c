@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 20:04:51 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/29 20:48:15 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/01 00:45:16 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ char	*ms_quote_removal_get_word(t_syntax_node *word_node)
 				return (NULL);
 			free(word);
 			word = temp;
-			ms_syntax_node_destroy(node);
 		}
+		ms_syntax_node_destroy(node);
 		i++;
 	}
 	return (word);
