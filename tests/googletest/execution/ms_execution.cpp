@@ -12,7 +12,7 @@ extern "C" {
 
 TEST(Execute, ms_execution)
 {
-	std::string input = "echo HOME";
+	std::string input = "echo $HOME";
 	std::string expected_output = getenv("HOME") + std::string("\n");
 	
 	testing::internal::CaptureStdout();
