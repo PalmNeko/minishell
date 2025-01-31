@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:41:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:17:27 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:04:50 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_syntax_node	*ms_parse_compound_list(t_token **tokens, int pos)
 		ms_syntax_node_destroy(child);
 		ms_syntax_node_destroy(child2);
 		ms_syntax_node_destroy(child3);
-		return (ms_parse_declined(tokens, pos));
+		return (ms_parse_declined(tokens, child->end_pos));
 	}
 	pos = child3->end_pos;
 	ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
@@ -63,13 +63,6 @@ t_syntax_node	*ms_parse_compound_list(t_token **tokens, int pos)
 	ms_lstappend_tail(&child_lst, child3, ms_syntax_node_destroy_wrapper);
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child3), NULL);
-	node = ms_syntax_node_create(SY_COMPOUND_LIST);
-	if (node == NULL)
-		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-	node = ms_syntax_node_set_of_children(node, &child_lst);
-	if (node == NULL)
-		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-	node->start_pos = start_pos;
-	node->end_pos = pos;
+	node = ms_syntax_node_create_nonterminal(SY_COMPOUND_LIST, &child_lst, start_pos, pos);
 	return (node);
 }

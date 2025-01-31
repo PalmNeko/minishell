@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:38:25 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:18:54 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:06:50 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_syntax_node	*ms_parse_pipeline(t_token **tokens, int pos)
 	}
 	else
 		ms_syntax_node_destroy(child);
+	if(tokens[pos] == NULL)
+		return (ms_parse_declined(tokens, pos - 1));
 	child = ms_parse_command(tokens, pos);
 	if (child == NULL)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);

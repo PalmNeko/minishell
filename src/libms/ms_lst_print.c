@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_lexical_analyze_destory_token.c                 :+:      :+:    :+:   */
+/*   ms_lst_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/25 07:37:25 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 16:31:34 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/01/29 11:45:17 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/01/29 11:45:31 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include <stdlib.h>
+#include "libft.h"
 
-void	ms_lexical_analyze_destroy_token(t_token *token)
+void	ms_lst_print(t_list *lst, void (*print)(void *))
 {
-	if (token)
+	while (lst != NULL)
 	{
-		free((void *)token->token);
-		token->token = NULL;
-		free(token);
-		token = NULL;
+		print(lst->content);
+		lst = lst->next;
 	}
 }

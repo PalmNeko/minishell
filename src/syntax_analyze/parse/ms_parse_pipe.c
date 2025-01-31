@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:38:14 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:18:48 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:51:32 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ t_syntax_node	*ms_parse_pipe(t_token **tokens, int pos)
 	node = ms_syntax_node_create(SY_PIPE);
 	if (node == NULL)
 		return (NULL);
-	node->token = tokens[pos];
+	node->token = ms_dup_token(tokens[pos]);
+	if(node->token == NULL)
+	{
+		ms_syntax_node_destroy(node);
+		return (NULL);
+	}
 	node->start_pos = pos;
 	node->end_pos = pos + 1;
 	return (node);
