@@ -6,10 +6,11 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:31:30 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:15:34 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:46:33 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexer.h"
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
@@ -20,7 +21,12 @@ t_syntax_node	*ms_parse_all(t_token **tokens, int pos)
 	node = ms_syntax_node_create(SY_ALL);
 	if (node == NULL)
 		return (NULL);
-	node->token = tokens[pos];
+	node->token = ms_dup_token(tokens[pos]);
+	if (node->token == NULL)
+	{
+		ms_syntax_node_destroy(node);
+		return (NULL);
+	}
 	node->start_pos = pos;
 	node->end_pos = pos + 1;
 	return (node);

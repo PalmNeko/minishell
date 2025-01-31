@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:39:16 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:19:18 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:52:29 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ t_syntax_node	*ms_parse_right_parenthesis(t_token **tokens, int pos)
 	node = ms_syntax_node_create(SY_RIGHT_PARENTHESIS);
 	if (node == NULL)
 		return (NULL);
-	node->token = tokens[pos];
+	node->token = ms_dup_token(tokens[pos]);
+	if(node->token == NULL)
+	{
+		ms_syntax_node_destroy(node);
+		return (NULL);
+	}
 	node->start_pos = pos;
 	node->end_pos = pos + 1;
 	return (node);

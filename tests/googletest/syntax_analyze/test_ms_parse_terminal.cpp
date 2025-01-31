@@ -6,7 +6,7 @@ extern "C"
 {
 	#include "syntax_analyze.h"
 	#include "lexer.h"
-	#include "ms_test.h"
+	#include "libms.h"
 };
 
 
@@ -57,9 +57,9 @@ TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_FAIL)
 // SY_BLANK
 TEST(Syntax_Analyze_Parse_Terminal, SY_BLANK_SUCCESS)
 {
-	t_token **tokens = ms_lexical_analyze(" ");
-	t_syntax_node *node = ms_parse_blank(tokens, 0);
-	test_runnner_of_ms_parse_terminal(node, SY_BLANK, tokens, 0);
+	t_token **tokens = ms_lexical_analyze("| ");
+	t_syntax_node *node = ms_parse_blank(tokens, 1);
+	test_runnner_of_ms_parse_terminal(node, SY_BLANK, tokens, 1);
 }
 
 TEST(Syntax_Analyze_Parse_Terminal, SY_BLANK_FAIL)
@@ -249,10 +249,10 @@ void test_runnner_of_ms_parse_terminal(t_syntax_node *node, t_syntax_type type, 
 {
 	ASSERT_NE(node, nullptr);
 	EXPECT_EQ(node->type, type);
-	EXPECT_EQ(node->token, tokens[pos]);
+	EXPECT_STREQ(node->token->token, tokens[pos]->token);
 	EXPECT_EQ(node->start_pos, pos);
 	EXPECT_EQ(node->end_pos, pos + 1);
 	ms_syntax_node_destroy(node);
-	ms_lexical_analyze_destroy_token(tokens[pos]);
-	free(tokens);
+	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+
 }

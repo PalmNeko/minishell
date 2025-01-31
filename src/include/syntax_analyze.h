@@ -10,6 +10,9 @@ t_syntax_node *ms_syntax_node_create(t_syntax_type type);
 void ms_syntax_node_destroy(t_syntax_node *node);
 void ms_syntax_node_destroy_wrapper(void *node);
 
+t_token *ms_dup_token(t_token *token);
+// t_syntax_node *ms_syntax_node_create_nonterminal(t_syntax_type type, t_syntax_node_list **child_lst, int start_pos, int end_pos);
+
 t_syntax_node *ms_syntax_node_set_of_children(t_syntax_node *node, t_syntax_node_list **child_lst);
 
 t_syntax_node *ms_parse_declined(t_token **tokens, int pos);
