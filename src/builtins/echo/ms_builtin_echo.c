@@ -10,32 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
-#include "builtin_internal.h"
+#include "builtin_echo.h"
 #include "libms.h"
 #include "libft.h"
-#include <limits.h>
-#include <stdbool.h>
 #include <stdlib.h>
 
 int	ms_builtin_echo(const char *path, char *const argv[], char *const envp[])
 {
-	char	*joined;
-	char	**arg_head;
+	char			*joined;
+	t_builtin_echo	parsed;
 
-	(void)path;
-	(void)envp;
-	if (argv[0] == NULL)
-		return (0);
-	arg_head = ms_get_argument_head(argv, "n");
-	if (arg_head == NULL)
-		return (0);
-	joined = ms_join_ntp((const char **)arg_head, " ");
+	ms_parse_builtin_echo_arg(&parsed, path, argv, envp);
+	joined = ms_join_ntp((const char **)(argv + parsed.arg_index), " ");
 	if (joined == NULL)
 		return (0);
-	ft_putstr_fd(joined, 1);
-	if (! ms_has_opt(argv, 'n', "n"))
-		ft_putchar_fd('\n', 1);
+	if (parsed.is_n)
+		ft_putstr_fd(joined, 1);
+	else
+		ft_putendl_fd(joined, 1);
 	free(joined);
 	return (0);
 }
