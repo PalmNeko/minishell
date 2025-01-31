@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:03:38 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/29 21:04:07 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:25:59 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ static t_syntax_node	*_ms_parameter_expansion(t_syntax_node *word_list)
 	{
 		word = ms_getenv(&word_list->token->token[1]);
 		if (word == NULL)
-		{
 			word = ft_strdup("");
-			if (word == NULL)
-				return (NULL);
-		}
+		else
+			word = ft_strdup(word);
+		if (word == NULL)
+			return (NULL);
 		free((void *)word_list->token->token);
 		word_list->token->token = word;
 	}

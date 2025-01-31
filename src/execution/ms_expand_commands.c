@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:32:20 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/29 21:11:07 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:34:20 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,21 @@ char	**ms_expand_commands(t_lsa_word_list **args)
 	return (expanded_args);
 }
 
-static void	_ms_expand_commands(char **expanded_command, t_list **expand_itr)
+static void	_ms_expand_commands(char **expanded_commands, t_list **expand_itr)
 {
-	size_t	j;
+	size_t	i;
+	char	*expanded_command;
 
-	j = 0;
-	while (expanded_command[j])
+	i = 0;
+	while (expanded_commands[i])
 	{
-		ms_lstappend_tail(expand_itr, expanded_command[j], free);
+		expanded_command = ft_strdup(expanded_commands[i]);
+		if (expanded_command == NULL)
+			return ;
+		ms_lstappend_tail(expand_itr, expanded_command, free);
 		if (expand_itr == NULL)
 			return ;
-		j++;
+		free(expanded_commands[i]);
+		i++;
 	}
 }
