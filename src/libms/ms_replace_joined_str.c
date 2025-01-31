@@ -19,7 +19,7 @@
  * @param right right string.
  * @return replaced string.
  */
-char	*ms_replace_joined_str(char **left, char *right)
+char	*ms_replace_joined_str(char **left, const char *right)
 {
 	char	*tmp;
 
