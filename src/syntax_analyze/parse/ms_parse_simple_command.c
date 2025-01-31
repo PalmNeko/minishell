@@ -36,6 +36,8 @@ t_syntax_node *ms_parse_simple_command(t_token **tokens, int pos)
 			ms_syntax_node_destroy(child);
 			break;
 		}
+		if(tokens[child->end_pos] == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), ms_parse_declined(tokens, pos));
 		child2 = ms_parse_symbol_item(tokens, child->end_pos, g_ms_parse_simple_command_func_list);
 		if (child2 == NULL)
 			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);

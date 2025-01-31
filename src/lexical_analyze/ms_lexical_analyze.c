@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/08 12:16:02 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:18:19 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_token	**ms_lexical_analyze(const char *input)
 
 	lst = NULL;
 	pos = 0;
+	while(ft_includes(input[pos], " \t"))
+		pos++;
 	while (input[pos])
 	{
 		token = get_token(input, pos);

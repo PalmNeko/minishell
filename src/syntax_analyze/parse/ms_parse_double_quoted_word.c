@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:17:58 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:05:49 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,7 @@ t_syntax_node	*ms_parse_double_quoted_word(t_token **tokens, int pos)
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
-	node = ms_syntax_node_create(SY_DOUBLE_QUOTED_WORD);
-	if (node == NULL)
-		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-	node = ms_syntax_node_set_of_children(node, &child_lst);
-	if (node == NULL)
-		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-	node->start_pos = start_pos;
-	node->end_pos = pos;
+	node = ms_syntax_node_create_nonterminal(SY_DOUBLE_QUOTED_WORD, &child_lst, start_pos, pos);
 	return (node);
 }
 

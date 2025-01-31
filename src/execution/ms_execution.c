@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/26 21:39:01 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:26:00 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,19 @@ int	ms_execution(const char *input)
 	int				ret;
 
 	tokens = ms_lexical_analyze(input);
-	node = ms_syntax_analyze(tokens);
-	if (node->type != SY_DECLINED)
+	if(tokens[0] != NULL)
 	{
-		lsa = semantic_analyze(node);
-		ret = ms_execute_from_lsa(lsa);
-		ms_lsa_destroy(lsa);
+		node = ms_syntax_analyze(tokens);
+		if (node->type != SY_DECLINED)
+		{
+			lsa = semantic_analyze(node);
+			ret = ms_execute_from_lsa(lsa);
+			ms_lsa_destroy(lsa);
+		}
+		else
+			ret = 1;
+		ms_syntax_node_destroy(node);
 	}
-	else
-		ret = 1;
-	ms_syntax_node_destroy(node);
 	ms_destroy_ntp2((void **)tokens, free);
 	return (ret);
 }

@@ -26,13 +26,8 @@ t_syntax_node *ms_parse_command(t_token **tokens, int pos)
 	if(child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
-	node = ms_syntax_node_create(SY_COMMAND);
+	node = ms_syntax_node_create_nonterminal(SY_COMMAND, &child_lst, start_pos, pos);
 	if (node == NULL)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-	node = ms_syntax_node_set_of_children(node, &child_lst);
-	if (node == NULL)
-		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-	node->start_pos = start_pos;
-	node->end_pos = pos;
 	return (node);
 }
