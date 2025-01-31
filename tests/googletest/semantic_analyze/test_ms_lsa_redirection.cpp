@@ -25,7 +25,7 @@ TEST(Semantic_Analyze, REDIRECTION_SUCCESS)
 
 	expect = (t_lsa_redirection *)malloc(sizeof(t_lsa_redirection));
 	expect->type = LSA_RD_APPEND;
-	expect->filename = ms_lsa_word_list(redirection_node->children[2]);
+	expect->filename = ms_lsa_word_list(redirection_node->children[1]);
 	expect->delimiter = NULL;
 	expect->heredoc_input = NULL;
 	expect->is_expansion = false;

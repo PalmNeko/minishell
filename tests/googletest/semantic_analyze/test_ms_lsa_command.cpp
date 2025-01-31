@@ -56,7 +56,7 @@ TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE2){
 	expect->args = NULL;
 	expect->assignments = (t_lsa_assignment **)malloc(sizeof(t_lsa_assignment *) * 3);
 	expect->assignments[0] = ms_lsa_assignment(command_node->children[0]->children[0]);
-	expect->assignments[1] = ms_lsa_assignment(command_node->children[0]->children[2]);
+	expect->assignments[1] = ms_lsa_assignment(command_node->children[0]->children[1]);
 	expect->assignments[2] = NULL;
 	expect->redirects = NULL;
 

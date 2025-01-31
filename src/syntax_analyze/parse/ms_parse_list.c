@@ -19,6 +19,8 @@ t_syntax_node *ms_parse_list(t_token **tokens,int pos)
 	const int start_pos = pos;
 
 	child_lst = NULL;
+	if(tokens[pos] == NULL)
+		return (ms_parse_declined(tokens, pos));
 	child = ms_parse_symbol_item(tokens, pos, g_ms_parse_list_func_list);
 	if (child == NULL)
 		return (NULL);
