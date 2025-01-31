@@ -24,3 +24,19 @@ def test_HOME_not_set():
     script_tester.test("builtin/cd/test_errors/too_many_arguments.sh",
         expected_stdout = "1\n",
         expected_stderr = "minishell: cd: HOME not set\n")
+
+@pytest.mark.skip(reason="デバッグの時用")
+def test_OLDPWD_not_set():
+    script_tester.test("builtin/cd/test_errors/OLDPWD_not_set.sh",
+        expected_stdout = "1\n",
+        expected_stderr = "minishell: cd: OLDPWD not set\n")
+
+@pytest.mark.skip(reason="デバッグの時用")
+def test_getcwd_error():
+    script_tester.test("builtin/cd/test_errors/getcwd_error.sh",
+        expected_stdout = "0\n",
+        expected_stderr = (
+            "/app/tests/pytest/builtin/cd/test_errors/\n",
+            "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n",
+            "/app/tests/pytest/builtin/cd/test_errors/tmp/.\n"
+            ))
