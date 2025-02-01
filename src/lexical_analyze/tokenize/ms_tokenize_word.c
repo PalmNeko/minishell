@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:38:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 06:27:13 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 06:56:13 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ bool ms_is_word_token_char(const char *str)
 	if (ft_includes(*str, NOT_WORD_CHARS))
 	{
 		if(*str == '&' && ft_strncmp(str, "&&", 2) == 0)
+			return (1);
+		else
 			return (0);
 	}
 	return (1);
