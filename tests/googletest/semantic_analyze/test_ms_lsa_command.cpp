@@ -25,11 +25,11 @@ TEST(Semantic_Analyze,COMMAND_SUCCESS_CASE1){
 	expect = (t_lsa_command *)malloc(sizeof(t_lsa_command));
 	expect->args = (t_lsa_word_list **)malloc(sizeof(t_lsa_word_list *) * 3);
 	expect->args[0] = ms_lsa_word_list(command_node->children[0]->children[0]);
-	expect->args[1] = ms_lsa_word_list(command_node->children[0]->children[2]);
+	expect->args[1] = ms_lsa_word_list(command_node->children[0]->children[1]);
 	expect->args[2] = NULL;
 	expect->assignments = NULL;
 	expect->redirects = (t_lsa_redirection **)malloc(sizeof(t_lsa_redirection *) * 2);
-	expect->redirects[0] = ms_lsa_redirection(command_node->children[0]->children[4]);
+	expect->redirects[0] = ms_lsa_redirection(command_node->children[0]->children[2]);
 	expect->redirects[1] = NULL;
 
 	actual = ms_lsa_command(command_node);

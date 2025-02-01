@@ -10,18 +10,18 @@
 
 # ワード
 <word_list> ::= <word_item> { <word_item> }
-<word_item> ::= <identify> | <word> | <double_quoted_word> | <single_quoted_word> | <variable>
+<word_item> ::= <identify> | <word> | <double_quoted_word> | <single_quoted_word> | <variable> | <equal>
 
 <pipeline> ::= <blank>? <command> <blank>? { <pipe> <blank>? <command> <blank>?}
 
-<command> ::= <command_item>
+<command> ::= <command_item> {<blank> <command_item>}
 <command_item> ::= <simple_command> | <assignment_command>
 
 <assignment_command> ::= <assignment_word> {<blank> <assignment_word>}
 <assignment_word> ::= <identify> <equals> <word_list>
 
 <simple_command> ::= <simple_command_item> {<blank> <simple_command_item>}
-<simple_command_item> ::= <word_list> | <redirection_word>
+<simple_command_item> ::= <word_list> | <redirection_word> | <assignment_word>
 
 <redirection_word> ::= <redirection> <blank>? <word_list>
 

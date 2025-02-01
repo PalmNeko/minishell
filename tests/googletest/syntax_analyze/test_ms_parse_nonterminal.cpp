@@ -276,11 +276,10 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS)
 
 	t_token **expect_tokens = ms_lexical_analyze(str);
 
-	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 4);
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 3);
 	expect_children[0] = ms_parse_word_list(expect_tokens, 0);
-	expect_children[1] = ms_parse_blank(expect_tokens, 1);
-	expect_children[2] = ms_parse_word_list(expect_tokens, 2);
-	expect_children[3] = NULL;
+	expect_children[1] = ms_parse_word_list(expect_tokens, 2);
+	expect_children[2] = NULL;
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_SIMPLE_COMMAND);
 	expect->children  = expect_children;
@@ -325,13 +324,11 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS2)
 
 	t_token **expect_tokens = ms_lexical_analyze(str);
 
-	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 6);
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 4);
 	expect_children[0] = ms_parse_word_list(expect_tokens, 0);
-	expect_children[1] = ms_parse_blank(expect_tokens, 1);
-	expect_children[2] = ms_parse_redirection_word(expect_tokens, 2);
-	expect_children[3] = ms_parse_blank(expect_tokens, 5);
-	expect_children[4] = ms_parse_redirection_word(expect_tokens, 6);
-	expect_children[5] = NULL;
+	expect_children[1] = ms_parse_redirection_word(expect_tokens, 2);
+	expect_children[2] = ms_parse_redirection_word(expect_tokens, 6);
+	expect_children[3] = NULL;
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_SIMPLE_COMMAND);
 	expect->children  = expect_children;

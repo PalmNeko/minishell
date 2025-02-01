@@ -47,6 +47,13 @@ TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_SUCESS)
 	test_runnner_of_ms_parse_terminal(node, SY_WORD, tokens, 0);
 }
 
+// TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_SUCESS2)
+// {
+// 	t_token **tokens = ms_lexical_analyze("=");
+// 	t_syntax_node *node = ms_parse_word(tokens, 0);
+// 	test_runnner_of_ms_parse_terminal(node, SY_WORD, tokens, 0);
+// }
+
 TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_FAIL)
 {
 	t_token **tokens = ms_lexical_analyze("|");
