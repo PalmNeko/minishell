@@ -73,8 +73,10 @@ void test_runner_of_lsa_command(t_lsa_command *expect,  t_lsa_command *actual)
 	if(expect->args)
 	{
 		int i;
+		ASSERT_NE(actual->args, nullptr);
 		for(i = 0; expect->args[i]; i++)
 		{
+			ASSERT_NE(actual->args[i], nullptr);
 			EXPECT_EQ(expect->args[i]->word_list, actual->args[i]->word_list);
 		}
 		ASSERT_EQ(expect->args[i], actual->args[i]);

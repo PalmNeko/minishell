@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:38:25 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/01 12:13:39 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 03:01:02 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ t_syntax_node	*ms_parse_pipeline(t_token **tokens, int pos)
 
 	child_lst = NULL;
 	pos += (tokens[pos] && tokens[pos]->type == TK_BLANK);
-	if(tokens[pos] == NULL)
-		return (ms_parse_declined(tokens, pos - 1));
 	child = ms_parse_command(tokens, pos);
 	if (child == NULL)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
@@ -43,17 +41,16 @@ t_syntax_node	*ms_parse_pipeline(t_token **tokens, int pos)
 		if (child == NULL)
 			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
 				NULL);
-		if (child->type == SY_DECLINED)
+		is_blank = (tokens[child->end_pos] && tokens[child->end_pos]->type == TK_BLANK);
+		if (child->type == SY_DECLINED || tokens[child->end_pos + is_blank] == NULL)
 		{
 			ms_syntax_node_destroy(child);
 			break ;
 		}
-		is_blank = (tokens[child->end_pos] && tokens[child->end_pos]->type == TK_BLANK);
 		child2 = ms_parse_command(tokens, child->end_pos + is_blank);
 		if (child2 == NULL)
 			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
-				ms_syntax_node_destroy(child),
-				NULL);
+				ms_syntax_node_destroy(child),NULL);
 		if (child2->type == SY_DECLINED)
 		{
 			ms_syntax_node_destroy(child);

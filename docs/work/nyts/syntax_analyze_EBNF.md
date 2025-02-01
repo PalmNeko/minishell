@@ -12,7 +12,7 @@
 <word_list> ::= <word_item> { <word_item> }
 <word_item> ::= <identify> | <word> | <double_quoted_word> | <single_quoted_word> | <variable> | <equal>
 
-<pipeline> ::= <blank>? <command> <blank>? { <pipe> <blank>? <command> <blank>?} | <compound_list>
+<pipeline> ::= <blank>? <command> <blank>? { <pipe> <blank>? <command> <blank>?} 
 
 <command> ::= {<assignment_command <blank>} <simple_command>
 <command_item> ::= <simple_command> | <assignment_command>
@@ -26,7 +26,7 @@
 <redirection_word> ::= <redirection> <blank>? <word_list>
 
 <list> ::= <pipeline> {<list_token> <pipeline>} | <compound_list>
-<compound_list> ::= {<blank>}<left_parenthesis> <list> <right_parenthesis> {<blank>}
+<compound_list> ::= <blank>?<left_parenthesis> <list> <right_parenthesis> <blank>?
 
 <user_input> ::= <all> {<all>}
 

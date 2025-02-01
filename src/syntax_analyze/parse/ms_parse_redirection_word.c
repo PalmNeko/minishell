@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:39:06 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 18:00:32 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 03:30:47 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,21 @@ t_syntax_node	*ms_parse_redirection_word(t_token **tokens, int pos)
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
-	if(tokens[pos]!=NULL && tokens[pos]->type == TK_BLANK)
-		pos++;
+	pos += (tokens[pos] && tokens[pos]->type == TK_BLANK);
 	if (tokens[pos] == NULL)
 	{
 		ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper);
-		return (ms_parse_declined(tokens, start_pos));
+		return (ms_parse_declined(tokens, pos - 1));
 	}
 	child = ms_parse_word_list(tokens, pos);
 	if (child == NULL)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+	if (child->type == SY_DECLINED)
+	{
+		ms_syntax_node_destroy(child);
+		ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper);
+		return (ms_parse_declined(tokens, pos));
+	}
 	ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);

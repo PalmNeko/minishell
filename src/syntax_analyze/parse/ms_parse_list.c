@@ -1,9 +1,6 @@
 #include "syntax_analyze.h"
 #include "libms.h"
 
-/*
-順序を逆にすると"(command)"のようなケースがセグフォする
-*/
 const t_parse_func g_ms_parse_list_func_list[3] = {
 	ms_parse_compound_list,
 	ms_parse_pipeline,
@@ -30,35 +27,32 @@ t_syntax_node *ms_parse_list(t_token **tokens,int pos)
 	if(child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
-	if(child->type == SY_PIPELINE)
+	while(tokens[pos])
 	{
-		while(tokens[pos])
+		child = ms_parse_list_token(tokens, pos);
+		if (child == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		if(child->type == SY_DECLINED || tokens[child->end_pos] == NULL)
 		{
-			child = ms_parse_list_token(tokens, pos);
-			if (child == NULL)
-				return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-			if(child->type == SY_DECLINED)
-			{
-				ms_syntax_node_destroy(child);
-				break;
-			}
-			child2 = ms_parse_pipeline(tokens, child->end_pos);
-			if (child2 == NULL)
-				return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
-			if(child2->type == SY_DECLINED)
-			{
-				ms_syntax_node_destroy(child);
-				ms_syntax_node_destroy(child2);
-				break;
-			}
-			ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
-			if(child_lst == NULL)
-				return(ms_syntax_node_destroy(child), NULL);
-			ms_lstappend_tail(&child_lst, child2, ms_syntax_node_destroy_wrapper);
-			if(child_lst == NULL)
-				return(ms_syntax_node_destroy(child2), NULL);
-			pos = child2->end_pos;
+			ms_syntax_node_destroy(child);
+			break;
 		}
+		child2 = ms_parse_symbol_item(tokens, child->end_pos, g_ms_parse_list_func_list);
+		if (child2 == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		if(child2->type == SY_DECLINED)
+		{
+			ms_syntax_node_destroy(child);
+			ms_syntax_node_destroy(child2);
+			break;
+		}
+		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
+		if(child_lst == NULL)
+			return(ms_syntax_node_destroy(child), NULL);
+		ms_lstappend_tail(&child_lst, child2, ms_syntax_node_destroy_wrapper);
+		if(child_lst == NULL)
+			return(ms_syntax_node_destroy(child2), NULL);
+		pos = child2->end_pos;
 	}
 	node = ms_syntax_node_create(SY_LIST);
 	if (node == NULL)
