@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:53:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/12/28 17:59:33 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/01 07:49:30 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*ms_set_opt_txt(char buf[3], char invalid_opt);
 char	**ms_get_first_arg_ptr(char *const argv[], const char *valid_opt);
 int		ms_check_opt(char *const argv[], const char *valid_opt);
 bool	ms_is_cwd_check(char *const argv[]);
+void	ms_perror_invalid_option(const char *cmd, char opt);
 
 // variable
 char	**ms_get_raw_cdwd(void);
