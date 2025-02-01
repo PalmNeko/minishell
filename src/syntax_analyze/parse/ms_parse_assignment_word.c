@@ -9,11 +9,11 @@ t_syntax_node *ms_parse_assignment_word(t_token **tokens, int pos)
 	const int start_pos = pos;
 
 	child_lst = NULL;
-	if(tokens[pos]->type != TK_IDENTIFY)
-		return (ms_parse_declined(tokens, pos));
-	child = ms_parse_word_list(tokens, pos);
+	child = ms_parse_assignment_word_name(tokens, pos);
 	if (child == NULL)
 		return (NULL);
+	if(child->type == SY_DECLINED)
+		return(ms_syntax_node_destroy(child),ms_parse_declined(tokens, pos));
 	ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
 	if(child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
@@ -49,3 +49,4 @@ t_syntax_node *ms_parse_assignment_word(t_token **tokens, int pos)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
 	return (node);
 }
+

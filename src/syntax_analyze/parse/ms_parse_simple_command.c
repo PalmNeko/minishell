@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 10:59:36 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/01 11:03:35 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 01:13:34 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "libms.h"
 #include <stdlib.h>
 
-static const t_parse_func g_ms_parse_simple_command_func_list[4] = {
-	ms_parse_assignment_word,
+static const t_parse_func g_ms_parse_simple_command_func_list[3] = {
 	ms_parse_redirection_word,
 	ms_parse_word_list,
 	NULL

@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:39:50 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 00:20:07 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 00:58:28 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "libms.h"
 #include <stdlib.h>
 
-static const t_parse_func	g_ms_parse_wordlist_func_list[6] = {
+static const t_parse_func	g_ms_parse_wordlist_func_list[7] = {
 	ms_parse_identify, 
 	ms_parse_word,
 	ms_parse_variable,
+	ms_parse_equal,
 	ms_parse_single_quoted_word,
 	ms_parse_double_quoted_word, 
 	NULL
