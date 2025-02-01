@@ -26,6 +26,23 @@ t_syntax_node *ms_parse_command(t_token **tokens, int pos)
 	if(child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
+	while(tokens[pos])
+	{
+		if(tokens[pos]->type != TK_BLANK || tokens[pos + 1] == NULL)
+			break;
+		child = ms_parse_symbol_item(tokens, pos + 1, g_ms_parse_command_func_list);
+		if (child == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		if(child->type == SY_DECLINED)
+		{
+			ms_syntax_node_destroy(child);
+			break;
+		}
+		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
+		if(child_lst == NULL)
+			return(ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		pos = child->end_pos;
+	}
 	node = ms_syntax_node_create_nonterminal(SY_COMMAND, &child_lst, start_pos, pos);
 	if (node == NULL)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);

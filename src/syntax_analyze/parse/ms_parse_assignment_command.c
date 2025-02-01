@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:40:11 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 17:55:01 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/01 04:41:36 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_syntax_node	*ms_parse_assignment_command(t_token **tokens, int pos)
 	pos = child->end_pos;
 	while (tokens[pos])
 	{
-		if(tokens[pos]->type != TK_BLANK)
+		if(tokens[pos]->type != TK_BLANK || tokens[pos + 1] == NULL)
 			break ;
 		child = ms_parse_assignment_word(tokens, pos + 1);
 		if (child == NULL)
