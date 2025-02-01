@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:53:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/30 18:40:19 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/01 08:46:40 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	ms_builtin_pwd(
 		return (2);
 	}
 	cwd = ms_get_current_dir_name();
-	printf("%s\n", cwd);
+	if (cwd == NULL)
+		cwd = ms_get_cdwd();
+	if (cwd != NULL)
+		printf("%s\n", cwd);
 	free(cwd);
 	return (0);
 }
