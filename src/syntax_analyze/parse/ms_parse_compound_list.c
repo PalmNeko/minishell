@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:41:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 18:04:50 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:16:11 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_syntax_node	*ms_parse_compound_list(t_token **tokens, int pos)
 	const int			start_pos = pos;
 
 	child_lst = NULL;
+	pos += (tokens[pos] && tokens[pos]->type == TK_BLANK);
 	child = ms_parse_left_parenthesis(tokens, pos);
 	if (child == NULL)
 		return (NULL);
@@ -54,6 +55,7 @@ t_syntax_node	*ms_parse_compound_list(t_token **tokens, int pos)
 		return (ms_parse_declined(tokens, child->end_pos));
 	}
 	pos = child3->end_pos;
+	pos += (tokens[pos] && tokens[pos]->type == TK_BLANK);
 	ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);

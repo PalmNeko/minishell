@@ -6,14 +6,14 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:13:29 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 09:16:17 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 05:56:51 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <semantic_analyze.h>
 #include <stdlib.h>
 
-t_lsa_assignment	*ms_lsa_assignment(const t_syntax_node *assignment_word_node)
+t_lsa_assignment	*ms_lsa_assignment(t_syntax_node *assignment_word_node)
 {
 	t_lsa_assignment	*lsa_assignment;
 

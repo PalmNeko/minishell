@@ -19,7 +19,7 @@ void test_runner_of_lexical_analize(
 	size_t size
 );
 
-TEST(LexicalAnalyseTest, SingleInput) {
+TEST(LexicalAnalyzeTest, SingleInput) {
 	// test_case_list
 	Lexical_TestCase test_case_list[] = {
 		{
@@ -167,7 +167,7 @@ TEST(LexicalAnalyseTest, SingleInput) {
 	);
 }
 
-TEST(LexicalAnalyseTest, MultipleInput_Simple) {
+TEST(LexicalAnalyzeTest, MultipleInput_Simple) {
 	Lexical_TestCase test_case_list[] = {
 		{
 			"\"Hello World\"",

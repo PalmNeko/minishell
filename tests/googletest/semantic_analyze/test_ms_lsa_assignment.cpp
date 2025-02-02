@@ -19,6 +19,8 @@ TEST(Semantic_Analyze, LSA_ASSIGNMENT_SUCCESS)
 	str = "test=word";
 	tokens = ms_lexical_analyze(str);
 	assignment_word_node = ms_parse_assignment_word(tokens, 0);
+	ASSERT_NE(assignment_word_node, nullptr);
+	ASSERT_NE(assignment_word_node->children, nullptr);
 
 	expect = (t_lsa_assignment *)malloc(sizeof(t_lsa_assignment));
 	expect->name = ms_lsa_word_list(assignment_word_node->children[0]);
@@ -26,6 +28,9 @@ TEST(Semantic_Analyze, LSA_ASSIGNMENT_SUCCESS)
 
 	actual = ms_lsa_assignment(assignment_word_node);
 
+	ASSERT_NE(actual, nullptr);	
+	ASSERT_NE(actual->name, nullptr);
+	ASSERT_NE(actual->value, nullptr);
 	EXPECT_EQ(expect->name->word_list, actual->name->word_list);
 	EXPECT_EQ(expect->value->word_list, actual->value->word_list);
 	EXPECT_STREQ(expect->name->word_list->children[0]->token->token, actual->name->word_list->children[0]->token->token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lsa_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:14:07 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/29 12:58:03 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/02 05:10:49 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static t_lsa_redirection_type	ms_lsa_redirection_type(const char *token);
 static t_lsa_redirection		*ms_lsa_redirection_create(t_lsa_redirection_type type);
 
-t_lsa_redirection	*ms_lsa_redirection(const t_syntax_node *redirection_node)
+t_lsa_redirection	*ms_lsa_redirection(t_syntax_node *redirection_node)
 {
 	t_lsa_redirection_type	type;
 	t_lsa_redirection		*lsa_redirection;

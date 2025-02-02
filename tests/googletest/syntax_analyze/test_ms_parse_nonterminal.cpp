@@ -192,6 +192,30 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_FAIL_CASE_2)
 }
 
 
+// SY_ASSIGNMENT_WORD(variable name part)
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_WORD_name_SUCCESS)
+{
+	const char *str = "test=word";
+
+	t_token **expect_tokens = ms_lexical_analyze(str);
+
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 2);
+	expect_children[0] = ms_parse_identify(expect_tokens, 0);
+	expect_children[1] = NULL;
+
+	t_syntax_node *expect = ms_syntax_node_create(SY_WORD_LIST);
+	expect->children  = expect_children;
+	expect->start_pos = 0;
+	expect->end_pos   = 1;
+
+	t_syntax_node *actual = ms_parse_assignment_word_name(expect_tokens, 0);
+
+	test_runner_of_ms_parse(expect, str, actual);
+
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+}
+
 // SY_ASSIGNMENT_WORD
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_WORD_SUCCESS)
 {
@@ -200,7 +224,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_WORD_SUCCESS)
 	t_token **expect_tokens = ms_lexical_analyze(str);
 
 	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 4);
-	expect_children[0] = ms_parse_word_list(expect_tokens, 0);
+	expect_children[0] = ms_parse_assignment_word_name(expect_tokens, 0);
 	expect_children[1] = ms_parse_equal(expect_tokens, 1);
 	expect_children[2] = ms_parse_word_list(expect_tokens, 2);
 	expect_children[3] = NULL;
@@ -276,11 +300,10 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS)
 
 	t_token **expect_tokens = ms_lexical_analyze(str);
 
-	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 4);
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 3);
 	expect_children[0] = ms_parse_word_list(expect_tokens, 0);
-	expect_children[1] = ms_parse_blank(expect_tokens, 1);
-	expect_children[2] = ms_parse_word_list(expect_tokens, 2);
-	expect_children[3] = NULL;
+	expect_children[1] = ms_parse_word_list(expect_tokens, 2);
+	expect_children[2] = NULL;
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_SIMPLE_COMMAND);
 	expect->children  = expect_children;
@@ -325,13 +348,11 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS2)
 
 	t_token **expect_tokens = ms_lexical_analyze(str);
 
-	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 6);
+	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 4);
 	expect_children[0] = ms_parse_word_list(expect_tokens, 0);
-	expect_children[1] = ms_parse_blank(expect_tokens, 1);
-	expect_children[2] = ms_parse_redirection_word(expect_tokens, 2);
-	expect_children[3] = ms_parse_blank(expect_tokens, 5);
-	expect_children[4] = ms_parse_redirection_word(expect_tokens, 6);
-	expect_children[5] = NULL;
+	expect_children[1] = ms_parse_redirection_word(expect_tokens, 2);
+	expect_children[2] = ms_parse_redirection_word(expect_tokens, 6);
+	expect_children[3] = NULL;
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_SIMPLE_COMMAND);
 	expect->children  = expect_children;
@@ -428,31 +449,23 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_PIPELINE_SUCCESS)
 {
 	const char *str = "test | word";
 
-	// 期待値用トークンを作る
 	t_token **expect_tokens = ms_lexical_analyze(str);
 
-	// 期待ノードの子配列
 	t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 6);
 	expect_children[0] = ms_parse_command(expect_tokens, 0);
-	expect_children[1] = ms_parse_blank(expect_tokens, 1);
-	expect_children[2] = ms_parse_pipe(expect_tokens, 2);
-	expect_children[3] = ms_parse_blank(expect_tokens, 3);
-	expect_children[4] = ms_parse_command(expect_tokens, 4);
-	expect_children[5] = NULL;
+	expect_children[1] = ms_parse_pipe(expect_tokens, 2);
+	expect_children[2] = ms_parse_command(expect_tokens, 4);
+	expect_children[3] = NULL;
 
-	// 期待ノード本体 (SY_PIPELINE)
 	t_syntax_node *expect = ms_syntax_node_create(SY_PIPELINE);
 	expect->children  = expect_children;
 	expect->start_pos = 0;
 	expect->end_pos   = 5;
 
-	// 実際のパース結果
 	t_syntax_node *actual = ms_parse_pipeline(expect_tokens, 0);
 
-	// 比較
 	test_runner_of_ms_parse(expect, str, actual);
 
-	// 後片付け
 	ms_syntax_node_destroy(expect);
 	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
 }

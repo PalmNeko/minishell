@@ -6,27 +6,39 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:38:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2024/12/25 07:38:46 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:58:04 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
 
+bool ms_is_word_token_char(const char *str);
+
 t_token	*ms_tokenize_word(const char *input, int pos)
 {
-	int		i;
+	const int start_pos = pos;
 	t_token	*token;
 
-	i = 0;
-	input += pos;
-	if (!ft_strchr(NOT_WORD_CHARS, input[i]))
+	if (input[pos] && ms_is_word_token_char(&input[pos]))
 	{
-		while (!ft_strchr(NOT_WORD_CHARS, input[i]))
-			i++;
-		token = ms_create_token(TK_WORD, input, pos, pos + i);
+		while (input[pos] && ms_is_word_token_char(&input[pos]))
+			pos++;
+		token = ms_create_token(TK_WORD, &input[start_pos], start_pos, pos);
 	}
 	else
 		token = ms_create_token(TK_DECLINED, "", pos, pos);
 	return (token);
+}
+
+bool ms_is_word_token_char(const char *str)
+{
+	if (ft_includes(*str, NOT_WORD_CHARS))
+	{
+		if(*str == '&' && ft_strncmp(str, "&&", 2) != 0)
+			return (1);
+		else
+			return (0);
+	}
+	return (1);
 }
