@@ -52,7 +52,7 @@ TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS_CASE2)
 	expect = (t_lsa_pipeline *)malloc(sizeof(t_lsa_pipeline));
 	expect->commands = (t_lsa_command **)malloc(sizeof(t_lsa_command *) * 3);
 	expect->commands[0] = ms_lsa_command(pipeline_node->children[0]);
-	expect->commands[1] = ms_lsa_command(pipeline_node->children[4]);
+	expect->commands[1] = ms_lsa_command(pipeline_node->children[2]);
 	expect->commands[2] = NULL;
 
 	actual = ms_lsa_pipeline(pipeline_node);

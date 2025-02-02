@@ -47,6 +47,13 @@ TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_SUCESS)
 	test_runnner_of_ms_parse_terminal(node, SY_WORD, tokens, 0);
 }
 
+// TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_SUCESS2)
+// {
+// 	t_token **tokens = ms_lexical_analyze("=");
+// 	t_syntax_node *node = ms_parse_word(tokens, 0);
+// 	test_runnner_of_ms_parse_terminal(node, SY_WORD, tokens, 0);
+// }
+
 TEST(Syntax_Analyze_Parse_Terminal, SY_WORD_FAIL)
 {
 	t_token **tokens = ms_lexical_analyze("|");
@@ -242,7 +249,7 @@ TEST(Syntax_Analyze_Parse_Terminal, SY_ALL_SUCCESS)
 {
 	t_token **tokens = ms_lexical_analyze("a");
 	t_syntax_node *node = ms_parse_all(tokens, 0);
-	test_runnner_of_ms_parse_terminal(node, SY_ALL, tokens, 0);
+	test_runnner_of_ms_parse_terminal(node, SY_IDENTIFY, tokens, 0);
 }
 
 void test_runnner_of_ms_parse_terminal(t_syntax_node *node, t_syntax_type type, t_token **tokens, int pos)

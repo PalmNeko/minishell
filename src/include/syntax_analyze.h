@@ -9,6 +9,9 @@ t_syntax_node *ms_syntax_analyze(t_token **tokens);
 t_syntax_node *ms_syntax_node_create(t_syntax_type type);
 void ms_syntax_node_destroy(t_syntax_node *node);
 void ms_syntax_node_destroy_wrapper(void *node);
+
+int ms_syntax_node_check_declined(t_syntax_node *node);
+
 void	ms_syntax_node_print(t_syntax_node *node);
 t_syntax_node	*ms_syntax_node_find_child(
 					t_syntax_node *node, t_syntax_type type);
@@ -39,10 +42,11 @@ t_syntax_node *ms_parse_right_parenthesis(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_double_quoted_word(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_single_quoted_word(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_word_list(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_assignment_command(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_assignment_word(t_token **tokens, int start_pos);
+t_syntax_node *ms_parse_assignment_word_name(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_redirection_word(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_simple_command(t_token **tokens, int start_pos);
-t_syntax_node *ms_parse_assignment_command(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_command(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_pipeline(t_token **tokens, int start_pos);
 t_syntax_node *ms_parse_list(t_token **tokens, int start_pos);
