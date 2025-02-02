@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:38:25 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 03:01:02 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:36:43 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_syntax_node	*ms_parse_pipeline(t_token **tokens, int pos)
 	t_syntax_node		*child2;
 	t_syntax_node_list	*child_lst;
 	const int			start_pos = pos;
-	bool is_blank;
+	bool				is_blank;
 
 	child_lst = NULL;
 	pos += (tokens[pos] && tokens[pos]->type == TK_BLANK);
@@ -41,8 +41,10 @@ t_syntax_node	*ms_parse_pipeline(t_token **tokens, int pos)
 		if (child == NULL)
 			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
 				NULL);
-		is_blank = (tokens[child->end_pos] && tokens[child->end_pos]->type == TK_BLANK);
-		if (child->type == SY_DECLINED || tokens[child->end_pos + is_blank] == NULL)
+		is_blank = (tokens[child->end_pos]
+				&& tokens[child->end_pos]->type == TK_BLANK);
+		if (child->type == SY_DECLINED || tokens[child->end_pos
+			+ is_blank] == NULL)
 		{
 			ms_syntax_node_destroy(child);
 			break ;
@@ -50,7 +52,7 @@ t_syntax_node	*ms_parse_pipeline(t_token **tokens, int pos)
 		child2 = ms_parse_command(tokens, child->end_pos + is_blank);
 		if (child2 == NULL)
 			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
-				ms_syntax_node_destroy(child),NULL);
+				ms_syntax_node_destroy(child), NULL);
 		if (child2->type == SY_DECLINED)
 		{
 			ms_syntax_node_destroy(child);
@@ -59,7 +61,8 @@ t_syntax_node	*ms_parse_pipeline(t_token **tokens, int pos)
 		}
 		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
 		if (child_lst == NULL)
-			return (ms_syntax_node_destroy(child), ms_syntax_node_destroy(child2), NULL);
+			return (ms_syntax_node_destroy(child),
+				ms_syntax_node_destroy(child2), NULL);
 		pos = child->end_pos;
 		ms_lstappend_tail(&child_lst, child2, ms_syntax_node_destroy_wrapper);
 		if (child_lst == NULL)

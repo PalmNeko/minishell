@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:13:33 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 05:41:39 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:26:19 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,29 @@
 //  *   args:        ["ls", "-l"]
 //  *   assignments: ["PATH=$PATH:/usr/bin"]
 //
-typedef void *(*t_lsa_command_func)(t_syntax_node *node);
-typedef void (*t_lsa_destroy_func)(void *node);
+typedef void				*(*t_lsa_command_func)(t_syntax_node *node);
+typedef void				(*t_lsa_destroy_func)(void *node);
 
-static t_list *g_lsts[3] = {NULL, NULL, NULL};
-static t_lsa_command_func g_lsa_command_funcs[3] = {(void *)ms_lsa_word_list, (void *)ms_lsa_assignment, (void *)ms_lsa_redirection};
-static t_lsa_destroy_func g_lsa_destroy_funcs[3] = {(void *)ms_lsa_wordlist_destroy, (void *)ms_lsa_assignment_destroy, (void *)ms_lsa_redirection_destroy};
+static t_list				*g_lsts[3] = {NULL, NULL, NULL};
+static t_lsa_command_func	g_lsa_command_funcs[3] = {(void *)ms_lsa_word_list,
+		(void *)ms_lsa_assignment, (void *)ms_lsa_redirection};
+static t_lsa_destroy_func	g_lsa_destroy_funcs[3] = {(void *)ms_lsa_wordlist_destroy,
+		(void *)ms_lsa_assignment_destroy, (void *)ms_lsa_redirection_destroy};
 
-static int ms_lsa_command_internal(t_syntax_node *command_node);
-static int _ms_lsa_command_internal(t_syntax_node *command_attr_node);
-static int ms_lsa_command_set(t_lsa_command *lsa_command);
-static t_lsa_command	*ms_create_lsa_command(void);
+static int					ms_lsa_command_internal(t_syntax_node *command_node);
+static int					_ms_lsa_command_internal(t_syntax_node *command_attr_node);
+static int					ms_lsa_command_set(t_lsa_command *lsa_command);
+static t_lsa_command		*ms_create_lsa_command(void);
 
 t_lsa_command	*ms_lsa_command(t_syntax_node *command_node)
 {
-	t_lsa_command		*lsa_command;
-	int i;
-	
+	t_lsa_command	*lsa_command;
+	int				i;
+
 	i = 0;
 	while (command_node->children[i] != NULL)
 	{
-		if(ms_lsa_command_internal(command_node->children[i]) == -1)
+		if (ms_lsa_command_internal(command_node->children[i]) == -1)
 			return (NULL);
 		i++;
 	}
@@ -63,13 +65,13 @@ t_lsa_command	*ms_lsa_command(t_syntax_node *command_node)
 	return (lsa_command);
 }
 
-static int ms_lsa_command_internal(t_syntax_node *command_node)
+static int	ms_lsa_command_internal(t_syntax_node *command_node)
 {
-	t_syntax_node *child_node;
-	int i;
+	t_syntax_node	*child_node;
+	int				i;
 
 	i = 0;
-	if(command_node->type == SY_ASSIGNMENT_COMMAND)
+	if (command_node->type == SY_ASSIGNMENT_COMMAND)
 	{
 		while (command_node->children[i] != NULL)
 		{
@@ -84,7 +86,7 @@ static int ms_lsa_command_internal(t_syntax_node *command_node)
 		while (command_node->children[i] != NULL)
 		{
 			child_node = command_node->children[i];
-			if(_ms_lsa_command_internal(child_node) == -1)
+			if (_ms_lsa_command_internal(child_node) == -1)
 				return (-1);
 			i++;
 		}
@@ -92,17 +94,17 @@ static int ms_lsa_command_internal(t_syntax_node *command_node)
 	return (0);
 }
 
-static int _ms_lsa_command_internal(t_syntax_node *command_attr_node)
+static int	_ms_lsa_command_internal(t_syntax_node *command_attr_node)
 {
-	void *temp;
-	t_lsa_command_type type;
+	void				*temp;
+	t_lsa_command_type	type;
 
 	temp = NULL;
-	if(command_attr_node->type == SY_ASSIGNMENT_WORD)
+	if (command_attr_node->type == SY_ASSIGNMENT_WORD)
 		type = LSA_CMD_ASSIGNMENTS;
-	else if(command_attr_node->type == SY_WORD_LIST)
+	else if (command_attr_node->type == SY_WORD_LIST)
 		type = LSA_CMD_ARGS;
-	else if(command_attr_node->type == SY_REDIRECTION_WORD)
+	else if (command_attr_node->type == SY_REDIRECTION_WORD)
 		type = LSA_CMD_REDIRECTS;
 	temp = g_lsa_command_funcs[type](command_attr_node);
 	if (temp == NULL)
@@ -116,30 +118,33 @@ static int _ms_lsa_command_internal(t_syntax_node *command_attr_node)
 	return (0);
 }
 
-static int ms_lsa_command_set(t_lsa_command *lsa_command)
+static int	ms_lsa_command_set(t_lsa_command *lsa_command)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (g_lsts[LSA_CMD_ARGS])
 	{
-		lsa_command->args = ms_lst_to_ntp(&g_lsts[LSA_CMD_ARGS], ms_identify, ms_noop_del);
+		lsa_command->args = ms_lst_to_ntp(&g_lsts[LSA_CMD_ARGS], ms_identify,
+				ms_noop_del);
 		if (lsa_command->args == NULL)
 			ret = -1;
 	}
 	if (g_lsts[LSA_CMD_ASSIGNMENTS])
 	{
-		lsa_command->assignments = ms_lst_to_ntp(&g_lsts[LSA_CMD_ASSIGNMENTS], ms_identify, ms_noop_del);
+		lsa_command->assignments = ms_lst_to_ntp(&g_lsts[LSA_CMD_ASSIGNMENTS],
+				ms_identify, ms_noop_del);
 		if (lsa_command->assignments == NULL)
 			ret = -1;
 	}
 	if (g_lsts[LSA_CMD_REDIRECTS])
 	{
-		lsa_command->redirects = ms_lst_to_ntp(&g_lsts[LSA_CMD_REDIRECTS], ms_identify, ms_noop_del);
+		lsa_command->redirects = ms_lst_to_ntp(&g_lsts[LSA_CMD_REDIRECTS],
+				ms_identify, ms_noop_del);
 		if (lsa_command->redirects == NULL)
 			ret = -1;
 	}
-	if(ret == -1)
+	if (ret == -1)
 		ms_lsa_command_destroy(lsa_command);
 	return (ret);
 }
