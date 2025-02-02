@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:38:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 18:48:31 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:58:04 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*ms_tokenize_word(const char *input, int pos)
 	const int start_pos = pos;
 	t_token	*token;
 
-	if (ms_is_word_token_char(&input[pos]))
+	if (input[pos] && ms_is_word_token_char(&input[pos]))
 	{
 		while (input[pos] && ms_is_word_token_char(&input[pos]))
 			pos++;
