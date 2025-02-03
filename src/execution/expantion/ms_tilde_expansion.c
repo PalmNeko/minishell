@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 20:05:04 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/29 20:05:05 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 22:50:23 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ static t_syntax_node	*_ms_execution_tilde_expantion(t_syntax_node *word_node)
 	temp = ms_tilde_expansion(word_node->token->token);
 	if (temp == NULL)
 		return (NULL);
-	free((void *)word_node->token->token);
-	word_node->token->token = temp;
+	if (ft_strcmp(temp, word_node->token->token) == 0)
+		free(temp);
+	else
+	{
+		ms_lexical_analyze_destroy_token(word_node->token);
+		word_node->token = ms_create_token(TK_WORD, temp, 0, ft_strlen(temp));
+		if (word_node->token == NULL)
+			return (NULL);
+	}
 	return (word_node);
 }

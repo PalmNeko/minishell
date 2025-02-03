@@ -70,7 +70,11 @@ TEST(Execute_Expansion, ms_parameter_expansion2)
 	node->children[1] = NULL;
 
 	t_syntax_node *result = ms_parameter_expansion(node);
+	ASSERT_NE(result, nullptr);
+	ASSERT_NE(result->children[0], nullptr);
+	ASSERT_NE(result->children[0]->children[0], nullptr);
 	ASSERT_STREQ(result->children[0]->children[0]->token->token, expect_str1.c_str());
+	ASSERT_NE(result->children[0]->children[1], nullptr);
 	ASSERT_STREQ(result->children[0]->children[1]->token->token, expect_str2.c_str());
 
 	ms_syntax_node_destroy(result);

@@ -28,6 +28,7 @@ void	ms_input(t_minishell mnsh)
 	while (1)
 	{
 		line = ms_get_user_input(mnsh);
+		fprintf(stderr, "line: %s\n", line);
 		if (line == NULL)
 			break ;
 		ft_strrchr(line, '\n')[0] = '\0';

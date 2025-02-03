@@ -38,6 +38,31 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_SUCCESS)
     ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
 }
 
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_SUCCESS2)
+{
+    const char *str = "\"\"";
+
+    t_token **expect_tokens = ms_lexical_analyze(str);
+
+    t_syntax_node **expect_children = (t_syntax_node **)malloc(sizeof(t_syntax_node*) * 3);
+	expect_children[0] = ms_parse_double_quote(expect_tokens, 0);
+	expect_children[1] = ms_parse_double_quote(expect_tokens, 1);
+	expect_children[2] = NULL;
+
+    t_syntax_node *expect = ms_syntax_node_create(SY_DOUBLE_QUOTED_WORD);
+    expect->children  = expect_children;
+    expect->start_pos = 0;
+    expect->end_pos   = 2;
+
+    t_syntax_node *actual = ms_parse_double_quoted_word(expect_tokens, 0);
+
+    test_runner_of_ms_parse(expect, str, actual);
+
+    ms_syntax_node_destroy(expect);
+    ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+}
+
+
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_FAIL)
 {
     const char *str = "\"word"; // 終了ダブルクォートがない

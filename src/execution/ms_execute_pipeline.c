@@ -6,13 +6,15 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 02:51:15 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/01 00:16:42 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 10:14:56 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include <stdlib.h>
 #include <sys/wait.h>
+#include "syntax_analyze.h"
+#include "libms.h"
 
 static int	ms_single_command_execution(t_lsa_pipeline *pipeline);
 static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline);
@@ -37,9 +39,13 @@ int	ms_execute_pipeline(t_lsa_pipeline *pipeline)
 static int	ms_single_command_execution(t_lsa_pipeline *pipeline)
 {
 	int	ret;
+	char **expanded_strings;
 
-	if (ms_isbuiltin((char *)pipeline->commands[0]->args[0]->word_list->children[0]))
+	expanded_strings = ms_expansion(pipeline->commands[0]->args[0]);
+	if (ms_isbuiltin(expanded_strings[0]) == 1)
+	{
 		ret = ms_simple_command_execution(pipeline->commands[0]);
+	}
 	else
 		ret = ms_execute_pipeline_fork(pipeline->commands[0], SINGLE_COMMAND,
 				NULL);
@@ -74,11 +80,10 @@ static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline)
 static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 		t_state_in_pipeline state, int *pipe_fd)
 {
-	int		ret;
+	int		status;
 	pid_t	pid;
 	int		new_pipe_fd[2];
 
-	ret = 0;
 	if (!(state & LAST_COMMAND))
 		if (pipe(new_pipe_fd) == -1)
 			return (1);
@@ -97,8 +102,10 @@ static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 			ft_memcpy(pipe_fd, new_pipe_fd, sizeof(int) * 2);
 		}
 	}
-	waitpid(pid, &ret, 0);
-	return (ret);
+	waitpid(pid, &status, 0);
+	if(WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	return (status);
 }
 
 static void	ms_execute_pipeline_child(t_lsa_command *lsa_command,

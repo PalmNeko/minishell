@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 18:05:49 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 21:44:46 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,24 @@ t_syntax_node	*ms_parse_double_quoted_word(t_token **tokens, int pos)
 	child = ms_parse_double_quote(tokens, pos);
 	if (child == NULL)
 		return (NULL);
-	if (child->token->type != TK_DOUBLE_QUOTE)
+	if (child->type == SY_DECLINED)
 		return (ms_syntax_node_destroy(child), ms_parse_declined(tokens, pos));
+	ms_syntax_node_print(child);
 	ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
+	if (child_lst == NULL)
+		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
 	while (tokens[pos])
 	{
-		if (tokens[pos]->type == TK_DOUBLE_QUOTE)
-			break ;
 		child = ms_parse_all(tokens, pos);
 		if (child == NULL)
 			return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper),
 				NULL);
+		if (child->type == SY_DOUBLE_QUOTE)
+		{
+			ms_syntax_node_destroy(child);
+			break ;
+		}
 		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
 		if (child_lst == NULL)
 			return (ms_syntax_node_destroy(child), NULL);
@@ -54,7 +60,11 @@ t_syntax_node	*ms_parse_double_quoted_word(t_token **tokens, int pos)
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
-	node = ms_syntax_node_create_nonterminal(SY_DOUBLE_QUOTED_WORD, &child_lst, start_pos, pos);
+	node = ms_syntax_node_create_nonterminal(SY_DOUBLE_QUOTED_WORD, &child_lst,
+			start_pos, pos);
+	ms_syntax_node_print(node);
+	if (node == NULL)
+		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
 	return (node);
 }
 
