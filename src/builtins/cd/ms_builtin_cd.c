@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 06:29:14 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 06:41:33 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:17:40 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "builtin_internal.h"
 #include "libft.h"
 #include "libms.h"
+#include "ms_error.h"
 #include <stddef.h>
 #include <errno.h>
 #include <string.h>
@@ -65,7 +66,7 @@ static int	ms_setnewpwd(t_builtin_cd *parsed, const char *chdir_pathname)
 
 	curdir = ms_get_current_dir_name();
 	if (curdir == NULL)
-		ms_perror_cd_cwd();
+		ms_perror_cwd("cd");
 	new_pwd = ms_create_newpwd(parsed, curdir, chdir_pathname);
 	if (new_pwd == NULL)
 		return (free(curdir), ms_perror_cd(chdir_pathname), 1);

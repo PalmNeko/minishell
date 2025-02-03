@@ -18,7 +18,6 @@
 
 char	*ms_get_cd_path(const char *arg_path);
 bool	ms_is_use_cdpath(const char *path);
-void	ms_perror_cd_cwd(void);
 void	ms_print_usage_cd(void);
 char	*ms_resolve_with_cdpath(const char *path);
 char	*ms_search_with_cdpath(const char *path);
