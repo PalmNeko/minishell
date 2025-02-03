@@ -1,4 +1,4 @@
-#include "IoTerminal.hpp"
+#include "IoCapture.hpp"
 #include <gtest/gtest.h>
 #include <iostream>
 
@@ -9,12 +9,17 @@ extern "C" {
 	#include <sys/types.h>
 };
 
-IoTerminal *testBuiltinExport(const char *path, char *const *argv, char *const *envp)
+
+IoCapture *testBuiltinExport(const char *path, char *const *argv, char *const *envp)
 {
-	IoTerminal *term = new IoTerminal;
+	IoCapture *term = new IoCapture;
 
 	term->boot();
-	ms_builtin_export(path, (char *const *)argv, envp);
+	if (term->isCapturing())
+	{
+		ms_builtin_export(path, (char *const *)argv, envp);
+		exit(0);
+	}
 	term->exit();
 	return term;
 }
@@ -45,7 +50,7 @@ TEST(ms_builtin_export, basic)
 	ms_add_export("Alice");
 
 	// テスト
-	IoTerminal 	*term;
+	IoCapture 	*term;
 	term = testBuiltinExport(NULL, (char *const*)args, NULL);
     EXPECT_EQ(term->getStdout(), expectStdout);
     EXPECT_EQ(term->getStderr(), expectStderr);
@@ -86,7 +91,7 @@ TEST(ms_builtin_export, invalid_optin)
 		"export: usage: export [name[=value] ...]\n";
 
 	// テスト
-	IoTerminal 	*term;
+	IoCapture 	*term;
 	term = testBuiltinExport(NULL, (char *const*)args, NULL);
     EXPECT_EQ(term->getStdout(), expectStdout);
     EXPECT_EQ(term->getStderr(), expectStderr);
