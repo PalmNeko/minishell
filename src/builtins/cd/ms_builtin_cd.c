@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_cd2.c                                   :+:      :+:    :+:   */
+/*   ms_builtin_cd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 06:29:14 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/01 08:54:20 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 06:41:33 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ static char	*ms_create_newpwd(
 		return (NULL);
 	abs_path = ms_get_full_path(old_cdwd, chdir_pathname);
 	if (abs_path == NULL)
-		return (free(old_cdwd), NULL);
-	free(old_cdwd);
+		return (NULL);
 	if (curdir == NULL)
 		new_pwd = ft_strdup(abs_path);
 	else if (parsed->symlink_follow == false)

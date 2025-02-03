@@ -26,7 +26,6 @@ int	ms_set_pwd_env(const char *new_path)
 	if (old_cdwd == NULL)
 		return (1);
 	result = ms_setenv("OLDPWD", old_cdwd, 1);
-	free(old_cdwd);
 	if (result != 0)
 		return (1);
 	ms_set_cdwd(new_path);

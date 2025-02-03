@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_internal.h                                 :+:      :+:    :+:   */
+/*   ms_cdwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 15:53:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 06:49:23 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/02/03 06:36:53 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/02/03 06:40:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_INTERNAL_H
-# define BUILTIN_INTERNAL_H
+#include "libft.h"
+#include <stdlib.h>
 
-# include <stdbool.h>
+static char	*g_cdwd = NULL;
 
-void	ms_perror_invalid_option(const char *cmd, char opt);
+char	*ms_get_cdwd(void)
+{
+	return (g_cdwd);
+}
 
-// variable
-char	*ms_get_cdwd(void);
-void	ms_set_cdwd(const char *cdwd);
+void	ms_set_cdwd(const char *cdwd)
+{
+	free(g_cdwd);
+	g_cdwd = ft_strdup(cdwd);
+}
 
-#endif
+void	ms_clear_cdwd(void)
+{
+	free(g_cdwd);
+}

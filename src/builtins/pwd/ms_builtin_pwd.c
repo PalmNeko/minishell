@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:53:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 06:21:32 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 06:46:02 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	ms_builtin_pwd(
 	}
 	cwd = ms_get_current_dir_name();
 	if (cwd == NULL)
+	{
 		cwd = ms_get_cdwd();
+		if (cwd != NULL)
+			cwd = ft_strdup(cwd);
+	}
 	if (cwd != NULL)
 		printf("%s\n", cwd);
 	free(cwd);
