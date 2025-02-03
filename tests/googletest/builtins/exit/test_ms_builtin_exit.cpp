@@ -159,26 +159,3 @@ TEST(ms_builtin_exit, skip_double_hyphen)
     EXPECT_EQ(term->getStderr(), expectStderr);
 	delete term;
 }
-
-/** インタラクティブではないシェルの場合はexitを表示しない。 */
-TEST(ms_builtin_exit, skip_sapmle)
-{
-	GTEST_SKIP();
-	std::string expectStderr;
-	std::string expectStdout;
-	int			expect_status;
-	const char 	*args[] = {"exit", NULL};
-
-	expect_status = 0;
-	expectStdout =
-		"";
-	expectStderr =
-		"";
-
-	IoCapture 	*term;
-	term = testBuiltinExit(NULL, (char *const*)args, NULL);
-	EXPECT_EQ(term->getStatus(), expect_status);
-    EXPECT_EQ(term->getStdout(), expectStdout);
-    EXPECT_EQ(term->getStderr(), expectStderr);
-	delete term;
-}
