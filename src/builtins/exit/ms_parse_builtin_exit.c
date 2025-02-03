@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:37:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/01 10:09:32 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 09:42:54 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "libms.h"
 #include <errno.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 static bool	ms_is_numeric(const char *str, const char *endptr);
 
@@ -38,7 +39,9 @@ int	ms_parse_builtin_exit(t_builtin_exit *parsed, char *const argv[])
 		str = opting.argv[opting.optind];
 	if (str == NULL)
 		return (ms_perror_cmd("exit", "not set `?' variable"), 1);
+	errno = 0;
 	status = ft_strtol(str, &endptr, 10);
+	// printf("status: %d %s %s\n", status, str, endptr);
 	if (ms_is_numeric(str, endptr) == false
 		|| errno != 0)
 		return (ms_perror_cmd2("exit",
