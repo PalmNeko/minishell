@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 09:16:41 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 11:10:16 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 08:08:34 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int	ms_history_truncate_file(const char *filename, int nlines)
 	eno = ms_write_history_history(&history, filename);
 	if (eno != 0)
 		return (eno);
+	ms_clear_history_history(&history);
 	return (0);
 }
