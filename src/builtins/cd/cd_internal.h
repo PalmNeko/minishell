@@ -16,13 +16,7 @@
 # include "cd_internal_type.h"
 # include <stdbool.h>
 
-int		ms_error_handling_cd(
-			const char *path, char *const argv[], char *const envp[]);
 char	*ms_get_cd_path(const char *arg_path);
-char	*ms_get_opt_lp(char *const argv[]);
-bool	ms_is_cwd_check(char *const argv[]);
-bool	ms_is_resolve_symlink(char *const argv[]);
-bool	ms_is_unresolve_symlink(char *const argv[]);
 bool	ms_is_use_cdpath(const char *path);
 void	ms_perror_cd_cwd(void);
 void	ms_print_usage_cd(void);
@@ -34,5 +28,6 @@ int		ms_parse_builtin_cd_args(
 			const char *path,
 			char *const argv[],
 			char *const envp[]);
+void	ms_perror_cd(const char *type);
 
 #endif
