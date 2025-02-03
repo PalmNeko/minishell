@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_simple_command_execution..c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:31:38 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/26 21:33:12 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/03 10:00:04 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include <stdio.h>
 
 static int	ms_simple_command_execution_with_args(t_lsa_command *lsa_command);
 static int	ms_simple_command_execution_no_args(t_lsa_command *lsa_command);
@@ -21,7 +20,6 @@ int	ms_simple_command_execution(t_lsa_command *lsa_command)
 	int	ret;
 
 	ret = 0;
-	fprintf(stderr, "simple command execution\n");
 	if (lsa_command->args)
 	{
 		ret = ms_simple_command_execution_with_args(lsa_command);
