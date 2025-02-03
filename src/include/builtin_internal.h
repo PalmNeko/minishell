@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:53:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/01 07:49:30 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 06:30:04 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,7 @@
 
 # include <stdbool.h>
 
-bool	ms_has_opt(char *const argv[], char opt, const char *valid_opts);
-bool	ms_is_option(const char *arg);
-bool	ms_validate_opts(const char *opts, const char *valid_opts);
 void	ms_set_character_map(const char *str, bool map[256]);
-char	*ms_get_first_invalid_opt(char *const argv[], const char *valid_opts);
-char	**ms_get_argument_head(char *const argv[], const char *valid_opts);
-char	*ms_set_opt_txt(char buf[3], char invalid_opt);
-char	**ms_get_first_arg_ptr(char *const argv[], const char *valid_opt);
-int		ms_check_opt(char *const argv[], const char *valid_opt);
 bool	ms_is_cwd_check(char *const argv[]);
 void	ms_perror_invalid_option(const char *cmd, char opt);
 
