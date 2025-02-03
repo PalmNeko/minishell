@@ -8,6 +8,7 @@ cd "$(dirname $0)"
 mkdir tmp
 
 # テスト
+# PROG="bash"
 LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
 pwd
@@ -15,8 +16,7 @@ cd tmp
 rm -r ../tmp
 cd .
 pwd
-echo $?
 EOF
 
 # 後始末
-rm -r tmp
+rm -rf tmp

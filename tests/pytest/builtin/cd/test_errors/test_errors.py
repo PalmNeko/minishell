@@ -34,9 +34,9 @@ def test_OLDPWD_not_set():
 @pytest.mark.skip(reason="デバッグの時用")
 def test_getcwd_error():
     script_tester.test("builtin/cd/test_errors/getcwd_error.sh",
-        expected_stdout = "0\n",
+        expected_stdout = (
+            "/app/tests/pytest/builtin/cd/test_errors\n"
+            "/app/tests/pytest/builtin/cd/test_errors/tmp/.\n"),
         expected_stderr = (
-            "/app/tests/pytest/builtin/cd/test_errors/\n",
-            "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n",
-            "/app/tests/pytest/builtin/cd/test_errors/tmp/.\n"
+            "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
             ))
