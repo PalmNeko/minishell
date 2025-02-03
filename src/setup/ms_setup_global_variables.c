@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_setup.c                                         :+:      :+:    :+:   */
+/*   ms_setup_global_variables.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:29:00 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 07:31:19 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/02/03 06:51:52 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/02/03 07:24:56 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "setup.h"
-#include "setup_internal.h"
-#include "readline.h"
+#include "builtin_internal.h"
 
-t_minishell	*ms_setup(void)
+int	ms_setup_global_variables(void)
 {
-	t_minishell	*ms;
-
-	ms_setup_variable();
-	ms_setup_history();
-	ms_setup_readline_behavior();
-	ms_setup_global_variables();
-	ms = ms_get_minishell();
-	*ms = (t_minishell){
-		.ms_malloc_list = NULL,
-		.ms_shell_var = NULL,
-	};
-	return (ms);
+	ms_init_cdwd();
+	return (0);
 }
