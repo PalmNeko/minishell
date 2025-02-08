@@ -117,10 +117,12 @@ char	*ms_dup_delimita(char *input)
 
 	end = input;
 	while (*end != '\0')
- 	{
+	{
 		if (ft_includes(*end, "\"'"))
 			ms_skip_surround_quote(&end);
 		if (ft_includes(*end, " \t\n<&|()"))
+			break ;
+		if (*end == '\0')
 			break ;
 		end++;
 	}
