@@ -137,13 +137,22 @@ void	ms_exclude_quote(char *input)
 {
 	size_t	set_pos;
 	size_t	pivot;
+	char	quote_txt;
 
 	set_pos = 0;
 	pivot = 0;
+	quote_txt = '\0';
 	while (input[pivot] != '\0')
 	{
-		if (ft_includes(input[pivot], "'\""))
+		if (quote_txt != '\0' && input[pivot] == quote_txt)
 		{
+			quote_txt = '\0';
+			pivot++;
+			continue ;
+		}
+		else if (quote_txt == '\0' && ft_includes(input[pivot], "'\""))
+		{
+			quote_txt = input[pivot];
 			pivot++;
 			continue ;
 		}
