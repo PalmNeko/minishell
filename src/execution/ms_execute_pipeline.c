@@ -42,7 +42,7 @@ static int	ms_single_command_execution(t_lsa_pipeline *pipeline)
 	char **expanded_strings;
 
 	expanded_strings = ms_expansion(pipeline->commands[0]->args[0]);
-	if (ms_isbuiltin(expanded_strings[0]) == 1)
+	if (expanded_strings[0] && ms_isbuiltin(expanded_strings[0]) == 1)
 	{
 		ret = ms_simple_command_execution(pipeline->commands[0]);
 	}

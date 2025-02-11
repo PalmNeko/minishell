@@ -36,21 +36,18 @@ t_syntax_node	*ms_quote_removal(t_syntax_node *word_list)
 			word = ms_quote_removal_get_word(child_node);
 			if (word == NULL)
 				return (NULL);
-			if (ft_strlen(word) > 0)
-			{
-				token = ms_create_token(TK_WORD, word, 0, ft_strlen(word));
-				free(word);
-				if (token == NULL)
-					return (NULL);
-				new_word_node = ms_syntax_node_create(SY_WORD);
-				if (new_word_node == NULL)
-					return (NULL);
-				new_word_node->token = token;
-				new_word_node->start_pos = child_node->start_pos;
-				new_word_node->end_pos = child_node->end_pos;
-				ms_syntax_node_destroy(child_node);
-				word_list->children[i] = new_word_node;
-			}
+			token = ms_create_token(TK_WORD, word, 0, ft_strlen(word));
+			free(word);
+			if (token == NULL)
+				return (NULL);
+			new_word_node = ms_syntax_node_create(SY_WORD);
+			if (new_word_node == NULL)
+				return (NULL);
+			new_word_node->token = token;
+			new_word_node->start_pos = child_node->start_pos;
+			new_word_node->end_pos = child_node->end_pos;
+			ms_syntax_node_destroy(child_node);
+			word_list->children[i] = new_word_node;
 		}
 		i++;
 	}

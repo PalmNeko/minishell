@@ -16,143 +16,149 @@
 #include <dirent.h>
 #include <stdlib.h>
 
-static t_syntax_node	*ms_expand_path(t_syntax_node *word);
-static char				**ms_expand_path_wildcard(char *token);
-static t_list			*_ms_expand_path_wildcard(DIR *dir, char *before_string,
-							char **after_string);
+static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst);
+static char	**ms_expand_path_wildcard(char *token);
 
-t_syntax_node	**ms_expand_path_static_get_lst(void)
+t_syntax_node *ms_duplicate_node(t_syntax_node *node)
 {
-	static t_list	*lst = NULL;
+	t_syntax_node *new_node;
 
-	return (&lst);
+	int i;
+
+	new_node = ms_syntax_node_create(node->type);
+	if (new_node == NULL)
+		return (NULL);
+	if(node->children != NULL)
+	{
+		i = 0;
+		new_node->children = (t_syntax_node **)malloc(sizeof(t_syntax_node *) * 100);
+		while (node->children[i] != NULL)
+		{
+			new_node->children[i] = ms_duplicate_node(node->children[i]);
+			if (new_node->children[i] == NULL)
+				return (NULL);
+			i++;
+		}
+		new_node->children[i] = NULL;	
+	}
+	if(node->token != NULL)
+		new_node->token = ms_dup_token(node->token);
+	new_node->start_pos = node->start_pos;
+	new_node->end_pos = node->end_pos;
+	return (new_node);
 }
 
 t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 {
 	int				i;
-	char			*token;
-	t_syntax_node	**nodes;
-	int				count;
-	t_list			*lst;
+	t_syntax_node	*new_child_node;
+	t_syntax_node	**new_children;
+	t_list			*node_lst;
 
+	node_lst = NULL;
 	i = 0;
-	lst = NULL;
-	count = ms_count_include_wildcard_node(word_list);
-	if (count == 0)
-		return (word_list);
 	while (word_list->children[i])
 	{
+		//ここでは既に展開されたワード達が入っている(no necessary edit)
 		if (word_list->children[i]->type == SY_WORD)
+			ms_expand_path(word_list->children[i], &node_lst);
+		else
 		{
-			if (ms_include_wildcard(word_list->children[i]))
-			{
-				nodes = ms_expand_path(word_list->children[i]);
-				if (nodes == NULL)
-					return (NULL);
-			}
-			else
-				ms_append_node_lst(&word_list->children[i]);
-			if (lst == NULL)
+			new_child_node = ms_duplicate_node(word_list->children[i]);
+			if (new_child_node == NULL)
 				return (NULL);
+			ms_lstappend_tail(&node_lst, 
+				new_child_node, 
+				ms_syntax_node_destroy_wrapper);
 		}
-		i++;
-	}
-	return (word_list);
-}
-
-static int	append_lst_internal(t_syntax_node **nodes)
-{
-	t_list	**lstp;
-	int		i;
-
-	lstp = ms_get_current_lst();
-	lst = NULL;
-	i = 0;
-	while (nodes[i] != NULL)
-	{
-		ms_lstappend_tail(&lst, nodes[i], ms_syntax_node_destroy_wrapper);
-		if (lst == NULL)
+		if (node_lst == NULL)
 			return (NULL);
 		i++;
 	}
-	return (0);
+	new_children = (t_syntax_node **)ms_lst_to_ntp(&node_lst, ms_identify, ms_noop_del);
+	if (new_children == NULL)
+		return (NULL);
+	ms_destroy_ntp2((void **)word_list->children, ms_syntax_node_destroy_wrapper);
+	word_list->children = new_children;
+	return (word_list);
 }
 
-static bool	ms_include_wildcard(t_syntax_node *word_node)
+static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst)
 {
 	char	*token;
-	int		i;
-
+	char **expanded_tokens;
+	int i;
+	t_list *node_lst2;
+	
+	node_lst2 = NULL;
+	expanded_tokens = NULL;
 	token = (char *)word_node->token->token;
 	i = 0;
 	while (token[i] != '\0')
 	{
 		if (token[i] == '*')
-			return (true);
+		{
+			expanded_tokens = ms_expand_path_wildcard(token);
+			if (expanded_tokens == NULL)
+				return (-1);
+			if (expanded_tokens[0] == NULL)
+			{
+				ms_lstappend_tail(node_lst, ms_duplicate_node(word_node), ms_syntax_node_destroy_wrapper);
+				if (node_lst == NULL)
+					return (-1);
+				break;
+			}
+			char *expanded_string;
+			expanded_string = ms_join_ntp((const char **)expanded_tokens, " ");
+			if (expanded_string == NULL)
+				return (-1);
+			t_token **expanded_token;
+			expanded_token = ms_lexical_analyze(expanded_string);
+			if (expanded_token == NULL)
+				return (-1);
+			int j;
+			j = 0;
+			while (expanded_token[j] != NULL)
+			{
+				t_syntax_node *child;
+				child = ms_syntax_node_create(SY_WORD);
+				if (child == NULL)
+					return (-1);
+				child->token = expanded_token[j];
+				child->start_pos = expanded_token[j]->start_pos;
+				child->end_pos = child->start_pos + 1;
+				ms_lstappend_tail(&node_lst2, child, ms_syntax_node_destroy_wrapper);
+				if (node_lst2 == NULL)
+					return (-1);
+				j++;
+			}
+			ft_lstadd_back(node_lst, node_lst2);
+			break;
+		}
 		i++;
 	}
-	return (false);
-}
-
-static t_syntax_node	**ms_expand_path(t_syntax_node *word_node)
-{
-	t_syntax_node		**children;
-	char				**expanded_tokens;
-	t_token				**expand_tokens;
-	char				*expanded_string;
-	t_syntax_node		*child;
-	t_syntax_node_list	*child_lst;
-	int					i;
-	const int			start_pos = word_node->start_pos;
-
-	expanded_tokens = ms_expand_path_wildcard((char *)word_node->token->token);
 	if (expanded_tokens == NULL)
-		return (NULL);
-	if (expanded_tokens[0] == NULL)
-		return (word_node);
-	ms_syntax_node_destroy(word_node);
-	expanded_string = ms_join_ntp((const char **)expanded_tokens, " ");
-	ms_destroy_ntp2((void **)expanded_tokens, free);
-	if (expanded_string == NULL)
-		return (NULL);
-	expand_tokens = ms_lexical_analyze(expanded_string);
-	free(expanded_string);
-	if (expand_tokens == NULL)
-		return (NULL);
-	child_lst = NULL;
-	i = 0;
-	while (expand_tokens[i] != NULL)
 	{
-		child = ms_syntax_node_create(SY_WORD);
-		if (child == NULL)
-			return (NULL);
-		child->token = expand_tokens[i];
-		child->start_pos = expand_tokens[i]->start_pos;
-		child->end_pos = child->start_pos + 1;
-		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
-		if (child_lst == NULL)
-			return (NULL);
-		i++;
+		ms_lstappend_tail(node_lst, ms_duplicate_node(word_node), ms_syntax_node_destroy_wrapper);
+		if (node_lst == NULL)
+			return (-1);
 	}
-	children = (char **)ms_lst_to_ntp(&child_lst, ms_identify, ms_noop_del);
-	if (children == NULL)
-		return (NULL);
-	return (children);
+	return (0);
 }
 
-char	**ms_expand_path_wildcard(char *token)
+char **ms_expand_path_wildcard(char *token)
 {
-	int		wildcard_position;
 	t_list	*expanded_token_lst;
 	char	**expanded_string;
 	char	**after_string;
 	char	*before_string;
 	DIR		*dir;
 	int		index;
+	struct dirent	*dp;
+	char	*filename;
+	int		i;
 
 	index = 0;
-	wildcard_position = ft_strchr(token, '*');
 	while (token[index] != '\0')
 	{
 		if (token[index] == '*')
@@ -166,10 +172,35 @@ char	**ms_expand_path_wildcard(char *token)
 			dir = opendir("./");
 			if (dir == NULL)
 				return (NULL);
-			expanded_token_lst = _ms_expand_path_wildcard(dir, before_string,
-					after_string);
-			if (expanded_token_lst == NULL)
-				return (NULL);
+			dp = readdir(dir);
+			expanded_token_lst = NULL;
+			while (dp != NULL)
+			{
+				if (ft_strncmp(dp->d_name, before_string,
+						ft_strlen(before_string)) == 0)
+				{
+					i = 0;
+					while (after_string[i] != NULL)
+					{
+						if (ft_strcmp(dp->d_name + ft_strlen(dp->d_name)
+								- ft_strlen(after_string[i]), after_string[i]) == 0)
+						{
+							if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name,
+									"..") != 0)
+							{
+								filename = ft_strdup(dp->d_name);
+								if (filename == NULL)
+									return (NULL);
+								ms_lstappend_tail(&expanded_token_lst, filename, free);
+								if (expanded_token_lst == NULL)
+									return (NULL);
+							}
+						}
+						i++;
+					}
+				}
+				dp = readdir(dir);
+			}
 			closedir(dir);
 			free(before_string);
 			ms_destroy_ntp2((void **)after_string, free);
@@ -194,45 +225,199 @@ char	**ms_expand_path_wildcard(char *token)
 	return (expanded_string);
 }
 
-static t_list	*_ms_expand_path_wildcard(DIR *dir, char *before_string,
-		char **after_string)
-{
-	t_list			*expanded_token_lst;
-	char			*filename;
-	int				i;
-	struct dirent	*dp;
 
-	dp = readdir(dir);
-	expanded_token_lst = NULL;
-	while (dp != NULL)
-	{
-		if (ft_strncmp(dp->d_name, before_string,
-				ft_strlen(before_string)) == 0)
-		{
-			i = 0;
-			while (after_string[i] != NULL)
-			{
-				if (ft_strcmp(dp->d_name + ft_strlen(dp->d_name)
-						- ft_strlen(after_string[i]), after_string[i]) == 0)
-				{
-					if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name,
-							"..") != 0)
-					{
-						filename = ft_strdup(dp->d_name);
-						if (filename == NULL)
-							return (NULL);
-						ms_lstappend_tail(&expanded_token_lst, filename, free);
-						if (expanded_token_lst == NULL)
-							return (NULL);
-					}
-				}
-				i++;
-			}
-		}
-		dp = readdir(dir);
-	}
-	return (expanded_token_lst);
-}
+
+// char	**ms_expand_path_wildcard(char *token)
+// {
+// 	int		wildcard_position;
+// 	t_list	*expanded_token_lst;
+// 	char	**expanded_string;
+// 	char	**after_string;
+// 	char	*before_string;
+// 	DIR		*dir;
+// 	int		index;
+
+// 	index = 0;
+// 	wildcard_position = ft_strchr(token, '*');
+// 	while (token[index] != '\0')
+// 	{
+// 		if (token[index] == '*')
+// 		{
+// 			before_string = ft_strndup(token, index);
+// 			if (before_string == NULL)
+// 				return (NULL);
+// 			after_string = ms_expand_path_wildcard(token + index + 1);
+// 			if (after_string == NULL)
+// 				return (NULL);
+// 			dir = opendir("./");
+// 			if (dir == NULL)
+// 				return (NULL);
+// 			expanded_token_lst = _ms_expand_path_wildcard(dir, before_string,
+// 					after_string);
+// 			if (expanded_token_lst == NULL)
+// 				return (NULL);
+// 			closedir(dir);
+// 			free(before_string);
+// 			ms_destroy_ntp2((void **)after_string, free);
+// 			expanded_string = ms_lst_to_ntp(&expanded_token_lst, ms_identify,
+// 					ms_noop_del);
+// 			if (expanded_string == NULL)
+// 				return (NULL);
+// 			return (expanded_string);
+// 		}
+// 		index++;
+// 	}
+// 	expanded_string = (char **)malloc(sizeof(char *) * 2);
+// 	if (expanded_string == NULL)
+// 		return (NULL);
+// 	expanded_string[0] = ft_strdup(token);
+// 	if (expanded_string[0] == NULL)
+// 	{
+// 		free(expanded_string);
+// 		return (NULL);
+// 	}
+// 	expanded_string[1] = NULL;
+// 	return (expanded_string);
+// }
+
+// static t_syntax_node	**ms_expand_path(t_syntax_node *word_node)
+// {
+// 	t_syntax_node		**children;
+// 	char				**expanded_tokens;
+// 	t_token				**expand_tokens;
+// 	char				*expanded_string;
+// 	t_syntax_node		*child;
+// 	t_syntax_node_list	*child_lst;
+// 	int					i;
+// 	const int			start_pos = word_node->start_pos;
+
+// 	expanded_tokens = ms_expand_path_wildcard((char *)word_node->token->token);
+// 	if (expanded_tokens == NULL)
+// 		return (NULL);
+// 	if (expanded_tokens[0] == NULL)
+// 		return (word_node);
+// 	ms_syntax_node_destroy(word_node);
+// 	expanded_string = ms_join_ntp((const char **)expanded_tokens, " ");
+// 	ms_destroy_ntp2((void **)expanded_tokens, free);
+// 	if (expanded_string == NULL)
+// 		return (NULL);
+// 	expand_tokens = ms_lexical_analyze(expanded_string);
+// 	free(expanded_string);
+// 	if (expand_tokens == NULL)
+// 		return (NULL);
+// 	child_lst = NULL;
+// 	i = 0;
+// 	while (expand_tokens[i] != NULL)
+// 	{
+// 		child = ms_syntax_node_create(SY_WORD);
+// 		if (child == NULL)
+// 			return (NULL);
+// 		child->token = expand_tokens[i];
+// 		child->start_pos = expand_tokens[i]->start_pos;
+// 		child->end_pos = child->start_pos + 1;
+// 		ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
+// 		if (child_lst == NULL)
+// 			return (NULL);
+// 		i++;
+// 	}
+// 	children = (char **)ms_lst_to_ntp(&child_lst, ms_identify, ms_noop_del);
+// 	if (children == NULL)
+// 		return (NULL);
+// 	return (children);
+// }
+
+// char	**ms_expand_path_wildcard(char *token)
+// {
+// 	int		wildcard_position;
+// 	t_list	*expanded_token_lst;
+// 	char	**expanded_string;
+// 	char	**after_string;
+// 	char	*before_string;
+// 	DIR		*dir;
+// 	int		index;
+
+// 	index = 0;
+// 	wildcard_position = ft_strchr(token, '*');
+// 	while (token[index] != '\0')
+// 	{
+// 		if (token[index] == '*')
+// 		{
+// 			before_string = ft_strndup(token, index);
+// 			if (before_string == NULL)
+// 				return (NULL);
+// 			after_string = ms_expand_path_wildcard(token + index + 1);
+// 			if (after_string == NULL)
+// 				return (NULL);
+// 			dir = opendir("./");
+// 			if (dir == NULL)
+// 				return (NULL);
+// 			expanded_token_lst = _ms_expand_path_wildcard(dir, before_string,
+// 					after_string);
+// 			if (expanded_token_lst == NULL)
+// 				return (NULL);
+// 			closedir(dir);
+// 			free(before_string);
+// 			ms_destroy_ntp2((void **)after_string, free);
+// 			expanded_string = ms_lst_to_ntp(&expanded_token_lst, ms_identify,
+// 					ms_noop_del);
+// 			if (expanded_string == NULL)
+// 				return (NULL);
+// 			return (expanded_string);
+// 		}
+// 		index++;
+// 	}
+// 	expanded_string = (char **)malloc(sizeof(char *) * 2);
+// 	if (expanded_string == NULL)
+// 		return (NULL);
+// 	expanded_string[0] = ft_strdup(token);
+// 	if (expanded_string[0] == NULL)
+// 	{
+// 		free(expanded_string);
+// 		return (NULL);
+// 	}
+// 	expanded_string[1] = NULL;
+// 	return (expanded_string);
+// }
+
+// static t_list	*_ms_expand_path_wildcard(DIR *dir, char *before_string,
+// 		char **after_string)
+// {
+// 	t_list			*expanded_token_lst;
+// 	char			*filename;
+// 	int				i;
+// 	struct dirent	*dp;
+
+// 	dp = readdir(dir);
+// 	expanded_token_lst = NULL;
+// 	while (dp != NULL)
+// 	{
+// 		if (ft_strncmp(dp->d_name, before_string,
+// 				ft_strlen(before_string)) == 0)
+// 		{
+// 			i = 0;
+// 			while (after_string[i] != NULL)
+// 			{
+// 				if (ft_strcmp(dp->d_name + ft_strlen(dp->d_name)
+// 						- ft_strlen(after_string[i]), after_string[i]) == 0)
+// 				{
+// 					if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name,
+// 							"..") != 0)
+// 					{
+// 						filename = ft_strdup(dp->d_name);
+// 						if (filename == NULL)
+// 							return (NULL);
+// 						ms_lstappend_tail(&expanded_token_lst, filename, free);
+// 						if (expanded_token_lst == NULL)
+// 							return (NULL);
+// 					}
+// 				}
+// 				i++;
+// 			}
+// 		}
+// 		dp = readdir(dir);
+// 	}
+// 	return (expanded_token_lst);
+// }
 
 // // static char **ms_expand_path_wildcard(char *token, int i)
 // // {
@@ -293,18 +478,3 @@ static t_list	*_ms_expand_path_wildcard(DIR *dir, char *before_string,
 // 	return (strdup("."));
 // }
 
-// static int ms_count_char(char *str, char c)
-// {
-// 	int count;
-// 	int i;
-
-// 	count = 0;
-// 	i = 0;
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] == c)
-// 			count++;
-// 		i++;
-// 	}
-// 	return (count);
-// }
