@@ -37,6 +37,8 @@ TEST(ms_builtin_exit, success)
 	expectStderr =
 		"exit\n";
 
+	ms_setenv("?", "0", 1);
+
 	IoCapture 	*term;
 	term = testBuiltinExit(NULL, (char *const*)args, NULL);
 	EXPECT_EQ(term->getStatus(), expect_status);
@@ -121,12 +123,12 @@ TEST(ms_builtin_exit, error_many_argument)
 	int			expect_status;
 	const char 	*args[] = {"exit", "00009223372036854775808", "123", NULL};
 
-	expect_status = 1;
+	expect_status = 2;
 	expectStdout =
 		"";
 	expectStderr =
 		"exit\n"
-		"minishell: exit: too many arguments\n";
+		"minishell: exit: 00009223372036854775808: numeric argument required\n";
 
 	IoCapture 	*term;
 	term = testBuiltinExit(NULL, (char *const*)args, NULL);
@@ -149,29 +151,6 @@ TEST(ms_builtin_exit, skip_double_hyphen)
 		"";
 	expectStderr =
 		"exit\n";
-
-	IoCapture 	*term;
-	term = testBuiltinExit(NULL, (char *const*)args, NULL);
-	EXPECT_EQ(term->getStatus(), expect_status);
-    EXPECT_EQ(term->getStdout(), expectStdout);
-    EXPECT_EQ(term->getStderr(), expectStderr);
-	delete term;
-}
-
-/** インタラクティブではないシェルの場合はexitを表示しない。 */
-TEST(ms_builtin_exit, skip_sapmle)
-{
-	GTEST_SKIP();
-	std::string expectStderr;
-	std::string expectStdout;
-	int			expect_status;
-	const char 	*args[] = {"exit", NULL};
-
-	expect_status = 0;
-	expectStdout =
-		"";
-	expectStderr =
-		"";
 
 	IoCapture 	*term;
 	term = testBuiltinExit(NULL, (char *const*)args, NULL);

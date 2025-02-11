@@ -6,62 +6,53 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:16:25 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/30 19:16:23 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/02 07:26:04 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "libms.h"
 #include "builtin_internal.h"
+#include "ms_getopt.h"
+#include "unset_internal_type.h"
 #include <stddef.h>
 
-static int	ms_error_handling_unset(
-				const char *path, char *const argv[], char *const envp[]);
+static int	ms_parse_option_unset(t_builtin_unset *parsed, t_opting *opting);
 static void	ms_print_usage_unset(void);
 
 int	ms_builtin_unset(const char *path, char *const argv[], char *const envp[])
 {
-	int		status;
-	char	**arg_head;
+	int				status;
+	int				index;
+	int				argc;
+	t_opting		opting;
+	t_builtin_unset	parsed;
 
-	status = ms_error_handling_unset(path, argv, envp);
+	(void)path;
+	(void)envp;
+	argc = (int)ms_ntpsize((void **)argv);
+	ms_getopt_init(&opting, argc, (char **)argv, "");
+	status = ms_parse_option_unset(&parsed, &opting);
 	if (status != 0)
 		return (status);
-	arg_head = ms_get_argument_head(argv, "");
-	if (arg_head == NULL)
-		return (1);
-	if (*arg_head != NULL && ft_strcmp(*arg_head, "--") == 0)
-		arg_head++;
-	while (*arg_head != NULL)
+	index = 0;
+	while (parsed.names[index] != NULL)
 	{
-		ms_unsetenv(*arg_head);
-		arg_head++;
+		ms_unsetenv(parsed.names[index]);
+		index++;
 	}
 	return (0);
 }
 
-int	ms_error_handling_unset(
-		const char *path, char *const argv[], char *const envp[])
+static int	ms_parse_option_unset(t_builtin_unset *parsed, t_opting *opting)
 {
-	char	**arg_head;
-	char	*invalid_opt;
-	char	*valid_opt;
-	char	opt_txt[3];
-
-	(void)path;
-	(void)envp;
-	valid_opt = "";
-	arg_head = ms_get_argument_head(argv, valid_opt);
-	if (arg_head == NULL)
-		return (1);
-	invalid_opt = ms_get_first_invalid_opt(argv, valid_opt);
-	if (invalid_opt != NULL)
+	while (ms_getopt_parse(opting))
 	{
-		ms_set_opt_txt(opt_txt, invalid_opt[0]);
-		ms_perror_cmd2("unset", opt_txt, "invalid option");
+		ms_perror_invalid_option("unset", opting->optopt);
 		ms_print_usage_unset();
 		return (2);
 	}
+	parsed->names = opting->argv + opting->optind;
 	return (0);
 }
 

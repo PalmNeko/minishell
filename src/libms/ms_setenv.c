@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 12:54:57 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/28 15:20:19 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 05:50:39 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,38 +50,24 @@ int	ms_setenv(const char *name, const char *value, int overwrite)
 
 int	ms_setenv_overwrite(const char *name, const char *value)
 {
-	t_list		**environ_lst;
-	t_list		*itr;
 	t_ms_var	*ms_var;
 
-	environ_lst = ms_int_get_environ_variable();
-	itr = *environ_lst;
-	while (itr != NULL)
-	{
-		ms_var = itr->content;
-		if (ft_strcmp(ms_var->name, name) == 0)
-			return (ms_overwrite_ms_var(ms_var, name, value));
-		itr = itr->next;
-	}
-	return (0);
+	ms_var = ms_find_ms_var(name);
+	if (ms_var != NULL)
+		return (ms_overwrite_ms_var(ms_var, name, value));
+	else
+		return (ms_append_new_env(name, value));
 }
 
 int	ms_setenv_if_unset(const char *name, const char *value)
 {
-	t_list		**environ_lst;
-	t_list		*itr;
 	t_ms_var	*ms_var;
 
-	environ_lst = ms_int_get_environ_variable();
-	itr = *environ_lst;
-	while (itr != NULL)
-	{
-		ms_var = itr->content;
-		if (ft_strcmp(ms_var->name, name) == 0)
-			return (0);
-		itr = itr->next;
-	}
-	return (ms_append_new_env(name, value));
+	ms_var = ms_find_ms_var(name);
+	if (ms_var != NULL)
+		return (0);
+	else
+		return (ms_append_new_env(name, value));
 }
 
 int	ms_overwrite_ms_var(t_ms_var *ms_var, const char *name, const char *value)

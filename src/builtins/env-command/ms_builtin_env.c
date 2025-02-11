@@ -6,60 +6,58 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 19:31:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2024/11/30 20:15:31 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/01 09:26:13 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "libms.h"
+#include "ms_getopt.h"
 #include "builtin_internal.h"
 #include <stddef.h>
 #include <stdio.h>
 
-static int	ms_error_handling_env(
-				const char *path, char *const argv[], char *const envp[]);
+static int 	ms_parse_builtin_env(t_opting *opting);
 static void	ms_print_usage_env(void);
 
 int	ms_builtin_env(const char *path, char *const argv[], char *const envp[])
 {
-	int		status;
-	char	**arg_head;
-
-	status = ms_error_handling_env(path, argv, envp);
-	if (status != 0)
-		return (status);
-	arg_head = ms_get_argument_head(argv, "");
-	if (arg_head == NULL)
-		return (1);
-	while (envp != NULL && *envp != NULL)
-	{
-		printf("%s\n", *envp);
-		envp++;
-	}
-	return (0);
-}
-
-int	ms_error_handling_env(
-		const char *path, char *const argv[], char *const envp[])
-{
-	char	**arg_head;
-	char	*invalid_opt;
-	char	*valid_opt;
-	char	opt_txt[3];
+	int			status;
+	int			argc;
+	char		**environs;
+	char		**head;
+	t_opting	opting;
 
 	(void)path;
 	(void)envp;
-	valid_opt = "";
-	arg_head = ms_get_argument_head(argv, valid_opt);
-	if (arg_head == NULL)
-		return (1);
-	invalid_opt = ms_get_first_invalid_opt(argv, valid_opt);
-	if (invalid_opt != NULL)
+	argc = (int)ms_ntpsize((void **)argv);
+	ms_getopt_init(&opting, argc, (char **)argv, "");
+	status = ms_parse_builtin_env(&opting);
+	if (status != 0)
+		return (status);
+	environs = ms_export_env();
+	head = environs;
+	while (head != NULL && *head != NULL)
 	{
-		ms_set_opt_txt(opt_txt, invalid_opt[0]);
-		ms_perror_cmd2("env", opt_txt, "invalid option");
+		printf("%s\n", *head);
+		head++;
+	}
+	ms_destroy_ntp(environs);
+	return (0);
+}
+
+static int 	ms_parse_builtin_env(t_opting *opting)
+{
+	while (ms_getopt_parse(opting))
+	{
+		ms_perror_invalid_option("env", opting->optopt);
 		ms_print_usage_env();
 		return (2);
+	}
+	if (opting->argv[opting->optind] != NULL)
+	{
+		ms_perror_cmd("env", "too many arguments");
+		return (1);
 	}
 	return (0);
 }

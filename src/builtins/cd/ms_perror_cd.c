@@ -12,7 +12,6 @@
 
 #include "libms.h"
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
 
 void	ms_perror_cd(const char *type)

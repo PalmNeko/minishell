@@ -13,6 +13,10 @@
 #ifndef EXPORT_INTERNAL_H
 # define EXPORT_INTERNAL_H
 
-int	ms_export_print_command(void);
+# include "export_internal_type.h"
+
+int		ms_export_print_command(void);
+int		ms_export_variables(const char **args);
+char	**ms_export_environs(void);
 
 #endif

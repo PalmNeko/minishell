@@ -6,12 +6,13 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:29:38 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 06:04:56 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 08:06:05 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 #include "setup.h"
+#include <stdlib.h>
 
 static void	ms_setup_only_interactive_var(void);
 
@@ -25,6 +26,7 @@ void	ms_setup_variable(void)
 	cwd = ms_get_current_dir_name();
 	if (cwd != NULL)
 		ms_setenv("PWD", cwd, 1);
+	free(cwd);
 	if (ms_is_interactive() == true)
 		ms_setup_only_interactive_var();
 }
