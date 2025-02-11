@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ms_parse_ebnf_option.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 19:12:42 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 18:03:25 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/02/11 20:40:53 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/02/11 20:41:13 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "parse_helper.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ms_parse_ebnf_option(
+		t_token **tokens,
+		int pos,
+		t_list **syntax_lst,
+		t_parse_func *parsers)
 {
-	t_list	*last_list;
-	t_list	*newlst_last;
+	int		end_pos;
 
-	last_list = ft_lstlast(*lst);
-	if (last_list == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	newlst_last = ft_lstlast(new);
-	if (last_list->next != NULL)
-	{
-		newlst_last->next = last_list->next;
-		last_list->next->prev = newlst_last;
-	}
-	new->prev = last_list;
-	last_list->next = new;
-	return ;
+	end_pos = pos;
+	end_pos = ms_parse_ebnf_one_method(tokens, pos, syntax_lst, parsers);
+	if (end_pos == -1)
+		return (-1);
+	if (end_pos == -2)
+		return (pos);
+	return (end_pos);
 }

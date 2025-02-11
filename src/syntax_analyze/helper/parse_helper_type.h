@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   parse_helper_type.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 19:12:42 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 18:03:25 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/02/11 20:44:16 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/02/11 20:49:18 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PARSE_HELPER_TYPE_H
+# define PARSE_HELPER_TYPE_H
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*last_list;
-	t_list	*newlst_last;
+# include "syntax_analyze_type.h"
 
-	last_list = ft_lstlast(*lst);
-	if (last_list == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	newlst_last = ft_lstlast(new);
-	if (last_list->next != NULL)
-	{
-		newlst_last->next = last_list->next;
-		last_list->next->prev = newlst_last;
-	}
-	new->prev = last_list;
-	last_list->next = new;
-	return ;
-}
+typedef int	(*t_parse_helper_func)(
+		t_token **tokens, int pos, t_list **syntax_lst, t_parse_func *parsers);
+
+#endif

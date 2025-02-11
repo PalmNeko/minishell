@@ -35,6 +35,7 @@ typedef enum e_syntax_type
 	SY_COMPOUND_LIST,
 	SY_USER_INPUT,
 	SY_INSTRUCTION,
+	SY_ACCEPTED,
 }						t_syntax_type;
 
 typedef t_list t_syntax_node_list;
@@ -50,5 +51,20 @@ typedef struct s_syntax_node
 
 // typedef struct s_syntax_node	t_syntax_node;
 typedef t_syntax_node *(*t_parse_func)(t_token **tokens, int pos);
+
+typedef enum e_ebnf_method
+{
+	EBNF_NONE,
+	EBNF_ONE,
+	EBNF_REPEAT,
+	EBNF_OPTION,
+}	t_ebnf_method;
+
+typedef struct s_syntax_rule
+{
+	t_ebnf_method	method;
+	t_parse_func	*parsers;
+	bool			enable_expansion;
+}	t_syntax_rule;
 
 #endif // SYNATX_ANALYZE_TYPE_H

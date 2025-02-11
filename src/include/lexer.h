@@ -9,6 +9,7 @@ t_token	**ms_lexical_analyze(const char *input);
 // Tokenize functions
 t_token	*ms_create_token(t_token_type type, const char *token, int start_pos,
 			int end_pos);
+t_token	*ms_copy_token(t_token *token);
 void	ms_lexical_analyze_destroy_token(t_token *token);
 void	ms_lexical_analyze_destroy_token_wrapper(void *token);
 t_token	*ms_tokenize_identify(const char *input, int pos);

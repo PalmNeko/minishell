@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ms_lst_append_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/08 19:12:42 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 18:03:25 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/02/11 20:57:04 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/02/11 21:01:32 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "syntax_analyze.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+/**
+ * duplicate with ms_lstappend_tail...
+ * i want to remove this function
+ */
+int	ms_lst_append_node(t_list **lst, t_syntax_node *node)
 {
-	t_list	*last_list;
-	t_list	*newlst_last;
+	t_list	*new;
 
-	last_list = ft_lstlast(*lst);
-	if (last_list == NULL)
+	new = ft_lstnew(node);
+	if (new == NULL)
 	{
-		*lst = new;
-		return ;
+		ft_lstclear(lst, ms_syntax_node_destroy_wrapper);
+		return (-1);
 	}
-	newlst_last = ft_lstlast(new);
-	if (last_list->next != NULL)
-	{
-		newlst_last->next = last_list->next;
-		last_list->next->prev = newlst_last;
-	}
-	new->prev = last_list;
-	last_list->next = new;
-	return ;
+	ft_lstadd_back(lst, new);
+	return (0);
 }
