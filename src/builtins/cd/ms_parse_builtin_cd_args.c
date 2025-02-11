@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 05:45:21 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/01 07:49:47 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/11 07:39:14 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <string.h>
 #include <errno.h>
 
-int	__ms_parse_builtin_cd_args(t_builtin_cd *parsed, t_opting *opting);
+static int	__ms_parse_builtin_cd_args(t_builtin_cd *parsed, t_opting *opting);
 
 int	ms_parse_builtin_cd_args(
 		t_builtin_cd *parsed,
@@ -42,7 +42,7 @@ int	ms_parse_builtin_cd_args(
 	return (status);
 }
 
-int	__ms_parse_builtin_cd_args(t_builtin_cd *parsed, t_opting *opting)
+static int	__ms_parse_builtin_cd_args(t_builtin_cd *parsed, t_opting *opting)
 {
 	char	**args;
 

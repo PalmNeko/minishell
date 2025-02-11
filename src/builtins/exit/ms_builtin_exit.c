@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:10:41 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/01 09:56:43 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/11 07:38:33 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "builtin_internal.h"
 #include "exit_internal.h"
 #include <stddef.h>
-#include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
 

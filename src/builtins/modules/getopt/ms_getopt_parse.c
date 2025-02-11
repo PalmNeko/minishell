@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 10:03:22 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/31 16:12:09 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/11 07:38:06 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void	ms_behavior_on_not_option(t_opting *opting);
-void	ms_behavior_on_option(t_opting *opting);
+static void	ms_behavior_on_not_option(t_opting *opting);
+static void	ms_behavior_on_option(t_opting *opting);
 
 /**
  * @brief Parse the next option.
@@ -38,13 +38,13 @@ bool	ms_getopt_parse(t_opting *opting)
 	return (true);
 }
 
-void	ms_behavior_on_not_option(t_opting *opting)
+static void	ms_behavior_on_not_option(t_opting *opting)
 {
 	ms_skip_double_hyphen_if_needed(opting);
 	opting->internal.is_parsed = true;
 }
 
-void	ms_behavior_on_option(t_opting *opting)
+static void	ms_behavior_on_option(t_opting *opting)
 {
 	char	*arg;
 	int		opt;

@@ -6,13 +6,12 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 06:15:50 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/01 06:20:34 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/11 07:37:16 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "libms.h"
-#include <stdio.h>
 
 /**
  * format: "minishell: %s: -%c: invalid option\n", cmd, opt
