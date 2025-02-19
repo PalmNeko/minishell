@@ -98,9 +98,8 @@ void	ms_skip_surround_quote(char **input)
 	ptr++;
 	while (*ptr != '\0' && ! ft_includes(*ptr, quote_txt))
 		ptr++;
-	if (*ptr == '\0')
-		return ;
-	ptr++;
+	if (*ptr != '\0')
+		ptr++;
 	*input = ptr;
 }
 

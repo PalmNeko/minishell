@@ -59,7 +59,7 @@ TEST(ms_set_delimita_list, quoted_with_double_quote)
 {
 	t_heredoc	heredoc;
 	int			ret;
-	char		input[] = "<<\"E\"\"OF\"";
+	char		input[] = "<<\"E\"\"\"\"OF\"";
 
 	ms_init_heredoc(&heredoc);
 	ret = ms_set_delimita_list(&heredoc, input);
@@ -98,7 +98,7 @@ TEST(ms_set_delimita_list, single_quoted)
 	EXPECT_EQ(ret, 0);
 	EXPECT_EQ(heredoc.delimita_count, 1);
 	ASSERT_NE(heredoc.delimita_list, nullptr);
-	EXPECT_STREQ((char *)heredoc.delimita_list->content, "'\"EOF\"'");
+	EXPECT_STREQ((char *)heredoc.delimita_list->content, "\"EOF\"");
 	EXPECT_EQ(heredoc.delimita_list->next, nullptr);
 	ms_finalize_heredoc(&heredoc);
 }
@@ -114,7 +114,7 @@ TEST(ms_set_delimita_list, include_space)
 	EXPECT_EQ(ret, 0);
 	EXPECT_EQ(heredoc.delimita_count, 1);
 	ASSERT_NE(heredoc.delimita_list, nullptr);
-	EXPECT_STREQ((char *)heredoc.delimita_list->content, "\" EOF \"");
+	EXPECT_STREQ((char *)heredoc.delimita_list->content, " EOF ");
 	EXPECT_EQ(heredoc.delimita_list->next, nullptr);
 	ms_finalize_heredoc(&heredoc);
 }
