@@ -87,13 +87,21 @@ void	ms_skip_until_heredoc(char **input)
 
 void	ms_skip_surround_quote(char **input)
 {
-	if (!ft_includes(**input, "'\""))
+	char	quote_txt[2];
+	char	*ptr;
+
+	ptr = *input;
+	if (!ft_includes(*ptr, "'\""))
 		return ;
-	(*input)++;
-	while (**input != '\0' && ! ft_includes(**input, "'\""))
-		(*input)++;
-	if (**input != '\0' && ft_includes(**input, "'\""))
-		(*input)++;
+	quote_txt[1] = '\0';
+	quote_txt[0] = *ptr;
+	ptr++;
+	while (*ptr != '\0' && ! ft_includes(*ptr, quote_txt))
+		ptr++;
+	if (*ptr == '\0')
+		return ;
+	ptr++;
+	*input = ptr;
 }
 
 void	ms_skip_set(char **input, const char *set)
@@ -105,8 +113,20 @@ void	ms_skip_set(char **input, const char *set)
 char	*ms_dup_delimita(char *input)
 {
 	char	*dup;
+	char	*end;
 
-	dup = ms_dup_until_sep(input, " \t\n<&|()");
+	end = input;
+	while (*end != '\0')
+	{
+		if (ft_includes(*end, "\"'"))
+			ms_skip_surround_quote(&end);
+		if (ft_includes(*end, " \t\n<&|()"))
+			break ;
+		if (*end == '\0')
+			break ;
+		end++;
+	}
+	dup = ft_strndup(input, end - input);
 	if (dup == NULL)
 		return (NULL);
 	ms_exclude_quote(dup);
@@ -117,13 +137,22 @@ void	ms_exclude_quote(char *input)
 {
 	size_t	set_pos;
 	size_t	pivot;
+	char	quote_txt;
 
 	set_pos = 0;
 	pivot = 0;
+	quote_txt = '\0';
 	while (input[pivot] != '\0')
 	{
-		if (ft_includes(input[pivot], "'\""))
+		if (quote_txt != '\0' && input[pivot] == quote_txt)
 		{
+			quote_txt = '\0';
+			pivot++;
+			continue ;
+		}
+		else if (quote_txt == '\0' && ft_includes(input[pivot], "'\""))
+		{
+			quote_txt = input[pivot];
 			pivot++;
 			continue ;
 		}
