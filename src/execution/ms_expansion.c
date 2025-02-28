@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:32:03 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/28 16:19:04 by nyts             ###   ########.fr       */
+/*   Updated: 2025/02/28 17:30:22 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 	word_list_node = ms_parameter_expansion(word_list_node);
 	word_list_node = ms_pathname_expansion(word_list_node);
 	word_list_node = ms_quote_removal(word_list_node);
-	ms_syntax_node_print(word_list_node);
 	i = 0;
 	expanded_text = ft_strdup("");
 	if (expanded_text == NULL)
