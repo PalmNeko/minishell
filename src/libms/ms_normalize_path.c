@@ -24,6 +24,7 @@ char	*ms_normalize_path(const char *path)
 {
 	char	**paths;
 	char	**root;
+	char	*joined;
 	t_list	*lst;
 
 	paths = ft_split(path, '/');
@@ -40,7 +41,10 @@ char	*ms_normalize_path(const char *path)
 			return (NULL);
 		}
 	}
-	return (ms_normalize_pathlst_join(lst));
+	joined = ms_normalize_pathlst_join(lst);
+	ms_destroy_ntp(root);
+	ft_lstclear(&lst, (void (*)(void *))ft_voidnop);
+	return (joined);
 }
 
 int	ms_normalize_path_join(t_list **lst, char *path)

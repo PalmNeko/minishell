@@ -6,6 +6,7 @@
 
 t_syntax_node *ms_syntax_analyze(t_token **tokens);
 
+t_syntax_node	*ms_syntax_node_copy(t_syntax_node *node);
 t_syntax_node *ms_syntax_node_create(t_syntax_type type);
 void ms_syntax_node_destroy(t_syntax_node *node);
 void ms_syntax_node_destroy_wrapper(void *node);
@@ -57,7 +58,16 @@ t_syntax_node *ms_parse_instruction(t_token **tokens, int start_pos);
 // internal function
 t_syntax_node *ms_parse_symbol_item(t_token **tokens, int pos, const t_parse_func *func_list);
 
-
+int	ms_parse_rule(
+		t_token **tokens,
+		int pos,
+		t_list **syntax_lst,
+		t_syntax_rule *rule);
+t_syntax_node	*ms_parse_rules(
+					t_token **tokens,
+					int pos,
+					t_syntax_type type,
+					t_syntax_rule **rules);
 
 
 
