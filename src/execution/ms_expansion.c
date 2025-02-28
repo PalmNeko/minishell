@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:32:03 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/19 17:25:51 by nyts             ###   ########.fr       */
+/*   Updated: 2025/02/28 16:19:04 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 	expanded_text = ft_strdup("");
 	if (expanded_text == NULL)
 		return (NULL);
-	while (lsa_word_list->word_list->children[i])
+	while (word_list_node->children[i])
 	{
 		token = (char *)word_list_node->children[i]->token->token;
 		temp = ft_strjoin(expanded_text, token);
