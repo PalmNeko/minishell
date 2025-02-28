@@ -14,19 +14,16 @@
 #include "libms.h"
 #include "builtin_internal.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 int	ms_set_pwd_env(const char *new_path)
 {
 	char	*old_cdwd;
 	int		result;
 
-	printf("new_path: %s\n", new_path);
 	old_cdwd = ms_get_cdwd();
 	if (old_cdwd == NULL)
 		return (1);
 	result = ms_setenv("OLDPWD", old_cdwd, 1);
-	free(old_cdwd);
 	if (result != 0)
 		return (1);
 	ms_set_cdwd(new_path);

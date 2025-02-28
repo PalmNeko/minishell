@@ -84,26 +84,15 @@ TEST(ms_builtin_env, ignore_argument)
 	int			expect_status;
 	int			status;
 	const char 	*args[] = {"env", "--", "-a", NULL};
-	char		**envp;
-	char		**envp_itr;
 
-	envp = ms_export_env();
-	envTerm.boot();
-	envp_itr = envp;
-	while (*envp_itr != NULL)
-		printf("%s\n", *(envp_itr++));
-	fflush(stdout);
-	envTerm.exit();
-
-	expect_status = 0;
-	expectStdout = envTerm.getStdout();
-	expectStderr = envTerm.getStderr();
+	expect_status = 1;
+	expectStdout = "";
+	expectStderr = "minishell: env: too many arguments\n";
 
 	term.boot();
-	status = ms_builtin_env(NULL, (char *const *)args, envp);
+	status = ms_builtin_env(NULL, (char *const *)args, NULL);
 	fflush(stdout);
 	term.exit();
-	ms_destroy_ntp(envp);
 	EXPECT_EQ(status, expect_status);
     EXPECT_EQ(term.getStdout(), expectStdout);
     EXPECT_EQ(term.getStderr(), expectStderr);

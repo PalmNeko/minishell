@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ms_print_usage_env(void)
+void	ms_print_usage_cd(void)
 {
 	ft_putendl_fd("cd: usage: cd [-L|[-P [-e]] [dir]", 2);
 }

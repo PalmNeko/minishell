@@ -78,4 +78,10 @@ void			ms_perror_cmd(const char *name, const char *msg);
 void			ms_perror_cmd2(
 					const char *name, const char *type, const char *msg);
 
+// exports
+t_list			*ms_get_exports(void);
+void			ms_set_exports(t_list *exports);
+void			ms_clear_exports(void);
+int				ms_add_export(const char *name);
+
 #endif
