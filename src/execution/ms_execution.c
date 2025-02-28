@@ -43,9 +43,9 @@ int	ms_execution(const char *input)
 		ms_syntax_node_destroy(node);
 	}
 	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
-	if(ms_getenv("?") == NULL)
-		ms_setenv("?", ft_itoa(ret), 0);
-	else
-		ms_setenv("?", ft_itoa(ret), 1);
+	// if(ms_getenv("?") == NULL)
+	// 	ms_setenv("?", ft_itoa(ret), 0);
+	// else
+	// 	ms_setenv("?", ft_itoa(ret), 1);
 	return (ret);
 }

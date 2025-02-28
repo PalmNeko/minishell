@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pathname_expansion.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 19:27:53 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/03 01:45:57 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:01:53 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,6 @@
 static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst);
 static char	**ms_expand_path_wildcard(char *token);
 
-t_syntax_node *ms_duplicate_node(t_syntax_node *node)
-{
-	t_syntax_node *new_node;
-
-	int i;
-
-	new_node = ms_syntax_node_create(node->type);
-	if (new_node == NULL)
-		return (NULL);
-	if(node->children != NULL)
-	{
-		i = 0;
-		new_node->children = (t_syntax_node **)malloc(sizeof(t_syntax_node *) * 100);
-		while (node->children[i] != NULL)
-		{
-			new_node->children[i] = ms_duplicate_node(node->children[i]);
-			if (new_node->children[i] == NULL)
-				return (NULL);
-			i++;
-		}
-		new_node->children[i] = NULL;	
-	}
-	if(node->token != NULL)
-		new_node->token = ms_dup_token(node->token);
-	new_node->start_pos = node->start_pos;
-	new_node->end_pos = node->end_pos;
-	return (new_node);
-}
-
 t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 {
 	int				i;
@@ -59,7 +30,6 @@ t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 	i = 0;
 	while (word_list->children[i])
 	{
-		//ここでは既に展開されたワード達が入っている(no necessary edit)
 		if (word_list->children[i]->type == SY_WORD)
 			ms_expand_path(word_list->children[i], &node_lst);
 		else
@@ -67,29 +37,35 @@ t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 			new_child_node = ms_duplicate_node(word_list->children[i]);
 			if (new_child_node == NULL)
 				return (NULL);
-			ms_lstappend_tail(&node_lst, 
-				new_child_node, 
+			ms_lstappend_tail(&node_lst,
+				new_child_node,
 				ms_syntax_node_destroy_wrapper);
 		}
 		if (node_lst == NULL)
 			return (NULL);
 		i++;
 	}
-	new_children = (t_syntax_node **)ms_lst_to_ntp(&node_lst, ms_identify, ms_noop_del);
+	new_children = (t_syntax_node **)
+		ms_lst_to_ntp(&node_lst, ms_identify, ms_noop_del);
 	if (new_children == NULL)
 		return (NULL);
-	ms_destroy_ntp2((void **)word_list->children, ms_syntax_node_destroy_wrapper);
+	ms_destroy_ntp2((void **)word_list->children,
+		ms_syntax_node_destroy_wrapper);
 	word_list->children = new_children;
 	return (word_list);
 }
 
 static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst)
 {
+	int		i;
 	char	*token;
-	char **expanded_tokens;
-	int i;
-	t_list *node_lst2;
-	
+	char	**expanded_tokens;
+	t_list	*node_lst2;
+	char	*expanded_string;
+	t_token **expanded_token;
+	int j;
+	t_syntax_node *child;
+
 	node_lst2 = NULL;
 	expanded_tokens = NULL;
 	token = (char *)word_node->token->token;
@@ -103,24 +79,21 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst)
 				return (-1);
 			if (expanded_tokens[0] == NULL)
 			{
-				ms_lstappend_tail(node_lst, ms_duplicate_node(word_node), ms_syntax_node_destroy_wrapper);
+				ms_lstappend_tail(node_lst, ms_duplicate_node(word_node),
+					ms_syntax_node_destroy_wrapper);
 				if (node_lst == NULL)
 					return (-1);
-				break;
+				break ;
 			}
-			char *expanded_string;
 			expanded_string = ms_join_ntp((const char **)expanded_tokens, " ");
 			if (expanded_string == NULL)
 				return (-1);
-			t_token **expanded_token;
 			expanded_token = ms_lexical_analyze(expanded_string);
 			if (expanded_token == NULL)
 				return (-1);
-			int j;
 			j = 0;
 			while (expanded_token[j] != NULL)
 			{
-				t_syntax_node *child;
 				child = ms_syntax_node_create(SY_WORD);
 				if (child == NULL)
 					return (-1);
@@ -133,7 +106,7 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst)
 				j++;
 			}
 			ft_lstadd_back(node_lst, node_lst2);
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -183,10 +156,10 @@ char **ms_expand_path_wildcard(char *token)
 					while (after_string[i] != NULL)
 					{
 						if (ft_strcmp(dp->d_name + ft_strlen(dp->d_name)
-								- ft_strlen(after_string[i]), after_string[i]) == 0)
+							- ft_strlen(after_string[i]), after_string[i]) == 0)
 						{
 							if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name,
-									"..") != 0)
+								"..") != 0)
 							{
 								filename = ft_strdup(dp->d_name);
 								if (filename == NULL)
@@ -477,4 +450,3 @@ char **ms_expand_path_wildcard(char *token)
 // 	}
 // 	return (strdup("."));
 // }
-

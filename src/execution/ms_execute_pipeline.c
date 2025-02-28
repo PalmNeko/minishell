@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execute_pipeline.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 02:51:15 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 10:14:56 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/19 07:47:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	ms_single_command_execution(t_lsa_pipeline *pipeline)
 	else
 		ret = ms_execute_pipeline_fork(pipeline->commands[0], SINGLE_COMMAND,
 				NULL);
+	ms_destroy_ntp2((void **)expanded_strings, free);
 	return (ret);
 }
 
@@ -78,7 +79,7 @@ static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline)
 // memo
 // pipelineの最後に篇数代入が来ると篇数代入は行われる？
 static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
-		t_state_in_pipeline state, int *pipe_fd)
+	t_state_in_pipeline state, int *pipe_fd)
 {
 	int		status;
 	pid_t	pid;
@@ -103,7 +104,7 @@ static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 		}
 	}
 	waitpid(pid, &status, 0);
-	if(WIFEXITED(status))
+	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
 	return (status);
 }
