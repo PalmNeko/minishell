@@ -34,10 +34,6 @@ char	*ms_get_cd_path(const char *arg_path)
 			ms_perror_cmd("cd", "OLDPWD not set");
 	}
 	else
-	{
-		target_pathname = ft_strdup(arg_path);
-		if (target_pathname == NULL)
-			ms_perror_cmd("cd", strerror(errno));
-	}
-	return (target_pathname);
+		target_pathname = (char *)arg_path;
+	return (ft_strdup(target_pathname));
 }

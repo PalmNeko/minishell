@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 09:55:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 05:53:57 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/02/03 08:05:33 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	ms_load_history_history(t_history *history, const char *filename)
 	if (tilde_expanded_filename == NULL)
 		return (errno);
 	fd = open(tilde_expanded_filename, O_RDONLY);
+	free(tilde_expanded_filename);
 	if (fd == -1)
 		return (errno);
 	ret_errno = ms_load_history_history_fd(history, fd);

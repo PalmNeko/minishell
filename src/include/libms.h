@@ -15,6 +15,7 @@
 
 # include "libft_type.h"
 # include "libms_type.h"
+# include "syntax_analyze_type.h"
 # include <stddef.h>
 
 /** string.h */
@@ -55,6 +56,8 @@ void ms_noop_del(void *arg);
 void ms_lstappend_tail(t_list **lst, void *content, void (*fr)(void *));
 void			ms_lst_print(t_list *lst, void (*print)(void *));
 
+t_syntax_node	*ms_duplicate_node(t_syntax_node *node);
+
 // environment variable
 char			*ms_getenv(const char *name);
 int				ms_setenv(const char *name, const char *value, int overwrite);
@@ -77,5 +80,11 @@ void			ms_perror_shell(const char *msg);
 void			ms_perror_cmd(const char *name, const char *msg);
 void			ms_perror_cmd2(
 					const char *name, const char *type, const char *msg);
+
+// exports
+t_list			*ms_get_exports(void);
+void			ms_set_exports(t_list *exports);
+void			ms_clear_exports(void);
+int				ms_add_export(const char *name);
 
 #endif

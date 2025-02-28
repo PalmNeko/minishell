@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 16:18:19 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/02 21:12:19 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <stdlib.h>
 
 static const t_tokenize_func	g_ms_tokenize_func_list[14] = {ms_tokenize_word,
-	ms_tokenize_identify, ms_tokenize_right_parenthesis,
-	ms_tokenize_left_parenthesis, ms_tokenize_newline, ms_tokenize_equal,
-	ms_tokenize_double_quote, ms_tokenize_single_quote,
-	ms_tokenize_redirection, ms_tokenize_blank, ms_tokenize_pipe,
-	ms_tokenize_list, ms_tokenize_variable, NULL};
+		ms_tokenize_identify, ms_tokenize_right_parenthesis,
+		ms_tokenize_left_parenthesis, ms_tokenize_newline, ms_tokenize_equal,
+		ms_tokenize_double_quote, ms_tokenize_single_quote,
+		ms_tokenize_redirection, ms_tokenize_blank, ms_tokenize_pipe,
+		ms_tokenize_list, ms_tokenize_variable, NULL};
 static t_token					**convert_to_array(t_token_list *lst);
 static t_token					*get_token(const char *input, int pos);
 static int						compare_priority(t_token *temp_token,
@@ -35,18 +35,23 @@ t_token	**ms_lexical_analyze(const char *input)
 
 	lst = NULL;
 	pos = 0;
-	while(ft_includes(input[pos], " \t"))
+	while (ft_includes(input[pos], " \t"))
 		pos++;
 	while (input[pos])
 	{
 		token = get_token(input, pos);
 		if (!token)
 			return (NULL);
+		if (token->type == TK_DECLINED)
+		{
+			ms_lexical_analyze_destroy_token(token);
+			return (NULL);
+		}
 		new_lst = ft_lstnew(token);
 		if (!new_lst)
 			return (NULL);
 		ft_lstadd_back(&lst, new_lst);
-		pos += (token->end_pos - token->start_pos);
+		pos = token->end_pos;
 	}
 	tokens = convert_to_array(lst);
 	if (!tokens)

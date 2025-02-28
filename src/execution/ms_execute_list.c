@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 02:37:50 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/26 21:32:59 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/01 00:16:24 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ms_execute_list(t_lsa_list *list)
 	ret = 0;
 	if (list->pipeline)
 		ret = ms_execute_pipeline(list->pipeline);
-	// else
-	// 	ret = ms_execute_compound_lists(list->compound_list);
+	else
+		ret = ms_execute_compound_lists(list->compound_list);
 	return (ret);
 }

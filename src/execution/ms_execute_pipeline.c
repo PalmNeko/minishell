@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execute_pipeline.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 02:51:15 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/26 21:45:41 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/19 07:47:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include "syntax_analyze.h"
+#include "libms.h"
 
-/*
-** 単コマンド, 複数コマンド, 無コマンドの処理を行う
-*/
 static int	ms_single_command_execution(t_lsa_pipeline *pipeline);
 static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline);
 static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
-				t_state_in_pipeline state, int pipe_fd[2]);
+				t_state_in_pipeline state, int *pipe_fd);
+static void	ms_execute_pipeline_child(t_lsa_command *lsa_command,
+				t_state_in_pipeline state, int *pipe_fd, int *new_pipe_fd);
 
 int	ms_execute_pipeline(t_lsa_pipeline *pipeline)
 {
 	int	ret;
 
-	// パイプラインの種類（単コマンド、複数コマンド、無コマンド）によって処理を分岐
 	if (pipeline->commands[0]->args == NULL)
 		ret = ms_simple_command_execution(pipeline->commands[0]);
 	else if (pipeline->commands[1] == NULL)
@@ -40,24 +39,27 @@ int	ms_execute_pipeline(t_lsa_pipeline *pipeline)
 static int	ms_single_command_execution(t_lsa_pipeline *pipeline)
 {
 	int	ret;
+	char **expanded_strings;
 
-	if (ms_isbuiltin((char *)pipeline->commands[0]->args[0]->word_list->children[0]->token->token))
+	expanded_strings = ms_expansion(pipeline->commands[0]->args[0]);
+	if (expanded_strings[0] && ms_isbuiltin(expanded_strings[0]) == 1)
+	{
 		ret = ms_simple_command_execution(pipeline->commands[0]);
+	}
 	else
 		ret = ms_execute_pipeline_fork(pipeline->commands[0], SINGLE_COMMAND,
 				NULL);
+	ms_destroy_ntp2((void **)expanded_strings, free);
 	return (ret);
 }
 
 static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline)
 {
-	int	pipe_fd[2];
-	int	i;
-	int	ret;
+	int			i;
+	int			ret;
+	static int	pipe_fd[2] = {-1, -1};
 
 	i = 0;
-	if (pipe(pipe_fd) == -1 || pipe(pipe_fd) == -1)
-		return (1);
 	while (pipeline->commands[i])
 	{
 		if (i == 0)
@@ -70,8 +72,6 @@ static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline)
 			ret = ms_execute_pipeline_fork(pipeline->commands[i],
 					MIDDLE_COMMAND, pipe_fd);
 		i++;
-		if (ret != 0)
-			break ;
 	}
 	return (ret);
 }
@@ -79,29 +79,55 @@ static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline)
 // memo
 // pipelineの最後に篇数代入が来ると篇数代入は行われる？
 static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
-		t_state_in_pipeline state, int pipe_fd[2])
+	t_state_in_pipeline state, int *pipe_fd)
+{
+	int		status;
+	pid_t	pid;
+	int		new_pipe_fd[2];
+
+	if (!(state & LAST_COMMAND))
+		if (pipe(new_pipe_fd) == -1)
+			return (1);
+	pid = fork();
+	if (pid == 0)
+		ms_execute_pipeline_child(lsa_command, state, pipe_fd, new_pipe_fd);
+	else
+	{
+		if (!(state & FIRST_COMMAND))
+		{
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+		}
+		if (!(state & LAST_COMMAND))
+		{
+			ft_memcpy(pipe_fd, new_pipe_fd, sizeof(int) * 2);
+		}
+	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	return (status);
+}
+
+static void	ms_execute_pipeline_child(t_lsa_command *lsa_command,
+		t_state_in_pipeline state, int *pipe_fd, int *new_pipe_fd)
 {
 	int	ret;
 
-	ret = 0;
-	if (fork() == 0)
+	if ((state & FIRST_COMMAND) == 0)
 	{
-		if ((state & FIRST_COMMAND) == 0)
-		{
-			if (close(STDIN_FILENO) == -1 || dup2(pipe_fd[0], STDIN_FILENO) ==
-				-1 || close(pipe_fd[0]) == -1)
-				return (1);
-		}
-		if ((state & LAST_COMMAND) == 0)
-		{
-			if (close(STDOUT_FILENO) || dup2(pipe_fd[1], STDOUT_FILENO)
-				|| close(pipe_fd[1]))
-				return (1);
-		}
-		ret = ms_simple_command_execution(lsa_command);
-		return (ret);
+		close(pipe_fd[1]);
+		if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+			exit(1);
+		close(pipe_fd[0]);
 	}
-	else
-		wait(NULL);
-	return (ret);
+	if ((state & LAST_COMMAND) == 0)
+	{
+		close(new_pipe_fd[0]);
+		if (dup2(new_pipe_fd[1], STDOUT_FILENO) == -1)
+			exit(1);
+		close(new_pipe_fd[1]);
+	}
+	ret = ms_simple_command_execution(lsa_command);
+	exit(ret);
 }
