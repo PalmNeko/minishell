@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_tokenize_identify.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:38:18 by rnakatan          #+#    #+#             */
-/*   Updated: 2024/12/25 07:39:20 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:19:52 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,3 @@ t_token	*ms_tokenize_identify(const char *input, int pos)
 		token = ms_create_token(TK_DECLINED, "", pos, pos);
 	return (token);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	t_token *token;
-
-// 	token = ms_tokenize_identify("_test", 0);
-// 	printf("token->type: %d\n", token->type);
-// 	printf("token->token: %s\n", token->token);
-// 	printf("token->start_pos: %d\n", token->start_pos);
-// 	if (token->type != TK_IDENTIFY)
-// 		return (1);
-// 	if (token->start_pos != 0)
-// 		return (1);
-// 	if (token->end_pos != 3)
-// 		return (1);
-// 	return (0);
-// }

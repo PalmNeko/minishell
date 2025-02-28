@@ -15,6 +15,7 @@
 
 # include "libft_type.h"
 # include "libms_type.h"
+# include "syntax_analyze_type.h"
 # include <stddef.h>
 
 /** string.h */
@@ -54,6 +55,8 @@ void ms_noop_del(void *arg);
 
 void ms_lstappend_tail(t_list **lst, void *content, void (*fr)(void *));
 void			ms_lst_print(t_list *lst, void (*print)(void *));
+
+t_syntax_node	*ms_duplicate_node(t_syntax_node *node);
 
 // environment variable
 char			*ms_getenv(const char *name);

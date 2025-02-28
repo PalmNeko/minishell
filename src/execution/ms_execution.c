@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/31 17:26:00 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:16:29 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libms.h"
 #include "semantic_analyze.h"
 #include "syntax_analyze.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /*notes
@@ -26,9 +27,10 @@ int	ms_execution(const char *input)
 	t_syntax_node	*node;
 	t_lsa			*lsa;
 	int				ret;
+	char	*stat_str;
 
 	tokens = ms_lexical_analyze(input);
-	if(tokens[0] != NULL)
+	if (tokens[0] != NULL)
 	{
 		node = ms_syntax_analyze(tokens);
 		if (node->type != SY_DECLINED)
@@ -41,6 +43,9 @@ int	ms_execution(const char *input)
 			ret = 1;
 		ms_syntax_node_destroy(node);
 	}
-	ms_destroy_ntp2((void **)tokens, free);
+	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	stat_str = ft_itoa(ret);
+	ms_setenv("?", stat_str, 1);
+	free(stat_str);
 	return (ret);
 }

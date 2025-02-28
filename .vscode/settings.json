@@ -1,0 +1,19 @@
+{
+	"files.associations": {
+		"fp_module_types.h": "c",
+		"fp_module_int_defs.h": "c",
+		"syntax_analyze.h": "c",
+		"syntax_analyze_type.h": "c",
+		"stdlib.h": "c",
+		"libms.h": "c",
+		"execution.h": "c",
+		"semantic_analyze.h": "c",
+		"stdio.h": "c",
+		"typeinfo": "c",
+		"semantic_analyze_internal.h": "c",
+		"execution_type.h": "c",
+		"functional": "cpp",
+		"semantic_analyze_type.h": "c"
+	},
+	"editor.indentSize": "tabSize"
+}
