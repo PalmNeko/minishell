@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:37:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/03 05:17:38 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/03 05:32:28 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,6 @@ static int	ms_redirect_append(t_lsa_redirection *redirect)
 	if (close(fd) == -1)
 		return (-1);
 	return (0);
-}
-
-void print_out_fd(int fd)
-{
-	char 	a[1024];
-	ssize_t n;
-	n = read(fd, &a, 1024);
-	if (n == -1)
-		return ;
-	write(1, &a, n);
 }
 
 static int	ms_redirect_heredoc(t_lsa_redirection *redirect)
