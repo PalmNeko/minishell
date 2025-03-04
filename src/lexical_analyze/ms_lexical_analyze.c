@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 21:34:34 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 22:04:42 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ static const t_tokenize_func	g_ms_tokenize_func_list[14] = {
 static t_token					*get_token(const char *input, int pos);
 static int						compare_priority(t_token *temp_token,
 									t_token *token);
+static bool						ms_is_same_priority_kind(t_token *temp_token,
+									t_token *token);
 
 /*
   TK_DECLINEだった時の処理のロジックが甘い？(今回の場合TK_DECLINEは存在しないけど)
+  ->そもそもDECLINEになることを想定していない（入力ケース全てについて解析を行う前提）ので処理を抜く。
 */
 t_token	**ms_lexical_analyze(const char *input)
 {
 	t_token_list	*lst;
-	t_token_list	*new_lst;
 	t_token			**tokens;
 	t_token			*token;
 	size_t			pos;
@@ -55,24 +57,14 @@ t_token	**ms_lexical_analyze(const char *input)
 	{
 		token = get_token(input, pos);
 		if (!token)
-			return (NULL);
-		if (token->type == TK_DECLINED)
-		{
-			ms_destroy_token(token);
-			return (NULL);
-		}
-		new_lst = ft_lstnew(token);
-		if (!new_lst)
-			return (NULL);
-		ft_lstadd_back(&lst, new_lst);
+			return (ft_lstclear(&lst, ms_destroy_token_wrapper), NULL);
+		if (ms_lst_append_tail(&lst, token) == -1)
+			return (ft_lstclear(&lst, ms_destroy_token_wrapper), NULL);
 		pos = token->end_pos;
 	}
 	tokens = ms_lst_to_ntp(&lst, ms_identify, ms_noop_del);
 	if (!tokens)
-	{
-		ft_lstclear(&lst, ms_destroy_token_wrapper);
-		return (NULL);
-	}
+		return (ft_lstclear(&lst, ms_destroy_token_wrapper), NULL);
 	return (tokens);
 }
 
@@ -109,8 +101,7 @@ static int	compare_priority(t_token *temp_token, t_token *token)
 		return (1);
 	temp_token_len = temp_token->end_pos - temp_token->start_pos;
 	token_len = token->end_pos - token->start_pos;
-	if ((temp_token->type > 2 && token->type > 2) || (temp_token->type <= 2
-			&& token->type <= 2))
+	if ((ms_is_same_priority_kind(temp_token, token)))
 	{
 		if (temp_token_len >= token_len)
 			return (1);
@@ -120,4 +111,12 @@ static int	compare_priority(t_token *temp_token, t_token *token)
 	if (temp_token->type > token->type)
 		return (1);
 	return (0);
+}
+
+static bool	ms_is_same_priority_kind(t_token *temp_token, t_token *token)
+{
+	if ((temp_token->type > 2 && token->type > 2)
+		|| (temp_token->type <= 2 && token->type <= 2))
+		return (true);
+	return (false);
 }
