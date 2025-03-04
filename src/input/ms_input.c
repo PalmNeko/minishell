@@ -20,13 +20,22 @@
 
 static char	*ms_get_user_input(t_minishell mnsh);
 static bool	ms_is_quoted_closed(const char *line);
+static int	ms_is_loop(int status);
 
-void	ms_input(t_minishell mnsh)
+static int	ms_get_status_from_meta(int status)
+{
+	return (status & 0xff);
+}
+
+int	ms_input(t_minishell mnsh)
 {
 	char	*line;
+	int		status;
+	char	*stat_str;
 
 	(void)mnsh;
-	while (1)
+	status = 0;
+	while (ms_is_loop(status))
 	{
 		line = ms_get_user_input(mnsh);
 		if (line == NULL)
@@ -35,11 +44,14 @@ void	ms_input(t_minishell mnsh)
 		if (! g_rl_is_sigint)
 		{
 			ms_add_mnsh_history(line);
-			ms_execution(line);
+			status = ms_execution(line);
+			stat_str = ft_itoa(ms_get_status_from_meta(status));
+			ms_setenv("?", stat_str, 1);
+			free(stat_str);
 		}
 		free(line);
 	}
-	return ;
+	return (ms_get_status_from_meta(status));
 }
 
 static char	*ms_get_user_input(t_minishell mnsh)
@@ -88,4 +100,11 @@ static bool	ms_is_quoted_closed(const char *line)
 		line++;
 	}
 	return (true);
+}
+
+static int ms_is_loop(int status)
+{
+	if (status & IS_CHILD)
+		return (0);
+	return(1);
 }
