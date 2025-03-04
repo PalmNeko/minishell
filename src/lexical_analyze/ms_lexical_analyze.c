@@ -6,12 +6,13 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 20:31:09 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 21:34:34 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexical_analyze.h"
 #include "libft.h"
+#include "libms.h"
 #include <stdlib.h>
 
 static const t_tokenize_func	g_ms_tokenize_func_list[14] = {
@@ -30,11 +31,14 @@ static const t_tokenize_func	g_ms_tokenize_func_list[14] = {
 	ms_tokenize_variable,
 	NULL
 };
-static t_token					**convert_to_array(t_token_list *lst);
+
 static t_token					*get_token(const char *input, int pos);
 static int						compare_priority(t_token *temp_token,
 									t_token *token);
 
+/*
+  TK_DECLINEだった時の処理のロジックが甘い？(今回の場合TK_DECLINEは存在しないけど)
+*/
 t_token	**ms_lexical_analyze(const char *input)
 {
 	t_token_list	*lst;
@@ -63,33 +67,12 @@ t_token	**ms_lexical_analyze(const char *input)
 		ft_lstadd_back(&lst, new_lst);
 		pos = token->end_pos;
 	}
-	tokens = convert_to_array(lst);
+	tokens = ms_lst_to_ntp(&lst, ms_identify, ms_noop_del);
 	if (!tokens)
-		return (NULL);
-	return (tokens);
-}
-
-static t_token	**convert_to_array(t_token_list *lst)
-{
-	t_token_list	*temp;
-	t_token			**tokens;
-	size_t			size;
-	size_t			i;
-
-	size = ft_lstsize(lst);
-	tokens = (t_token **)malloc(sizeof(t_token *) * (size + 1));
-	if (!tokens)
-		return (NULL);
-	i = 0;
-	while (lst)
 	{
-		temp = lst;
-		tokens[i] = lst->content;
-		lst = lst->next;
-		free(temp);
-		i++;
+		ft_lstclear(&lst, ms_destroy_token_wrapper);
+		return (NULL);
 	}
-	tokens[i] = NULL;
 	return (tokens);
 }
 

@@ -19,7 +19,7 @@ TEST(Execute_Expansion, ms_parameter_expansion)
 
 	child_node = (t_syntax_node *)malloc(sizeof(t_syntax_node));
 	child_node->type = SY_VARIABLE;
-	child_node->token = ms_dup_token(token[0]);
+	child_node->token = ms_duplicate_token(token[0]);
 	child_node->children = NULL;
 
 	node = (t_syntax_node *)malloc(sizeof(t_syntax_node));
@@ -49,11 +49,11 @@ TEST(Execute_Expansion, ms_parameter_expansion2)
 	child_nodes = (t_syntax_node **)malloc(sizeof(t_syntax_node) * 3);
 	child_nodes[0] = (t_syntax_node *)malloc(sizeof(t_syntax_node));
 	child_nodes[0]->type = SY_DOUBLE_QUOTE;
-	child_nodes[0]->token = ms_dup_token(token[0]);
+	child_nodes[0]->token = ms_duplicate_token(token[0]);
 	child_nodes[0]->children = NULL;
 	child_nodes[1] = (t_syntax_node *)malloc(sizeof(t_syntax_node));
 	child_nodes[1]->type = SY_DOUBLE_QUOTE;
-	child_nodes[1]->token = ms_dup_token(token[1]);
+	child_nodes[1]->token = ms_duplicate_token(token[1]);
 	child_nodes[1]->children = NULL;
 	child_nodes[2] = NULL;
 

@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:09:33 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:10:56 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 21:24:25 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_syntax_node	*ms_syntax_node_find_child(t_syntax_node *node,
 t_syntax_node	*ms_syntax_node_get_child(t_syntax_node *node,
 					t_syntax_type type);
 
-t_token			*ms_dup_token(t_token *token);
 t_syntax_node	*ms_syntax_node_create_nonterminal(t_syntax_type type,
 					t_syntax_node_list **child_lst, int start_pos, int end_pos);
 

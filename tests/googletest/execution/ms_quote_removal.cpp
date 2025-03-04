@@ -20,15 +20,15 @@ TEST(Execute_Expansion, ms_quote_removal)
 
 	child_nodes = (t_syntax_node **)malloc(sizeof(t_syntax_node) * 4);
 	child_nodes[0] = ms_syntax_node_create(SY_DOUBLE_QUOTE);
-	child_nodes[0]->token = ms_dup_token(token[0]);
+	child_nodes[0]->token = ms_duplicate_token(token[0]);
 	child_nodes[0]->start_pos = 0;
 	child_nodes[0]->end_pos = 1;
 	child_nodes[1] = ms_syntax_node_create(SY_WORD);
-	child_nodes[1]->token = ms_dup_token(token[1]);
+	child_nodes[1]->token = ms_duplicate_token(token[1]);
 	child_nodes[1]->start_pos = 1;
 	child_nodes[1]->end_pos = 2;
 	child_nodes[2] = ms_syntax_node_create(SY_DOUBLE_QUOTE);
-	child_nodes[2]->token = ms_dup_token(token[2]);
+	child_nodes[2]->token = ms_duplicate_token(token[2]);
 	child_nodes[2]->start_pos = 2;
 	child_nodes[2]->end_pos = 3;
 	child_nodes[3] = NULL;

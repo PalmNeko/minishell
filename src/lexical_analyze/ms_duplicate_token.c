@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_dup_token.c                                     :+:      :+:    :+:   */
+/*   ms_duplicate_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 19:32:26 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 19:32:27 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/04 21:21:29 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexical_analyze.h"
-#include "syntax_analyze.h"
+#include "libft.h"
 #include <stdlib.h>
 
-t_token	*ms_dup_token(t_token *token)
+t_token	*ms_duplicate_token(t_token *token)
 {
 	t_token	*new_token;
 

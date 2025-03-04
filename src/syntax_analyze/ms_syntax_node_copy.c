@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_syntax_node_copy.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:11:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 20:03:08 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/04 21:23:03 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_syntax_node	*ms_syntax_node_copy(t_syntax_node *node)
 	new_node->end_pos = node->end_pos;
 	if (node->token)
 	{
-		new_node->token = ms_dup_token(node->token);
+		new_node->token = ms_duplicate_token(node->token);
 		if (new_node->token == NULL)
 			return (ms_syntax_node_destroy(new_node), NULL);
 	}

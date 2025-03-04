@@ -72,7 +72,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_FAIL)
 
     t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
 
-    expect->token = ms_dup_token(tokens[0]);
+    expect->token = ms_duplicate_token(tokens[0]);
     expect->start_pos = 0;
     expect->end_pos   = 1; 
 
@@ -119,7 +119,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SINGLE_QUOTED_WORD_FAIL)
 	t_syntax_node *actual = ms_parse_single_quoted_word(tokens, 0);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1; 
 
@@ -188,7 +188,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_FAIL_CASE_1)
 	t_syntax_node *actual = ms_parse_word_list(tokens, 0);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1; 
 
@@ -206,7 +206,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_FAIL_CASE_2)
 	t_syntax_node *actual = ms_parse_word_list(tokens, 0);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1;
 
@@ -507,7 +507,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_PIPELINE_FAIL)
 
 	// 期待ノード (SY_DECLINED)
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1;
 
@@ -624,7 +624,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_COMPOUND_LIST_FAIL)
 	t_token **tokens = ms_lexical_analyze(str);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[5]);
+	expect->token = ms_duplicate_token(tokens[5]);
 	expect->start_pos = 5;
 	expect->end_pos   = 6;
 

@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:15:08 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 20:58:54 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 21:25:09 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ t_token	**ms_lexical_analyze(const char *input);
 // Tokenize functions
 t_token	*ms_create_token(t_token_type type, const char *token, int start_pos,
 			int end_pos);
-t_token	*ms_copy_token(t_token *token);
+
+t_token	*ms_duplicate_token(t_token *token);
+
 void	ms_destroy_token(t_token *token);
 void	ms_destroy_token_wrapper(void *token);
 t_token	*ms_tokenize_identify(const char *input, int pos);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_diplicate_node.c                                :+:      :+:    :+:   */
+/*   ms_duplicate_node.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:21:53 by nyts              #+#    #+#             */
-/*   Updated: 2025/02/19 17:03:13 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 21:23:03 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_syntax_node	*ms_duplicate_node(t_syntax_node *node)
 		new_node->children[i] = NULL;
 	}
 	if (node->token != NULL)
-		new_node->token = ms_dup_token(node->token);
+		new_node->token = ms_duplicate_token(node->token);
 	new_node->start_pos = node->start_pos;
 	new_node->end_pos = node->end_pos;
 	return (new_node);

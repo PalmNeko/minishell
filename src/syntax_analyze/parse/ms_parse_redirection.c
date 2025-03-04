@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse_redirection.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:39:12 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 19:36:17 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/04 21:23:03 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_syntax_node	*ms_parse_redirection(t_token **tokens, int pos)
 	node = ms_syntax_node_create(SY_REDIRECTION);
 	if (node == NULL)
 		return (NULL);
-	node->token = ms_dup_token(tokens[pos]);
+	node->token = ms_duplicate_token(tokens[pos]);
 	if (node->token == NULL)
 	{
 		ms_syntax_node_destroy(node);
