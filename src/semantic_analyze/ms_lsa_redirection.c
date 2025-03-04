@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lsa_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:14:07 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 05:10:49 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:03:52 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 #include "semantic_analyze_internal.h"
 #include <stdlib.h>
 
-static t_lsa_redirection_type	ms_lsa_redirection_type(const char *token);
-static t_lsa_redirection		*ms_lsa_redirection_create(t_lsa_redirection_type type);
+static t_lsa_redirection_type	ms_get_redirection_type(
+									t_syntax_node *redirection_node);
+static t_lsa_redirection		*ms_lsa_redirection_create(
+									t_lsa_redirection_type type);
 
 t_lsa_redirection	*ms_lsa_redirection(t_syntax_node *redirection_node)
 {
-	t_lsa_redirection_type	type;
 	t_lsa_redirection		*lsa_redirection;
 	int						pos;
 
-	type = ms_lsa_redirection_type(redirection_node->children[0]->token->token);
-	lsa_redirection = ms_lsa_redirection_create(type);
+	lsa_redirection = ms_lsa_redirection_create
+		(ms_get_redirection_type(redirection_node->children[0]));
 	if (lsa_redirection->type == LSA_RD_HEREDOC)
 	{
 		pos = 1;
@@ -36,17 +37,16 @@ t_lsa_redirection	*ms_lsa_redirection(t_syntax_node *redirection_node)
 	}
 	else
 	{
-		if (redirection_node->children[1]->type != SY_BLANK)
-			lsa_redirection->filename = ms_lsa_word_list(redirection_node->children[1]);
-		else
-			lsa_redirection->filename = ms_lsa_word_list(redirection_node->children[2]);
+		lsa_redirection->filename = ms_lsa_word_list
+			(redirection_node->children[1]);
 		if (lsa_redirection->filename == NULL)
 			return (free(lsa_redirection), NULL);
 	}
 	return (lsa_redirection);
 }
 
-static t_lsa_redirection	*ms_lsa_redirection_create(t_lsa_redirection_type type)
+static t_lsa_redirection
+	*ms_lsa_redirection_create(t_lsa_redirection_type type)
 {
 	t_lsa_redirection	*lsa_redirection;
 
@@ -61,8 +61,12 @@ static t_lsa_redirection	*ms_lsa_redirection_create(t_lsa_redirection_type type)
 	return (lsa_redirection);
 }
 
-static t_lsa_redirection_type	ms_lsa_redirection_type(const char *token)
+static t_lsa_redirection_type
+	ms_get_redirection_type(t_syntax_node *redirection_node)
 {
+	const char	*token;
+
+	token = redirection_node->token->token;
 	if (ft_strcmp(token, ">") == 0)
 		return (LSA_RD_OUTPUT);
 	else if (ft_strcmp(token, ">>") == 0)

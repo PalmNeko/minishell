@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:12:28 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:13:23 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 22:34:06 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,8 @@ typedef struct s_lsa
 {
 	t_lsa_list				**lists;
 }							t_lsa;
+
+typedef void				*(*t_lsa_command_func)(t_syntax_node *node);
+typedef void				(*t_lsa_destroy_func)(void *node);
 
 #endif
