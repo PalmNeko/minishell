@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execute_pipeline.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 02:51:15 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/19 07:47:53 by marvin           ###   ########.fr       */
+/*   Updated: 2025/03/04 17:41:13 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ms_single_command_execution(t_lsa_pipeline *pipeline);
 static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline);
 static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 				t_state_in_pipeline state, int *pipe_fd);
-static void	ms_execute_pipeline_child(t_lsa_command *lsa_command,
+static int	ms_execute_pipeline_child(t_lsa_command *lsa_command,
 				t_state_in_pipeline state, int *pipe_fd, int *new_pipe_fd);
 
 int	ms_execute_pipeline(t_lsa_pipeline *pipeline)
@@ -38,8 +38,8 @@ int	ms_execute_pipeline(t_lsa_pipeline *pipeline)
 
 static int	ms_single_command_execution(t_lsa_pipeline *pipeline)
 {
-	int	ret;
-	char **expanded_strings;
+	int		ret;
+	char	**expanded_strings;
 
 	expanded_strings = ms_expansion(pipeline->commands[0]->args[0]);
 	if (expanded_strings[0] && ms_isbuiltin(expanded_strings[0]) == 1)
@@ -90,7 +90,11 @@ static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 			return (1);
 	pid = fork();
 	if (pid == 0)
-		ms_execute_pipeline_child(lsa_command, state, pipe_fd, new_pipe_fd);
+	{
+		status = ms_execute_pipeline_child(lsa_command, state, pipe_fd, new_pipe_fd);
+		status = ms_add_meta(status, IS_CHILD);
+		return (status);
+	}
 	else
 	{
 		if (!(state & FIRST_COMMAND))
@@ -109,7 +113,8 @@ static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 	return (status);
 }
 
-static void	ms_execute_pipeline_child(t_lsa_command *lsa_command,
+//close_errorを考慮
+static int	ms_execute_pipeline_child(t_lsa_command *lsa_command,
 		t_state_in_pipeline state, int *pipe_fd, int *new_pipe_fd)
 {
 	int	ret;
@@ -118,16 +123,16 @@ static void	ms_execute_pipeline_child(t_lsa_command *lsa_command,
 	{
 		close(pipe_fd[1]);
 		if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-			exit(1);
+			return (1);
 		close(pipe_fd[0]);
 	}
 	if ((state & LAST_COMMAND) == 0)
 	{
 		close(new_pipe_fd[0]);
 		if (dup2(new_pipe_fd[1], STDOUT_FILENO) == -1)
-			exit(1);
+			return (1);
 		close(new_pipe_fd[1]);
 	}
 	ret = ms_simple_command_execution(lsa_command);
-	exit(ret);
+	return (ret);
 }

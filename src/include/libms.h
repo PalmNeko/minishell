@@ -58,6 +58,8 @@ void			ms_lst_print(t_list *lst, void (*print)(void *));
 
 t_syntax_node	*ms_duplicate_node(t_syntax_node *node);
 
+int	ms_add_meta(int status, int meta);
+
 // environment variable
 char			*ms_getenv(const char *name);
 int				ms_setenv(const char *name, const char *value, int overwrite);
