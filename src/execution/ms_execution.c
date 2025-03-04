@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 18:02:47 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 20:37:26 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	ms_execution(const char *input)
 			ret = 1;
 		ms_syntax_node_destroy(node);
 	}
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens, ms_destroy_token_wrapper);
 	return (ret);
 }

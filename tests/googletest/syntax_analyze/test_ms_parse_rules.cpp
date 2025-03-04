@@ -62,7 +62,7 @@ TEST(ms_parse_rules, comprehensive_success)
 	ASSERT_NE(tokens, nullptr);
 	node = ms_parse_rules(tokens, 0, SY_PIPELINE, rules_ptr);
 
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 
 	if (node == NULL)
 		FAIL();
@@ -125,7 +125,7 @@ TEST(ms_parse_rules, EBNF_ONE_declined)
 	ASSERT_NE(tokens, nullptr);
 	node = ms_parse_rules(tokens, 0, SY_IDENTIFY, rules_ptr);
 
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 
 	ASSERT_NE(node, nullptr);
 

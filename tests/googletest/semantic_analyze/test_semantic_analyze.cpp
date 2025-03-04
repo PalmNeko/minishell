@@ -44,7 +44,7 @@ TEST(Semantic_Analyze, SEMANTIC_ANALYZE_SUCCESS_CASE1)
 	ms_lsa_destroy(expect);
 	ms_lsa_destroy(actual);
 	ms_syntax_node_destroy(node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }
 
 // lists test
@@ -102,7 +102,7 @@ TEST(Semantic_Analyze, SEMANTIC_ANALYZE_SUCCESS_CASE2)
 	ms_lsa_destroy(expect);
 	ms_lsa_destroy(actual);
 	ms_syntax_node_destroy(node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }
 
 // heredoc test

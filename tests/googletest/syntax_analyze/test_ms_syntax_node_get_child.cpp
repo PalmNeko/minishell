@@ -26,5 +26,5 @@ TEST(ms_lsa_get_child_node, basic) {
 	EXPECT_EQ(user_input_node->type, SY_WORD_LIST);
 
 	ms_syntax_node_destroy(command_node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }

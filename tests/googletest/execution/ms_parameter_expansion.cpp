@@ -33,7 +33,7 @@ TEST(Execute_Expansion, ms_parameter_expansion)
 	ASSERT_STREQ(result->children[0]->token->token, expect_str);
 
 	ms_syntax_node_destroy(result);
-	ms_destroy_ntp2((void **)token, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)token,  ms_destroy_token_wrapper);
 }
 
 TEST(Execute_Expansion, ms_parameter_expansion2)
@@ -78,5 +78,5 @@ TEST(Execute_Expansion, ms_parameter_expansion2)
 	ASSERT_STREQ(result->children[0]->children[1]->token->token, expect_str2.c_str());
 
 	ms_syntax_node_destroy(result);
-	ms_destroy_ntp2((void **)token, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)token,  ms_destroy_token_wrapper);
 }

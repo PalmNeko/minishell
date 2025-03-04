@@ -6,7 +6,7 @@
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:26:37 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 19:40:23 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 20:31:09 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token	**ms_lexical_analyze(const char *input)
 			return (NULL);
 		if (token->type == TK_DECLINED)
 		{
-			ms_lexical_analyze_destroy_token(token);
+			ms_destroy_token(token);
 			return (NULL);
 		}
 		new_lst = ft_lstnew(token);
@@ -107,11 +107,11 @@ static t_token	*get_token(const char *input, int pos)
 		if (compare_priority(temp_token, token))
 		{
 			if (token)
-				ms_lexical_analyze_destroy_token(token);
+				ms_destroy_token(token);
 			token = temp_token;
 		}
 		else
-			ms_lexical_analyze_destroy_token(temp_token);
+			ms_destroy_token(temp_token);
 		i++;
 	}
 	return (token);

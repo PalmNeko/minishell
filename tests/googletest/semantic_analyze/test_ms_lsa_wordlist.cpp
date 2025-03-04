@@ -30,5 +30,5 @@ TEST(Semantic_Analyze, LSA_WORDLIST_SUCCESS)
 	ms_lsa_wordlist_destroy(expect);
 	ms_lsa_wordlist_destroy(actual);
 	ms_syntax_node_destroy(wordlist_node);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }

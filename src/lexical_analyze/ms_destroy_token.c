@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_syntax_node_destroy.c                           :+:      :+:    :+:   */
+/*   ms_lexical_analyze_destory_token.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 23:28:43 by rnakatan          #+#    #+#             */
+/*   Created: 2024/12/25 07:37:25 by rnakatan          #+#    #+#             */
 /*   Updated: 2025/03/04 20:31:09 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "syntax_analyze.h"
 #include <stdlib.h>
 
-void	ms_syntax_node_destroy(t_syntax_node *node)
+void	ms_destroy_token(t_token *token)
 {
-	int	i;
-
-	if (node->children)
+	if (token)
 	{
-		i = 0;
-		while (node->children[i])
-		{
-			ms_syntax_node_destroy(node->children[i]);
-			i++;
-		}
-		free(node->children);
+		free((void *)token->token);
+		token->token = NULL;
+		free(token);
+		token = NULL;
 	}
-	else if (node->token)
-		ms_destroy_token(node->token);
-	free(node);
 }

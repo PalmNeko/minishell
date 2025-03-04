@@ -34,7 +34,7 @@ TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS)
 	ms_lsa_pipeline_destroy(expect);
 	ms_lsa_pipeline_destroy(actual);
 	ms_syntax_node_destroy(pipeline_node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }
 
 TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS_CASE2)
@@ -65,5 +65,5 @@ TEST(Semantic_Analyze, LSA_PIPELINE_SUCCESS_CASE2)
 	ms_lsa_pipeline_destroy(expect);
 	ms_lsa_pipeline_destroy(actual);
 	ms_syntax_node_destroy(pipeline_node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }

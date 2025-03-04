@@ -9,11 +9,6 @@ extern "C"
 	#include "libms.h"
 };
 
-void ms_lexical_analyze_destroy_token_wrapper(void *token)
-{
-	ms_lexical_analyze_destroy_token((t_token*)token);
-}
-
 void test_runner_of_ms_parse(
     t_syntax_node *expect,
     const char    *str,
@@ -58,5 +53,5 @@ void test_runner_of_ms_parse(
 
     // テストに使用したノード等を破棄
     ms_syntax_node_destroy(actual);
-    ms_destroy_ntp2(reinterpret_cast<void**>(tokens), ms_lexical_analyze_destroy_token_wrapper);
+    ms_destroy_ntp2(reinterpret_cast<void**>(tokens),  ms_destroy_token_wrapper);
 }

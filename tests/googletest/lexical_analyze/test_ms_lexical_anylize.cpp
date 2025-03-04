@@ -478,7 +478,7 @@ void test_runner_of_lexical_analize(
 		}
 		for (size_t j = 0; tokens[j] != NULL; j++)
 		{
-			ms_lexical_analyze_destroy_token(tokens[j]);
+			ms_destroy_token(tokens[j]);
 		}
 		free(tokens);
 	}

@@ -67,6 +67,6 @@ TEST(Lexical_Token, CreateToken)
 			test_case.end_pos) << "Incorrect end position for " << test_case.description;
 
 		// メモリの解放
-		ms_lexical_analyze_destroy_token(token);
+		ms_destroy_token(token);
 	}
 }
