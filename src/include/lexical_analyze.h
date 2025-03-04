@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   lexical_analyze.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:15:08 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 20:37:26 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 20:58:54 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef LEXICAL_ANALYZE_H
+# define LEXICAL_ANALYZE_H
 
-# include "lexer_config.h"
-# include "lexer_type.h"
+# include "lexical_analyze_type.h"
+# include "lexical_analyze_config.h"
 
 t_token	**ms_lexical_analyze(const char *input);
 

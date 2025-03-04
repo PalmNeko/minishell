@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "lexical_analyze.h"
 #include "libft.h"
 
 bool	ms_is_word_token_char(const char *str);

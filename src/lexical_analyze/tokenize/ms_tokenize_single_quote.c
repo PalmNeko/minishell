@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "lexical_analyze.h"
 #include "libft.h"
 
 t_token	*ms_tokenize_single_quote(const char *input, int pos)

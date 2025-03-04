@@ -3,7 +3,7 @@
 
 # include <cstddef>
 # include <functional>
-# include "lexer_type.h"
+# include "lexical_analyze_type.h"
 
 struct				Tokenize_TestCase
 {

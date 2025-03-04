@@ -4,7 +4,7 @@
 
 extern "C"
 {
-#include "lexer.h"
+#include "lexical_analyze.h"
 #include "ms_test.h"
 
 };

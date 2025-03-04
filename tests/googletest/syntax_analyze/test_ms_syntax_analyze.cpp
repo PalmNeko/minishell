@@ -4,7 +4,7 @@
 extern "C"
 {
 	#include "syntax_analyze.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "libms.h"
 };
 

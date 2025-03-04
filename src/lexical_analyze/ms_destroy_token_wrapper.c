@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "lexical_analyze.h"
 
 void	ms_destroy_token_wrapper(void *token)
 {

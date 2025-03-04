@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_type.h                                       :+:      :+:    :+:   */
+/*   lexical_analyze_type.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:15:00 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:15:01 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 20:51:08 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_TYPE_H
-# define LEXER_TYPE_H
+#ifndef LEXICAL_ANALYZE_TYPE_H
+# define LEXICAL_ANALYZE_TYPE_H
 
 typedef enum e_token_type
 {

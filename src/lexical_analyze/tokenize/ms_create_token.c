@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "lexical_analyze.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <string.h>

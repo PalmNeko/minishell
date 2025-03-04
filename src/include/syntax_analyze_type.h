@@ -13,7 +13,7 @@
 #ifndef SYNTAX_ANALYZE_TYPE_H
 # define SYNTAX_ANALYZE_TYPE_H
 
-# include "lexer.h"
+# include "lexical_analyze.h"
 # include "libft.h"
 
 typedef enum e_syntax_type

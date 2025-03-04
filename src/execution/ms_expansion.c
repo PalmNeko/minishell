@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "lexer.h"
+#include "lexical_analyze.h"
 #include "libms.h"
 #include "syntax_analyze.h"
 #include <stdlib.h>

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_config.h                                     :+:      :+:    :+:   */
+/*   lexical_analyze_config.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:14:55 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:14:56 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/04 20:52:09 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_CONFIG_H
-# define LEXER_CONFIG_H
+#ifndef LEXICAL_ANALYZE_CONFIG_H
+# define LEXICAL_ANALYZE_CONFIG_H
 
 # define TYPE 0
 # define CATEGORY 1
