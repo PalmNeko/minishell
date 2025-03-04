@@ -16,10 +16,7 @@
 // -2 syntax_error
 // -1 ENOMEM
 // 0 > endpos
-int	ms_parse_ebnf_one_method(
-		t_token **tokens,
-		int pos,
-		t_list **syntax_lst,
+int	ms_parse_ebnf_one_method(t_token **tokens, int pos, t_list **syntax_lst,
 		t_parse_func *parsers)
 {
 	t_syntax_node	*node;

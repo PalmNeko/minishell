@@ -10,20 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "libms.h"
 #include "semantic_analyze.h"
 #include "semantic_analyze_internal.h"
 #include "syntax_analyze.h"
-#include "libms.h"
-#include "libft.h"
 #include <stdlib.h>
 
-static int		ms_lsa_set_heredoc_input(
-					t_lsa_redirection *lsa_redirection, const char *delimiter);
+static int		ms_lsa_set_heredoc_input(t_lsa_redirection *lsa_redirection,
+					const char *delimiter);
 static t_list	*ms_lsa_get_heredoc_input_lst(const char *delimiter);
 static char		*ms_lst_node_to_string(t_list *lst);
 
-int	ms_lsa_set_heredoc(
-		t_lsa_redirection *lsa_redirection, t_syntax_node *delimiter_node)
+int	ms_lsa_set_heredoc(t_lsa_redirection *lsa_redirection,
+		t_syntax_node *delimiter_node)
 {
 	char	*delimiter;
 
@@ -41,8 +41,8 @@ int	ms_lsa_set_heredoc(
 	return (-1);
 }
 
-static int	ms_lsa_set_heredoc_input(
-		t_lsa_redirection *lsa_redirection, const char *delimiter)
+static int	ms_lsa_set_heredoc_input(t_lsa_redirection *lsa_redirection,
+		const char *delimiter)
 {
 	t_list			*heredoc_lst;
 	t_syntax_node	**heredoc_input;

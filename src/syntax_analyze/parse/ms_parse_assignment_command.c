@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
 #include "libms.h"
+#include "syntax_analyze.h"
 
 t_syntax_node	*ms_parse_assignment_command(t_token **tokens, int pos)
 {
@@ -32,7 +32,7 @@ t_syntax_node	*ms_parse_assignment_command(t_token **tokens, int pos)
 	pos = child->end_pos;
 	while (tokens[pos])
 	{
-		if(tokens[pos]->type != TK_BLANK || tokens[pos + 1] == NULL)
+		if (tokens[pos]->type != TK_BLANK || tokens[pos + 1] == NULL)
 			break ;
 		child = ms_parse_assignment_word(tokens, pos + 1);
 		if (child == NULL)
@@ -40,7 +40,8 @@ t_syntax_node	*ms_parse_assignment_command(t_token **tokens, int pos)
 				NULL);
 		if (child->type != SY_DECLINED)
 		{
-			ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
+			ms_lstappend_tail(&child_lst, child,
+				ms_syntax_node_destroy_wrapper);
 			if (child_lst == NULL)
 				return (ms_syntax_node_destroy(child), NULL);
 			pos = child->end_pos;
@@ -51,7 +52,8 @@ t_syntax_node	*ms_parse_assignment_command(t_token **tokens, int pos)
 			break ;
 		}
 	}
-	node = ms_syntax_node_create_nonterminal(SY_ASSIGNMENT_COMMAND, &child_lst, start_pos, pos);
+	node = ms_syntax_node_create_nonterminal(SY_ASSIGNMENT_COMMAND, &child_lst,
+			start_pos, pos);
 	if (node == NULL)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
 	return (node);

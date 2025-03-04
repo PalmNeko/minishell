@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
 #include "libft.h"
 #include "semantic_analyze.h"
+#include "syntax_analyze.h"
 
 t_list	*ms_get_next_line_node(void)
 {

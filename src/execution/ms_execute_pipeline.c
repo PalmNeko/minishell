@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "libms.h"
+#include "syntax_analyze.h"
 #include <stdlib.h>
 #include <sys/wait.h>
-#include "syntax_analyze.h"
-#include "libms.h"
 
 static int	ms_single_command_execution(t_lsa_pipeline *pipeline);
 static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline);
@@ -79,7 +79,7 @@ static int	ms_multiple_command_execution(t_lsa_pipeline *pipeline)
 // memo
 // pipelineの最後に篇数代入が来ると篇数代入は行われる？
 static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
-	t_state_in_pipeline state, int *pipe_fd)
+		t_state_in_pipeline state, int *pipe_fd)
 {
 	int		status;
 	pid_t	pid;
@@ -91,7 +91,8 @@ static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 	pid = fork();
 	if (pid == 0)
 	{
-		status = ms_execute_pipeline_child(lsa_command, state, pipe_fd, new_pipe_fd);
+		status = ms_execute_pipeline_child(lsa_command, state, pipe_fd,
+				new_pipe_fd);
 		status = ms_add_meta(status, IS_CHILD);
 		return (status);
 	}
@@ -113,7 +114,7 @@ static int	ms_execute_pipeline_fork(t_lsa_command *lsa_command,
 	return (status);
 }
 
-//close_errorを考慮
+// close_errorを考慮
 static int	ms_execute_pipeline_child(t_lsa_command *lsa_command,
 		t_state_in_pipeline state, int *pipe_fd, int *new_pipe_fd)
 {

@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
 #include "lexer.h"
 #include "libms.h"
+#include "syntax_analyze.h"
 
-static t_syntax_node	**ms_syntax_node_children_copy(
-							t_syntax_node **children);
+static t_syntax_node	**ms_syntax_node_children_copy(t_syntax_node **children);
 
 t_syntax_node	*ms_syntax_node_copy(t_syntax_node *node)
 {
@@ -42,8 +41,7 @@ t_syntax_node	*ms_syntax_node_copy(t_syntax_node *node)
 	return (new_node);
 }
 
-static t_syntax_node	**ms_syntax_node_children_copy(
-							t_syntax_node **children)
+static t_syntax_node	**ms_syntax_node_children_copy(t_syntax_node **children)
 {
 	t_syntax_node	**new_children;
 	size_t			lst_size;
@@ -59,8 +57,8 @@ static t_syntax_node	**ms_syntax_node_children_copy(
 		new_children[i] = ms_syntax_node_copy(children[i]);
 		if (new_children[i] == NULL)
 		{
-			ms_destroy_ntp2(
-				(void **)new_children, ms_syntax_node_destroy_wrapper);
+			ms_destroy_ntp2((void **)new_children,
+				ms_syntax_node_destroy_wrapper);
 			return (NULL);
 		}
 		i++;

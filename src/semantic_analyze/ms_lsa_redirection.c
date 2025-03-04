@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "semantic_analyze_internal.h"
 #include "semantic_analyze.h"
+#include "semantic_analyze_internal.h"
 #include <stdlib.h>
 
 static t_lsa_redirection_type	ms_lsa_redirection_type(const char *token);
@@ -30,7 +30,8 @@ t_lsa_redirection	*ms_lsa_redirection(t_syntax_node *redirection_node)
 		pos = 1;
 		if (redirection_node->children[pos]->type == SY_BLANK)
 			pos++;
-		if (ms_lsa_set_heredoc(lsa_redirection, redirection_node->children[pos]) != 0)
+		if (ms_lsa_set_heredoc(lsa_redirection,
+				redirection_node->children[pos]) != 0)
 			return (ms_lsa_redirection_destroy(lsa_redirection), NULL);
 	}
 	else

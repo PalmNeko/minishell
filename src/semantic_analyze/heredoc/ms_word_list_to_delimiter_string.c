@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
-#include "semantic_analyze.h"
 #include "libft.h"
 #include "libms.h"
-#include <stdlib.h>
+#include "semantic_analyze.h"
+#include "syntax_analyze.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-static int	ms_replace_joined_str_quoted_word(
-				char **left, const t_syntax_node *right);
+static int	ms_replace_joined_str_quoted_word(char **left,
+				const t_syntax_node *right);
 
 /**
  * @brief デリミタワードリストを文字列に変換する
@@ -43,8 +43,8 @@ char	*ms_word_list_to_delimiter_string(t_lsa_word_list *word_list)
 			ms_replace_joined_str_quoted_word(&delimiter, inner_node);
 		else
 		{
-			if (ms_replace_joined_str(
-					&delimiter, inner_node->token->token) == NULL)
+			if (ms_replace_joined_str(&delimiter,
+					inner_node->token->token) == NULL)
 				return (free(delimiter), NULL);
 		}
 		pos++;
@@ -55,8 +55,8 @@ char	*ms_word_list_to_delimiter_string(t_lsa_word_list *word_list)
 /**
  * @param right expected type: SYNGLE_QUOTED_WORD or DOUBLE_QUOTED_WORD
  */
-static int	ms_replace_joined_str_quoted_word(
-				char **left, const t_syntax_node *right)
+static int	ms_replace_joined_str_quoted_word(char **left,
+		const t_syntax_node *right)
 {
 	char			*quoted_word;
 	int				pos;
@@ -66,7 +66,7 @@ static int	ms_replace_joined_str_quoted_word(
 	if (quoted_word == NULL)
 		return (-1);
 	pos = 0;
-	if (! (right->children[pos]->type == SY_DOUBLE_QUOTE
+	if (!(right->children[pos]->type == SY_DOUBLE_QUOTE
 			|| right->children[pos]->type == SY_SINGLE_QUOTE))
 		return (free(quoted_word), -1);
 	pos++;

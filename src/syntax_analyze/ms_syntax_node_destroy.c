@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
 #include "lexer.h"
+#include "syntax_analyze.h"
 #include <stdlib.h>
 
 void	ms_syntax_node_destroy(t_syntax_node *node)

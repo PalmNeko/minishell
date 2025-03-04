@@ -16,8 +16,8 @@
 #include <dirent.h>
 #include <stdlib.h>
 
-static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst);
-static char	**ms_expand_path_wildcard(char *token);
+static int		ms_expand_path(t_syntax_node *word_node, t_list **node_lst);
+static char		**ms_expand_path_wildcard(char *token);
 
 t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 {
@@ -37,16 +37,15 @@ t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 			new_child_node = ms_duplicate_node(word_list->children[i]);
 			if (new_child_node == NULL)
 				return (NULL);
-			ms_lstappend_tail(&node_lst,
-				new_child_node,
+			ms_lstappend_tail(&node_lst, new_child_node,
 				ms_syntax_node_destroy_wrapper);
 		}
 		if (node_lst == NULL)
 			return (NULL);
 		i++;
 	}
-	new_children = (t_syntax_node **)
-		ms_lst_to_ntp(&node_lst, ms_identify, ms_noop_del);
+	new_children = (t_syntax_node **)ms_lst_to_ntp(&node_lst, ms_identify,
+			ms_noop_del);
 	if (new_children == NULL)
 		return (NULL);
 	ms_destroy_ntp2((void **)word_list->children,
@@ -57,14 +56,14 @@ t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 
 static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst)
 {
-	int		i;
-	char	*token;
-	char	**expanded_tokens;
-	t_list	*node_lst2;
-	char	*expanded_string;
-	t_token **expanded_token;
-	int j;
-	t_syntax_node *child;
+	int				i;
+	char			*token;
+	char			**expanded_tokens;
+	t_list			*node_lst2;
+	char			*expanded_string;
+	t_token			**expanded_token;
+	int				j;
+	t_syntax_node	*child;
 
 	node_lst2 = NULL;
 	expanded_tokens = NULL;
@@ -100,7 +99,8 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst)
 				child->token = expanded_token[j];
 				child->start_pos = expanded_token[j]->start_pos;
 				child->end_pos = child->start_pos + 1;
-				ms_lstappend_tail(&node_lst2, child, ms_syntax_node_destroy_wrapper);
+				ms_lstappend_tail(&node_lst2, child,
+					ms_syntax_node_destroy_wrapper);
 				if (node_lst2 == NULL)
 					return (-1);
 				j++;
@@ -112,24 +112,25 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **node_lst)
 	}
 	if (expanded_tokens == NULL)
 	{
-		ms_lstappend_tail(node_lst, ms_duplicate_node(word_node), ms_syntax_node_destroy_wrapper);
+		ms_lstappend_tail(node_lst, ms_duplicate_node(word_node),
+			ms_syntax_node_destroy_wrapper);
 		if (node_lst == NULL)
 			return (-1);
 	}
 	return (0);
 }
 
-char **ms_expand_path_wildcard(char *token)
+char	**ms_expand_path_wildcard(char *token)
 {
-	t_list	*expanded_token_lst;
-	char	**expanded_string;
-	char	**after_string;
-	char	*before_string;
-	DIR		*dir;
-	int		index;
+	t_list			*expanded_token_lst;
+	char			**expanded_string;
+	char			**after_string;
+	char			*before_string;
+	DIR				*dir;
+	int				index;
 	struct dirent	*dp;
-	char	*filename;
-	int		i;
+	char			*filename;
+	int				i;
 
 	index = 0;
 	while (token[index] != '\0')
@@ -156,15 +157,17 @@ char **ms_expand_path_wildcard(char *token)
 					while (after_string[i] != NULL)
 					{
 						if (ft_strcmp(dp->d_name + ft_strlen(dp->d_name)
-							- ft_strlen(after_string[i]), after_string[i]) == 0)
+								- ft_strlen(after_string[i]),
+								after_string[i]) == 0)
 						{
-							if (ft_strcmp(dp->d_name, ".") != 0 && ft_strcmp(dp->d_name,
-								"..") != 0)
+							if (ft_strcmp(dp->d_name, ".") != 0
+								&& ft_strcmp(dp->d_name, "..") != 0)
 							{
 								filename = ft_strdup(dp->d_name);
 								if (filename == NULL)
 									return (NULL);
-								ms_lstappend_tail(&expanded_token_lst, filename, free);
+								ms_lstappend_tail(&expanded_token_lst, filename,
+									free);
 								if (expanded_token_lst == NULL)
 									return (NULL);
 							}

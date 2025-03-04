@@ -49,7 +49,8 @@ t_syntax_node	*ms_parse_redirection_word(t_token **tokens, int pos)
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child), NULL);
 	pos = child->end_pos;
-	node = ms_syntax_node_create_nonterminal(SY_REDIRECTION_WORD, &child_lst, start_pos, pos);
+	node = ms_syntax_node_create_nonterminal(SY_REDIRECTION_WORD, &child_lst,
+			start_pos, pos);
 	if (node == NULL)
 		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
 	return (node);

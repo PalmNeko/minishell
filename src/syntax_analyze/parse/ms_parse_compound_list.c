@@ -65,6 +65,7 @@ t_syntax_node	*ms_parse_compound_list(t_token **tokens, int pos)
 	ms_lstappend_tail(&child_lst, child3, ms_syntax_node_destroy_wrapper);
 	if (child_lst == NULL)
 		return (ms_syntax_node_destroy(child3), NULL);
-	node = ms_syntax_node_create_nonterminal(SY_COMPOUND_LIST, &child_lst, start_pos, pos);
+	node = ms_syntax_node_create_nonterminal(SY_COMPOUND_LIST, &child_lst,
+			start_pos, pos);
 	return (node);
 }

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
-#include "parse_helper.h"
 #include "libms.h"
+#include "parse_helper.h"
+#include "syntax_analyze.h"
 
 static t_parse_helper_func	ms_get_parse_func(t_ebnf_method method);
 static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst);
@@ -20,10 +20,7 @@ static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst);
 // -1 ENOMEM
 // -2 syntax_error
 // -3 invalid rule method
-int	ms_parse_rule(
-		t_token **tokens,
-		int pos,
-		t_list **syntax_lst,
+int	ms_parse_rule(t_token **tokens, int pos, t_list **syntax_lst,
 		t_syntax_rule *rule)
 {
 	t_list				*rule_lst;
@@ -79,10 +76,10 @@ static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst)
 		while (*children != NULL)
 		{
 			copied = ms_syntax_node_copy(*children);
-			if (copied == NULL
-				|| ms_lst_append_node(&expanded_lst, copied) == -1)
-				return (ft_lstclear(
-						&expanded_lst, ms_syntax_node_destroy_wrapper), NULL);
+			if (copied == NULL || ms_lst_append_node(&expanded_lst, copied) ==
+				-1)
+				return (ft_lstclear(&expanded_lst,
+						ms_syntax_node_destroy_wrapper), NULL);
 			children++;
 		}
 		lst = lst->next;

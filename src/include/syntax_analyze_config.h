@@ -1,5 +1,16 @@
-#ifndef SYNATX_ANALYZE_TYPE_H
-# define SYNATX_ANALYZE_TYPE_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax_analyze_config.h                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/04 18:33:51 by nyts              #+#    #+#             */
+/*   Updated: 2025/03/04 18:34:38 by nyts             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#ifndef SYNTAX_ANALYZE_CONFIG_H
+# define SYNTAX_ANALYZE_CONFIG_H
 #endif
 
