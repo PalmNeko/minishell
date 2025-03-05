@@ -6,13 +6,14 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/05 05:06:09 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/05 05:08:11 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "setup.h"
 #include "libms.h"
 #include "history.h"
+#include "builtin_internal.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -27,6 +28,7 @@ void	ms_cleanup_and_exit(int status)
 	}
 	ms_export_history();
 	ms_clear_history();
+	ms_clear_cdwd();
 	ms_clear_environ(NULL);
 	exit(status);
 }
