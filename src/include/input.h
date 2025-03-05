@@ -16,7 +16,7 @@
 # include "setup_type.h"
 # include "input_type.h"
 
-void	ms_input(t_minishell mnsh);
+int		ms_input(t_minishell mnsh);
 void	ms_init_heredoc(t_heredoc *heredoc);
 void	ms_finalize_heredoc(t_heredoc *heredoc);
 int		ms_set_delimita_list(t_heredoc *heredoc, char *input);
