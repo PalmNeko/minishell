@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 04:46:51 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/28 06:22:57 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/03 05:09:17 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ms_unset_readnodestream(void)
 t_syntax_node	*ms_read_node(void)
 {
 	if (g_stream == NULL)
+		return (NULL);
+	if (g_stream[g_pos] == NULL)
 		return (NULL);
 	return (g_stream[g_pos++]);
 }

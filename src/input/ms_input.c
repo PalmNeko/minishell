@@ -75,7 +75,7 @@ static char	*ms_get_user_input(t_minishell mnsh)
 		return (line);
 	heredoc_input = ms_input_heredoc(mnsh, line);
 	if (heredoc_input == NULL)
-		return (NULL);
+		return (free(line), NULL);
 	if (ms_replace_joined_str(&line, heredoc_input) == NULL)
 		return (free(line), free(heredoc_input), NULL);
 	free(heredoc_input);
