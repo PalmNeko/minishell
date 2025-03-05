@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_ntpsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:19:32 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/08 12:22:45 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:47:58 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ size_t	ms_ntpsize(void **ntp)
 		ntp++;
 	}
 	return (size);
-
 }

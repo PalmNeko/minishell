@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 06:29:14 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 07:45:01 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:02:05 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	ms_builtin_cd(const char *path, char *const argv[], char *const envp[])
 	if (status != 0)
 		return (status);
 	status = ms_builtin_cd2(&parsed);
-	// finalize すること
 	free(parsed.chdir_pathname);
 	return (status);
 }

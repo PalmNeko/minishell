@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:37:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 09:42:54 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:24:51 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,26 @@ int	ms_parse_builtin_exit(t_builtin_exit *parsed, char *const argv[])
 {
 	int			status;
 	char		*endptr;
-	int			argc;
+	int			idx;
 	char		*str;
-	t_opting	opting;
 
-	argc = (int)ms_ntpsize((void **)argv);
-	ms_getopt_init(&opting, argc, (char **)argv, "");
-	if (opting.argv[opting.optind] != NULL
-		&& ft_strcmp(opting.argv[opting.optind], "--") == 0)
-		ms_getopt_parse(&opting);
-	if (opting.argv[opting.optind] == NULL)
+	idx = 1;
+	if (argv[idx] != NULL
+		&& ft_strcmp(argv[idx], "--") == 0)
+		idx++;
+	if (argv[idx] == NULL)
 		str = ms_getenv("?");
 	else
-		str = opting.argv[opting.optind];
+		str = argv[idx];
 	if (str == NULL)
 		return (ms_perror_cmd("exit", "not set `?' variable"), 1);
 	errno = 0;
 	status = ft_strtol(str, &endptr, 10);
-	// printf("status: %d %s %s\n", status, str, endptr);
 	if (ms_is_numeric(str, endptr) == false
 		|| errno != 0)
 		return (ms_perror_cmd2("exit",
 				str, "numeric argument required"), 2);
-	if (ms_ntpsize((void **)(opting.argv + opting.optind)) > 1)
+	if (ms_ntpsize((void **)(argv + idx)) > 1)
 		return (ms_perror_cmd("exit", "too many arguments"), 1);
 	parsed->exit_status = status;
 	return (0);
