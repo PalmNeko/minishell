@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analyze_config.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:14:55 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 20:52:09 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/08 19:28:18 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define CATEGORY 1
 # define LETTER_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
 # define DIGIT_CHARS "0123456789"
-# define IDENTIFY_CHARS LETTER_CHARS DIGIT_CHARS
+# define IDENTIFY_CHARS (LETTER_CHARS DIGIT_CHARS)
 # define VARIABLE_INITIAL_CHARS LETTER_CHARS "?"
 # define META_CHARS "<> \n\t=|&()"
 # define QUOTE_CHARS "\"\'"

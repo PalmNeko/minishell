@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analyze_type.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:08:38 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:09:17 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/08 19:34:44 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef enum e_syntax_type
 	SY_LEFT_PARENTHESIS,
 	SY_RIGHT_PARENTHESIS,
 	SY_ALL,
-
 	SY_DOUBLE_QUOTED_WORD,
 	SY_SINGLE_QUOTED_WORD,
 	SY_WORD_LIST,
@@ -61,7 +60,6 @@ typedef struct s_syntax_node
 	int						end_pos;
 }							t_syntax_node;
 
-// typedef struct s_syntax_node	t_syntax_node;
 typedef t_syntax_node		*(*t_parse_func)(t_token **tokens, int pos);
 
 typedef enum e_ebnf_method

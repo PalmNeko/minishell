@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semantic_analyze_type.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:12:28 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 22:34:06 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/08 19:33:38 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ typedef t_list				t_lsa_list_lst;
 
 typedef enum e_lsa_list_type
 {
-	LSA_LIST_ALWAYS, // ;
-	LSA_LIST_AND,    // &&
-	LSA_LIST_OR,     // ||
+	LSA_LIST_ALWAYS,
+	LSA_LIST_AND,
+	LSA_LIST_OR,
 }							t_lsa_list_type;
 
 typedef enum e_lsa_redirection_type
 {
-	LSA_RD_INPUT,   // <
-	LSA_RD_OUTPUT,  // >
-	LSA_RD_APPEND,  // >>
-	LSA_RD_HEREDOC, // <<
+	LSA_RD_INPUT,
+	LSA_RD_OUTPUT,
+	LSA_RD_APPEND,
+	LSA_RD_HEREDOC,
 }							t_lsa_redirection_type;
 
 typedef enum e_lsa_command_type
@@ -42,15 +42,15 @@ typedef enum e_lsa_command_type
 
 typedef struct s_lsa_word_list
 {
-	t_syntax_node *word_list; // SY_WORD_LIST
+	t_syntax_node			*word_list;
 }							t_lsa_word_list;
 
 typedef t_syntax_node		t_syntax_node_word_list;
 
 typedef struct s_lsa_assignment
 {
-	t_lsa_word_list *name;  // 変数名
-	t_lsa_word_list *value; // 値
+	t_lsa_word_list			*name;
+	t_lsa_word_list			*value;
 }							t_lsa_assignment;
 
 typedef struct s_lsa_redirection
@@ -58,8 +58,8 @@ typedef struct s_lsa_redirection
 	t_lsa_redirection_type	type;
 	t_lsa_word_list			*filename;
 	t_lsa_word_list			*delimiter;
-	t_syntax_node **heredoc_input; // ヒアドクの入力
-	bool is_expansion;             // 変数展開するかどうか
+	t_syntax_node			**heredoc_input;
+	bool					is_expansion;
 }							t_lsa_redirection;
 
 typedef struct s_lsa_command
@@ -78,10 +78,8 @@ typedef struct s_lsa_list	t_lsa_list;
 typedef struct s_lsa_list
 {
 	t_lsa_list_type			type;
-	// pipelineとcompound_listのどちらかにしか入らない。
-	// 片方がNULLならもう片方はnon-NULL。
-	t_lsa_pipeline *pipeline;   // パイプライン
-	t_lsa_list **compound_list; // NULL終端の配列
+	t_lsa_pipeline			*pipeline;
+	t_lsa_list				**compound_list;
 }							t_lsa_list;
 
 typedef struct s_lsa

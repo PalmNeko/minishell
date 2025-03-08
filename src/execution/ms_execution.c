@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 20:37:26 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/08 19:24:13 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ms_execution(const char *input)
 	t_lsa			*lsa;
 	int				ret;
 
+	ret = 0;
 	tokens = ms_lexical_analyze(input);
 	if (tokens[0] != NULL)
 	{

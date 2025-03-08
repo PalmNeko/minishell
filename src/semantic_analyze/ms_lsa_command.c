@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lsa_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:13:33 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 23:45:50 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/08 20:38:46 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,21 @@ static int	ms_lsa_command_internal(t_syntax_node *command_node)
 static int	_ms_lsa_command_internal(t_syntax_node *command_attr_node)
 {
 	void				*content;
-	t_lsa_command_type	type;
+	t_lsa_command_type	lsa_command_type;
 
 	content = NULL;
+	lsa_command_type = LSA_CMD_ARGS;
 	if (command_attr_node->type == SY_ASSIGNMENT_WORD)
-		type = LSA_CMD_ASSIGNMENTS;
+		lsa_command_type = LSA_CMD_ASSIGNMENTS;
 	else if (command_attr_node->type == SY_WORD_LIST)
-		type = LSA_CMD_ARGS;
+		lsa_command_type = LSA_CMD_ARGS;
 	else if (command_attr_node->type == SY_REDIRECTION_WORD)
-		type = LSA_CMD_REDIRECTS;
-	content = g_lsa_command_funcs[type](command_attr_node);
+		lsa_command_type = LSA_CMD_REDIRECTS;
+	content = g_lsa_command_funcs[lsa_command_type](command_attr_node);
 	if (content == NULL)
-		return (ft_lstclear(&g_lsts[type], g_lsa_destroy_funcs[type]), -1);
-	if (ms_lst_append_tail(&g_lsts[type], content) == -1)
-		return (ft_lstclear(&g_lsts[type], g_lsa_destroy_funcs[type]), -1);
+		return (ft_lstclear(&g_lsts[lsa_command_type], g_lsa_destroy_funcs[lsa_command_type]), -1);
+	if (ms_lst_append_tail(&g_lsts[lsa_command_type], content) == -1)
+		return (ft_lstclear(&g_lsts[lsa_command_type], g_lsa_destroy_funcs[lsa_command_type]), -1);
 	return (0);
 }
 
