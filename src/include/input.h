@@ -23,5 +23,7 @@ int		ms_set_delimita_list(t_heredoc *heredoc, char *input);
 char	*ms_read_with_delimita(char *delimita);
 char	*ms_append_with_newline(char **input, const char *input_line);
 char	*ms_input_heredoc(t_minishell mnsh, char *input);
+void	ms_skip_until_heredoc(char **input);
+void	ms_skip_surround_quote(char **input);
 
 #endif

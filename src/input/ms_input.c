@@ -102,9 +102,9 @@ static bool	ms_is_quoted_closed(const char *line)
 	return (true);
 }
 
-static int ms_is_loop(int status)
+static int	ms_is_loop(int status)
 {
 	if (status & IS_CHILD)
 		return (0);
-	return(1);
+	return (1);
 }

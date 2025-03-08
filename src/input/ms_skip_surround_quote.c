@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_setup_readline_behavior.c                       :+:      :+:    :+:   */
+/*   ms_skip_surround_quote.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 13:18:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/05 13:26:39 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/05 13:45:00 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/05 13:45:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "setup.h"
-#include "readline.h"
-#include <readline/readline.h>
-#include <unistd.h>
-#include <termios.h>
+#include "libft.h"
 
-int	ms_setup_readline_behavior(void)
+void	ms_skip_surround_quote(char **input)
 {
-	if (ms_is_interactive())
-		ms_setup_readline_handler();
-	else
-	{
-		rl_prep_term_function = NULL;
-		rl_deprep_term_function = NULL;
-	}
-	return (0);
+	char	quote_txt[2];
+	char	*ptr;
+
+	ptr = *input;
+	if (!ft_includes(*ptr, "'\""))
+		return ;
+	quote_txt[1] = '\0';
+	quote_txt[0] = *ptr;
+	ptr++;
+	while (*ptr != '\0' && ! ft_includes(*ptr, quote_txt))
+		ptr++;
+	if (*ptr != '\0')
+		ptr++;
+	*input = ptr;
 }

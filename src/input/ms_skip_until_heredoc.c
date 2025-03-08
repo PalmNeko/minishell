@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_error_type.h                                    :+:      :+:    :+:   */
+/*   ms_skip_until_heredoc.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 06:59:18 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 07:00:48 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/05 13:29:22 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/05 13:45:25 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_ERROR_TYPE_H
-# define MS_ERROR_TYPE_H
+#include "libft.h"
+#include "input.h"
 
-# define ECWD ("error retrieving current directory: getcwd:"\
-	" cannot access parent directories")
-
-#endif
+void	ms_skip_until_heredoc(char **input)
+{
+	while (**input != '\0')
+	{
+		if (ft_includes (**input, "'\""))
+		{
+			ms_skip_surround_quote(input);
+			continue ;
+		}
+		if (ft_strncmp(*input, "<<", 2) == 0)
+			return ;
+		(*input)++;
+	}
+}
