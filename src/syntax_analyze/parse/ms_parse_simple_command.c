@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 10:59:36 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 19:35:46 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:17:01 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
-static const t_parse_func	g_ms_parse_simple_command_func_list[3] = {ms_parse_redirection_word,
-		ms_parse_word_list, NULL};
+static const t_parse_func	g_ms_parse_simple_command_func_list[3] = {
+	ms_parse_redirection_word,
+	ms_parse_word_list,
+	NULL
+};
 
 t_syntax_node	*ms_parse_simple_command(t_token **tokens, int pos)
 {

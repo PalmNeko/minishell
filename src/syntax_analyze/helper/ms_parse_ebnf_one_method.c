@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse_ebnf_one_method.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:41:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 20:59:07 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:26:42 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_syntax_node_copy.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:11:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/04 21:23:03 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/09 11:02:00 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "libms.h"
 #include "syntax_analyze.h"
 
-static t_syntax_node	**ms_syntax_node_children_copy(t_syntax_node **children);
+static t_syntax_node	**ms_syntax_node_children_copy(
+							t_syntax_node **children);
 
 t_syntax_node	*ms_syntax_node_copy(t_syntax_node *node)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse_rule.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 09:45:22 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 21:02:35 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/09 08:37:26 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst);
 // -1 ENOMEM
 // -2 syntax_error
 // -3 invalid rule method
-int	ms_parse_rule(t_token **tokens, int pos, t_list **syntax_lst,
-		t_syntax_rule *rule)
+int	ms_parse_rule(t_token **tokens,
+	int pos,
+	t_list **syntax_lst,
+	t_syntax_rule *rule)
 {
 	t_list				*rule_lst;
 	t_list				*expanded_lst;
