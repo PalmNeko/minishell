@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_tilde_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 20:05:04 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 20:31:09 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/09 12:21:31 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
-static t_syntax_node	*ms_execution_tilde_expantion_quoted(t_syntax_node *word_list);
-static t_syntax_node	*_ms_execution_tilde_expantion(t_syntax_node *word_node);
+static t_syntax_node	*ms_execution_tilde_expantion_quoted(
+							t_syntax_node *word_list);
+static t_syntax_node	*_ms_execution_tilde_expantion(
+							t_syntax_node *word_node);
 
 t_syntax_node	*ms_execution_tilde_expantion(t_syntax_node *word_list)
 {
@@ -45,7 +47,8 @@ t_syntax_node	*ms_execution_tilde_expantion(t_syntax_node *word_list)
 	return (word_list);
 }
 
-static t_syntax_node	*ms_execution_tilde_expantion_quoted(t_syntax_node *word_list)
+static t_syntax_node	*ms_execution_tilde_expantion_quoted(
+							t_syntax_node *word_list)
 {
 	int				i;
 	t_syntax_node	*node;

@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:19:32 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/08 12:22:45 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:02:13 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ size_t	ms_ntpsize(void **ntp)
 		ntp++;
 	}
 	return (size);
-
 }

@@ -6,13 +6,13 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 05:18:13 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/23 05:25:39 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:01:12 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-size_t ms_count_ntp(void **ntp)
+size_t	ms_count_ntp(void **ntp)
 {
 	size_t	index;
 
