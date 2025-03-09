@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:13:33 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/08 20:38:46 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:17:45 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,11 @@ static int	_ms_lsa_command_internal(t_syntax_node *command_attr_node)
 		lsa_command_type = LSA_CMD_REDIRECTS;
 	content = g_lsa_command_funcs[lsa_command_type](command_attr_node);
 	if (content == NULL)
-		return (ft_lstclear(&g_lsts[lsa_command_type], g_lsa_destroy_funcs[lsa_command_type]), -1);
+		return (ft_lstclear(&g_lsts[lsa_command_type],
+				g_lsa_destroy_funcs[lsa_command_type]), -1);
 	if (ms_lst_append_tail(&g_lsts[lsa_command_type], content) == -1)
-		return (ft_lstclear(&g_lsts[lsa_command_type], g_lsa_destroy_funcs[lsa_command_type]), -1);
+		return (ft_lstclear(&g_lsts[lsa_command_type],
+				g_lsa_destroy_funcs[lsa_command_type]), -1);
 	return (0);
 }
 
