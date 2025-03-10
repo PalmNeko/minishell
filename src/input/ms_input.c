@@ -75,7 +75,7 @@ static char	*ms_get_user_input(t_minishell mnsh)
 		return (line);
 	heredoc_input = ms_input_heredoc(mnsh, line);
 	if (heredoc_input == NULL)
-		return (NULL);
+		return (free(line), NULL);
 	if (ms_replace_joined_str(&line, heredoc_input) == NULL)
 		return (free(line), free(heredoc_input), NULL);
 	free(heredoc_input);
@@ -102,9 +102,9 @@ static bool	ms_is_quoted_closed(const char *line)
 	return (true);
 }
 
-static int ms_is_loop(int status)
+static int	ms_is_loop(int status)
 {
 	if (status & IS_CHILD)
 		return (0);
-	return(1);
+	return (1);
 }

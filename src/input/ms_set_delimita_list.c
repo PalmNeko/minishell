@@ -14,13 +14,9 @@
 #include "input.h"
 #include <stdlib.h>
 
-char	*ms_dup_until_sep(char *input, const char *sep_set);
 void	ms_exclude_quote(char *input);
 char	*ms_dup_delimita(char *input);
 void	ms_skip_set(char **input, const char *set);
-void	ms_skip_surround_quote(char **input);
-void	ms_skip_until_heredoc(char **input);
-void	ms_skip_delimita(char **input);
 int		ms_append_delim(t_heredoc *heredoc, char *input);
 
 int	ms_set_delimita_list(t_heredoc *heredoc, char *input)
@@ -62,53 +58,6 @@ int	ms_append_delim(t_heredoc *heredoc, char *input)
 	return (0);
 }
 
-void	ms_skip_delimita(char **input)
-{
-	ms_skip_set(input, " \t\n");
-	while (!ft_includes(**input, " \t\n"))
-		(*input)++;
-	ms_skip_set(input, " \t\n");
-}
-
-void	ms_skip_until_heredoc(char **input)
-{
-	while (**input != '\0')
-	{
-		if (ft_includes (**input, "'\""))
-		{
-			ms_skip_surround_quote(input);
-			continue ;
-		}
-		if (ft_strncmp(*input, "<<", 2) == 0)
-			return ;
-		(*input)++;
-	}
-}
-
-void	ms_skip_surround_quote(char **input)
-{
-	char	quote_txt[2];
-	char	*ptr;
-
-	ptr = *input;
-	if (!ft_includes(*ptr, "'\""))
-		return ;
-	quote_txt[1] = '\0';
-	quote_txt[0] = *ptr;
-	ptr++;
-	while (*ptr != '\0' && ! ft_includes(*ptr, quote_txt))
-		ptr++;
-	if (*ptr != '\0')
-		ptr++;
-	*input = ptr;
-}
-
-void	ms_skip_set(char **input, const char *set)
-{
-	while (ft_includes(**input, (char *)set))
-		(*input)++;
-}
-
 char	*ms_dup_delimita(char *input)
 {
 	char	*dup;
@@ -144,30 +93,21 @@ void	ms_exclude_quote(char *input)
 	while (input[pivot] != '\0')
 	{
 		if (quote_txt != '\0' && input[pivot] == quote_txt)
-		{
 			quote_txt = '\0';
-			pivot++;
-			continue ;
-		}
 		else if (quote_txt == '\0' && ft_includes(input[pivot], "'\""))
-		{
 			quote_txt = input[pivot];
-			pivot++;
-			continue ;
+		else
+		{
+			input[set_pos] = input[pivot];
+			set_pos++;
 		}
-		input[set_pos] = input[pivot];
-		set_pos++;
 		pivot++;
 	}
 	input[set_pos] = '\0';
 }
 
-char	*ms_dup_until_sep(char *input, const char *sep_set)
+void	ms_skip_set(char **input, const char *set)
 {
-	size_t	len;
-
-	len = 0;
-	while (input[len] != '\0' && !ft_includes(input[len], (char *)sep_set))
-		len++;
-	return (ft_strndup(input, len));
+	while (ft_includes(**input, (char *)set))
+		(*input)++;
 }

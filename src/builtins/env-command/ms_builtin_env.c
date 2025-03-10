@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 19:31:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/01 09:26:13 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:05:35 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-static int 	ms_parse_builtin_env(t_opting *opting);
+static int	ms_parse_builtin_env(t_opting *opting);
 static void	ms_print_usage_env(void);
 
 int	ms_builtin_env(const char *path, char *const argv[], char *const envp[])
@@ -46,7 +46,7 @@ int	ms_builtin_env(const char *path, char *const argv[], char *const envp[])
 	return (0);
 }
 
-static int 	ms_parse_builtin_env(t_opting *opting)
+static int	ms_parse_builtin_env(t_opting *opting)
 {
 	while (ms_getopt_parse(opting))
 	{
