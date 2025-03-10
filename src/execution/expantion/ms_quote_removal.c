@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 20:04:51 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 22:55:07 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:28:14 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
-static char		*ms_quote_removal_get_word(t_syntax_node *word_node);
+static char				*ms_quote_removal_get_word(t_syntax_node *word_node);
+static t_syntax_node	*ms_create_quote_removal_word_node(char *word,
+							t_syntax_node *child_node);
 
 t_syntax_node	*ms_quote_removal(t_syntax_node *word_list)
 {
 	int				i;
 	char			*word;
-	t_token			*token;
 	t_syntax_node	*child_node;
 	t_syntax_node	*new_word_node;
 
@@ -36,16 +37,10 @@ t_syntax_node	*ms_quote_removal(t_syntax_node *word_list)
 			word = ms_quote_removal_get_word(child_node);
 			if (word == NULL)
 				return (NULL);
-			token = ms_create_token(TK_WORD, word, 0, ft_strlen(word));
+			new_word_node = ms_create_quote_removal_word_node(word, child_node);
 			free(word);
-			if (token == NULL)
-				return (NULL);
-			new_word_node = ms_syntax_node_create(SY_WORD);
 			if (new_word_node == NULL)
 				return (NULL);
-			new_word_node->token = token;
-			new_word_node->start_pos = child_node->start_pos;
-			new_word_node->end_pos = child_node->end_pos;
 			ms_syntax_node_destroy(child_node);
 			word_list->children[i] = new_word_node;
 		}
@@ -78,4 +73,22 @@ char	*ms_quote_removal_get_word(t_syntax_node *quoted_word_node)
 		i++;
 	}
 	return (word);
+}
+
+static t_syntax_node	*ms_create_quote_removal_word_node(char *word,
+	t_syntax_node *child_node)
+{
+	t_token			*token;
+	t_syntax_node	*new_word_node;
+
+	token = ms_create_token(TK_WORD, word, 0, ft_strlen(word));
+	if (token == NULL)
+		return (NULL);
+	new_word_node = ms_syntax_node_create(SY_WORD);
+	if (new_word_node == NULL)
+		return (NULL);
+	new_word_node->token = token;
+	new_word_node->start_pos = child_node->start_pos;
+	new_word_node->end_pos = child_node->end_pos;
+	return (new_word_node);
 }
