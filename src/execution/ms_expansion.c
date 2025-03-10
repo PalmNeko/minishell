@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:32:03 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/09 13:21:39 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:30:27 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "syntax_analyze.h"
 #include <stdlib.h>
 
-typedef t_syntax_node	*(*t_expand_func)(t_syntax_node *word_list_node);
+typedef t_syntax_node		*(*t_expand_func)(t_syntax_node *word_list_node);
 
 static const t_expand_func	g_expand_funcs[] = {
 	ms_execution_tilde_expantion,
@@ -74,10 +74,7 @@ static char	**ms_get_expand_texts(t_syntax_node *word_list_node)
 		free(expanded_text);
 		if (temp == NULL)
 			return (NULL);
-		expanded_text = ft_strjoin(temp, " ");
-		free(temp);
-		if (expanded_text == NULL)
-			return (NULL);
+		expanded_text = temp;
 		i++;
 	}
 	expanded_texts = ft_split(expanded_text, ' ');
