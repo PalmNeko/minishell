@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:08:38 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/09 07:55:09 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/13 03:07:04 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_syntax_rule
 	t_ebnf_method			method;
 	t_parse_func			*parsers;
 	bool					enable_expansion;
-	bool					skip_blank;
+	bool					include_node;
 }							t_syntax_rule;
 
 #endif // SYNTAX_ANALYZE_TYPE_H

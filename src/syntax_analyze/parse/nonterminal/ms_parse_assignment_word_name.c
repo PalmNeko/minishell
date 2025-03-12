@@ -6,33 +6,31 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 19:38:50 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/09 10:31:48 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/12 09:47:41 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 #include "syntax_analyze.h"
 
+static const t_syntax_rule	*g_ms_assignment_word_name_rule_list[2] = {
+	(t_syntax_rule[]){{
+	EBNF_ONE,
+	(t_parse_func[]){
+	ms_parse_identify,
+	NULL},
+	false,
+	true}},
+	NULL
+};
+
 t_syntax_node	*ms_parse_assignment_word_name(t_token **tokens, int pos)
 {
 	t_syntax_node		*node;
-	t_syntax_node		*child;
-	t_syntax_node_list	*child_lst;
-	const int			start_pos = pos;
 
-	child_lst = NULL;
-	child = ms_parse_identify(tokens, pos);
-	if (child == NULL)
-		return (NULL);
-	if (child->type == SY_DECLINED)
-		return (ms_syntax_node_destroy(child), ms_parse_declined(tokens, pos));
-	ms_lstappend_tail(&child_lst, child, ms_syntax_node_destroy_wrapper);
-	if (child_lst == NULL)
-		return (ms_syntax_node_destroy(child), NULL);
-	pos = child->end_pos;
-	node = ms_syntax_node_create_nonterminal(SY_WORD_LIST, &child_lst,
-			start_pos, pos);
+	node = ms_parse_rules(tokens, pos, SY_WORD_LIST,
+			(t_syntax_rule **)g_ms_assignment_word_name_rule_list);
 	if (node == NULL)
-		return (ft_lstclear(&child_lst, ms_syntax_node_destroy_wrapper), NULL);
+		return (NULL);
 	return (node);
 }

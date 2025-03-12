@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 23:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/09 08:41:17 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/12 03:39:00 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static const t_syntax_rule	*g_ms_parse_double_quoted_word_rule_list[] = {
 	EBNF_REPEAT,
 	(t_parse_func *)g_ms_double_quoted_word_content_func_list,
 	false,
-	false}},
+	true}},
 	(t_syntax_rule []){{
 	EBNF_ONE,
 	(t_parse_func *)g_ms_double_quote_func_list,

@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 09:45:22 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/09 08:37:26 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/13 03:07:58 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int	ms_parse_rule(t_token **tokens,
 	}
 	else
 		expanded_lst = rule_lst;
-	if (expanded_lst != NULL)
+	if (expanded_lst != NULL && rule->include_node)
 		ft_lstadd_back(syntax_lst, expanded_lst);
+	else
+		ft_lstclear(&expanded_lst, ms_syntax_node_destroy_wrapper);
 	return (new_pos);
 }
 
