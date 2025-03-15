@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 19:27:53 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/15 23:07:55 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/15 23:16:57 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 			(void *)ms_duplicate_node, ms_syntax_node_destroy_wrapper);
 	if (new_children == NULL)
 		return (NULL);
-	ms_destroy_ntp2((void **)word_list->children, ms_syntax_node_destroy_wrapper);
+	ms_destroy_ntp2((void **)word_list->children,
+		ms_syntax_node_destroy_wrapper);
 	word_list->children = new_children;
 	return (word_list);
 }
