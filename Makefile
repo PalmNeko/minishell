@@ -6,7 +6,7 @@ run: # run container
 down:
 	docker container stop minishell
 
-test: test_gtest test_pytest # run test
+test: test_gtest test_pytest test_norm # run test
 
 test_gtest:
 	make -C tests/googletest/
