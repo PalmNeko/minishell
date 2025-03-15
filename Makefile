@@ -6,7 +6,7 @@ run: # run container
 down:
 	docker container stop minishell
 
-test: test_gtest test_pytest # run test
+test: test_gtest test_pytest test_norm # run test
 
 test_gtest:
 	make -C tests/googletest/
@@ -14,3 +14,6 @@ test_gtest:
 
 test_pytest:
 	bash tests/pytest/run_test.sh
+
+test_norm:
+	! (norminette src | grep -v OK) && echo "Norminette OK" || false

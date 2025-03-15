@@ -24,3 +24,6 @@ jobs:
       - name: System test # pytest
         run: |
           make test_pytest
+      - name: Norm test
+        run: |
+          make test_norm
