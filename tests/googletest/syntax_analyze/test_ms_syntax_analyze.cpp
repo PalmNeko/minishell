@@ -104,7 +104,7 @@ void test_runnner_of_syntax_analyze_fail(
 	t_syntax_node *node = ms_syntax_analyze(tokens);
 	EXPECT_EQ(node->type, SY_DECLINED);
 	EXPECT_EQ(node->start_pos, pos);
-	EXPECT_EQ(node->end_pos, pos  + 1);
+	EXPECT_EQ(node->end_pos, pos + 1);
 	ms_syntax_node_destroy(node);
 	ms_destroy_ntp2((void**)tokens, ms_destroy_token_wrapper);
 }

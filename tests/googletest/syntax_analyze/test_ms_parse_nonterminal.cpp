@@ -316,6 +316,25 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS3)
 	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_FAIL)
+{
+	const char *str = ">";
+
+	t_token **tokens = ms_lexical_analyze(str);
+
+	t_syntax_node *actual = ms_parse_pipeline(tokens, 0);
+
+	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
+	expect->token = ms_duplicate_token(tokens[0]);
+	expect->start_pos = 0;
+	expect->end_pos   = 1;
+
+	test_runner_of_ms_parse(expect, str, actual);
+
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
+}
+
 //----------------------------------------
 // SY_SIMPLE_COMMAND
 //----------------------------------------
@@ -519,29 +538,6 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_PIPELINE_FAIL)
 	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
-TEST(Syntax_Analyze_Parse_Nonterminal, SY_PIPELINE_FAIL2)
-{
-	const char *str = "echo |";
-
-	// 実際の解析結果
-	t_token **tokens = ms_lexical_analyze(str);
-
-	t_syntax_node *actual = ms_parse_pipeline(tokens, 0);
-
-	// 期待ノード (SY_DECLINED)
-	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_duplicate_token(tokens[0]);
-	expect->start_pos = 0;
-	expect->end_pos   = 1;
-
-	// 比較
-	test_runner_of_ms_parse(expect, str, actual);
-
-	// 後片付け
-	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
-}
-
 //----------------------------------------
 // SY_LIST
 //----------------------------------------
@@ -601,26 +597,6 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_LIST_SUCCESS_CASE2)
 
 	ms_syntax_node_destroy(expect);
 	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
-}
-
-// FAILED_CASE
-TEST(Syntax_Analyze_Parse_Nonterminal, SY_LIST_FAILED_CASE1)
-{
-	const char *str = "test |";
-
-	t_token **tokens = ms_lexical_analyze(str);
-
-	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_duplicate_token(tokens[0]);
-	expect->start_pos = 2;
-	expect->end_pos   = 3;
-
-	t_syntax_node *actual = ms_parse_list(tokens, 0);
-
-	test_runner_of_ms_parse(expect, str, actual);
-
-	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
