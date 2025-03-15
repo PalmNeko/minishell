@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse_rule.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 09:45:22 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 21:02:35 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:22:18 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
-#include "parse_helper.h"
 #include "libms.h"
+#include "parse_helper.h"
+#include "syntax_analyze.h"
 
 static t_parse_helper_func	ms_get_parse_func(t_ebnf_method method);
 static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst);
@@ -20,11 +20,10 @@ static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst);
 // -1 ENOMEM
 // -2 syntax_error
 // -3 invalid rule method
-int	ms_parse_rule(
-		t_token **tokens,
-		int pos,
-		t_list **syntax_lst,
-		t_syntax_rule *rule)
+int	ms_parse_rule(t_token **tokens,
+	int pos,
+	t_list **syntax_lst,
+	t_syntax_rule *rule)
 {
 	t_list				*rule_lst;
 	t_list				*expanded_lst;
@@ -33,8 +32,6 @@ int	ms_parse_rule(
 
 	rule_lst = NULL;
 	parse_helper_f = ms_get_parse_func(rule->method);
-	if (parse_helper_f == NULL)
-		return (-3);
 	new_pos = parse_helper_f(tokens, pos, &rule_lst, rule->parsers);
 	if (new_pos < 0)
 		return (new_pos);
@@ -47,8 +44,10 @@ int	ms_parse_rule(
 	}
 	else
 		expanded_lst = rule_lst;
-	if (expanded_lst != NULL)
+	if (expanded_lst != NULL && rule->include_node)
 		ft_lstadd_back(syntax_lst, expanded_lst);
+	else
+		ft_lstclear(&expanded_lst, ms_syntax_node_destroy_wrapper);
 	return (new_pos);
 }
 
@@ -81,8 +80,8 @@ static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst)
 			copied = ms_syntax_node_copy(*children);
 			if (copied == NULL
 				|| ms_lst_append_node(&expanded_lst, copied) == -1)
-				return (ft_lstclear(
-						&expanded_lst, ms_syntax_node_destroy_wrapper), NULL);
+				return (ft_lstclear(&expanded_lst,
+						ms_syntax_node_destroy_wrapper), NULL);
 			children++;
 		}
 		lst = lst->next;

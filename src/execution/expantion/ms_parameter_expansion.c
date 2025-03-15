@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 21:03:38 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/02 23:00:22 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/09 12:22:11 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ t_syntax_node	*ms_parameter_expansion(t_syntax_node *word_list)
 	return (word_list);
 }
 
-static t_syntax_node	*_ms_parameter_expansion(t_syntax_node *word_list_item_node)
+static t_syntax_node	*_ms_parameter_expansion(
+							t_syntax_node *word_list_item_node)
 {
 	char	*word;
 

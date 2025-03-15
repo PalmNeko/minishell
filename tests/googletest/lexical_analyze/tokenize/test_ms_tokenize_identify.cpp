@@ -5,7 +5,7 @@
 
 extern "C"
 {
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 };
 
 TEST(Lexical_Tokenize, Identify_Success)

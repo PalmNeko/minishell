@@ -12,11 +12,8 @@
 
 #include "syntax_analyze.h"
 
-t_syntax_node	*ms_parse_rules(
-					t_token **tokens,
-					int pos,
-					t_syntax_type type,
-					t_syntax_rule **rules)
+t_syntax_node	*ms_parse_rules(t_token **tokens, int pos, t_syntax_type type,
+		t_syntax_rule **rules)
 {
 	t_syntax_node	*node;
 	t_list			*child_lst;

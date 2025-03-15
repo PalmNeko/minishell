@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libms.h"
 #include "semantic_analyze.h"
 #include "semantic_analyze_internal.h"
 #include "syntax_analyze.h"
-#include "libms.h"
 #include <stdlib.h>
 
 /*notes

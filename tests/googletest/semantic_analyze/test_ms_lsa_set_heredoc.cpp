@@ -4,7 +4,7 @@ extern "C" {
 	#include "semantic_analyze.h"
 	#include "semantic_analyze_internal.h"
 	#include "syntax_analyze.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "libms.h"
 }
 
@@ -24,7 +24,7 @@ TEST(ms_lsa_set_heredoc, basic)
 	EXPECT_NE(lsa_redirection->delimiter, nullptr);
 	EXPECT_NE(lsa_redirection->heredoc_input, nullptr);
 
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 	ms_syntax_node_destroy(syntax_analyzed);
 	ms_lsa_destroy(lsa);
 }

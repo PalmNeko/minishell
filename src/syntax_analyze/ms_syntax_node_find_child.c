@@ -12,8 +12,8 @@
 
 #include "syntax_analyze.h"
 
-t_syntax_node	*ms_syntax_node_find_child(
-					t_syntax_node *node, t_syntax_type type)
+t_syntax_node	*ms_syntax_node_find_child(t_syntax_node *node,
+		t_syntax_type type)
 {
 	t_syntax_node	*result;
 	int				pos;

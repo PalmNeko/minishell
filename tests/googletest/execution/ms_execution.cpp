@@ -5,7 +5,7 @@
 extern "C" {
     #include "execution.h"
 	#include "libms.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "syntax_analyze.h"
 	#include "semantic_analyze.h"
 };

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_create_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:38:05 by rnakatan          #+#    #+#             */
-/*   Updated: 2024/12/25 07:38:07 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:31:09 by nyts             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "lexical_analyze.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +26,7 @@ t_token	*ms_create_token(t_token_type type, const char *token, int start_pos,
 	new_token->type = type;
 	new_token->token = ft_strndup(token, end_pos - start_pos);
 	if (new_token->token == NULL)
-		return (ms_lexical_analyze_destroy_token(new_token), NULL);
+		return (ms_destroy_token(new_token), NULL);
 	new_token->start_pos = start_pos;
 	new_token->end_pos = end_pos;
 	return (new_token);

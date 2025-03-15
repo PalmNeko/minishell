@@ -4,7 +4,7 @@
 
 extern "C"
 {
-#include "lexer.h"
+#include "lexical_analyze.h"
 
 };
 
@@ -32,6 +32,6 @@ void	test_runner_of_tokenize(
 		ASSERT_EQ(token->end_pos, test_case.expect->end_pos) << "end_pos";
 
 		// release the token
-		ms_lexical_analyze_destroy_token(token);
+		ms_destroy_token(token);
 	}
 }

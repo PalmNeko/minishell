@@ -4,7 +4,7 @@ extern "C" {
 	#include "semantic_analyze.h"
 	#include "semantic_analyze_internal.h"
 	#include "syntax_analyze.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "libms.h"
 }
 
@@ -38,7 +38,7 @@ TEST(Semantic_Analyze, LSA_LIST_SUCCESS_CASE1){
 	ms_lsa_list_destroy(expect);
 	ms_lsa_list_destroy(actual);
 	ms_syntax_node_destroy(list_node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }
 
 // compound list
@@ -76,5 +76,5 @@ TEST(Semantic_Analyze, LSA_LIST_SUCCESS_CASE2){
 	ms_lsa_list_destroy(expect);
 	ms_lsa_list_destroy(actual);
 	ms_syntax_node_destroy(list_node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }

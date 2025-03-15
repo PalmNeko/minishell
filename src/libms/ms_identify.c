@@ -6,11 +6,11 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:22:35 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/10 13:23:11 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:01:35 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void *ms_identify(void *arg)
+void	*ms_identify(void *arg)
 {
 	return (arg);
 }

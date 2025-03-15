@@ -3,12 +3,12 @@
 extern "C"
 {
 	#include "syntax_analyze.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "libms.h"
 };
 
 void test_runner_of_ms_parse(t_syntax_node *expect, const char *str, t_syntax_node *actual);
-void ms_lexical_analyze_destroy_token_wrapper(void *token);
+void ms_destroy_token_wrapper(void *token);
 
 TEST(ms_syntax_analyze_internal, ms_parse_symbol_item)
 {
@@ -23,5 +23,5 @@ TEST(ms_syntax_analyze_internal, ms_parse_symbol_item)
 	EXPECT_EQ(node->start_pos, 0);
 	EXPECT_EQ(node->end_pos, 3);
 	ms_syntax_node_destroy(node);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }

@@ -13,11 +13,8 @@
 #include "parse_helper.h"
 #include "syntax_analyze.h"
 
-int	ms_parse_ebnf_repeat_method(
-	t_token **tokens,
-	int pos,
-	t_list **syntax_lst,
-	t_parse_func *parsers)
+int	ms_parse_ebnf_repeat_method(t_token **tokens, int pos, t_list **syntax_lst,
+		t_parse_func *parsers)
 {
 	t_list	*working_lst;
 	int		end_pos;
@@ -27,11 +24,11 @@ int	ms_parse_ebnf_repeat_method(
 	end_pos = pos;
 	while (1)
 	{
-		new_pos = ms_parse_ebnf_one_method(
-				tokens, end_pos, &working_lst, parsers);
+		new_pos = ms_parse_ebnf_one_method(tokens, end_pos, &working_lst,
+				parsers);
 		if (new_pos == -1)
-			return (ft_lstclear(
-					&working_lst, ms_syntax_node_destroy_wrapper), -1);
+			return (ft_lstclear(&working_lst, ms_syntax_node_destroy_wrapper),
+				-1);
 		else if (new_pos == -2)
 			break ;
 		end_pos = new_pos;
