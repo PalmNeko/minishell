@@ -1,4 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   semantic_analyze_config.h                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/04 19:14:04 by nyts              #+#    #+#             */
+/*   Updated: 2025/03/04 19:14:09 by nyts             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SEMANTIC_ANALYZE_CONFIG_H
-#define SEMANTIC_ANALYZE_CONFIG_H
+# define SEMANTIC_ANALYZE_CONFIG_H
 
 #endif

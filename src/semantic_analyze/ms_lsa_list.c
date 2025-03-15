@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:13:43 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 09:13:44 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/15 23:17:31 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,3 @@ static t_lsa_list	*ms_create_lsa_list(void)
 	lsa_list->compound_list = NULL;
 	return (lsa_list);
 }
-
-// static t_lsa_list **ms_lsa_compound_list(t_syntax_node *compound_list_node)
-// {
-// 	t_lsa_list **lsa_list;
-// 	t_syntax_node *child;
-// 	t_syntax_node_list *child_lst;
-// 	int i;
-
-// 	child_lst = compound_list_node->children;
-// 	lsa_list = malloc(sizeof(t_lsa_list *) * (ms_lstsize(child_lst) + 1));
-// 	if (lsa_list == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	while (child_lst)
-// 	{
-// 		child = child_lst->node;
-// 		if (child->type == SY_LIST)
-// 			lsa_list[i] = ms_lsa_list(child);
-// 		else
-// 			lsa_list[i] = ms_lsa_list(child->children[1]);
-// 		if (lsa_list[i] == NULL)
-// 			return (NULL);
-// 		child_lst = child_lst->next;
-// 		i++;
-// 	}
-// 	lsa_list[i] = NULL;
-// 	return (lsa_list);
-// }

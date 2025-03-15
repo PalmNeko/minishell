@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_simple_command_execution..c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:31:38 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/02/28 17:42:59 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/15 18:02:12 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,15 @@ int	ms_simple_command_execution(t_lsa_command *lsa_command)
 	return (ret);
 }
 
+// memento(a moment) may add to the functions
 static int	ms_simple_command_execution_with_args(t_lsa_command *lsa_command)
 {
 	char	**args;
 	int		ret;
 
-	// t_environ_memento *memento;
 	args = ms_expand_commands(lsa_command->args);
 	if (args == NULL)
 		return (1);
-	// memento = ms_save_exec_memento(char *const envp[]);
 	if (lsa_command->assignments)
 		ret = ms_run_assignment_variables(lsa_command->assignments);
 	if (lsa_command->redirects)

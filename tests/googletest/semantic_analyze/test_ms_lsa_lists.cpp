@@ -4,7 +4,7 @@ extern "C" {
 	#include "semantic_analyze.h"
 	#include "semantic_analyze_internal.h"
 	#include "syntax_analyze.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "libms.h"
 }
 
@@ -40,7 +40,7 @@ TEST(Semantic_Analyze, LSA_LISTS_SUCCESS_CASE1){
 	ms_destroy_ntp2((void **)expect, ms_lsa_list_destroy_wrapper);
 	ms_destroy_ntp2((void **)actual, ms_lsa_list_destroy_wrapper);
 	ms_syntax_node_destroy(lists_node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }
 
 // list and list
@@ -82,5 +82,5 @@ TEST(Semantic_Analyze, LSA_LISTS_SUCCESS_CASE2){
 	ms_destroy_ntp2((void **)expect, ms_lsa_list_destroy_wrapper);
 	ms_destroy_ntp2((void **)actual, ms_lsa_list_destroy_wrapper);
 	ms_syntax_node_destroy(lists_node);
-	ms_destroy_ntp2((void **)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void **)tokens,  ms_destroy_token_wrapper);
 }

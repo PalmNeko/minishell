@@ -12,13 +12,13 @@
 
 #include "syntax_analyze.h"
 
-t_syntax_node	*ms_syntax_node_get_child(
-					t_syntax_node *node, t_syntax_type type)
+t_syntax_node	*ms_syntax_node_get_child(t_syntax_node *node,
+		t_syntax_type type)
 {
 	int	pos;
 
 	pos = 0;
-	if (node -> children == NULL)
+	if (node->children == NULL)
 		return (NULL);
 	while (node->children[pos] != NULL)
 	{

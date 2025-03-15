@@ -5,7 +5,7 @@
 extern "C"
 {
 	#include "syntax_analyze.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "libms.h"
 };
 
@@ -260,6 +260,6 @@ void test_runnner_of_ms_parse_terminal(t_syntax_node *node, t_syntax_type type, 
 	EXPECT_EQ(node->start_pos, pos);
 	EXPECT_EQ(node->end_pos, pos + 1);
 	ms_syntax_node_destroy(node);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 
 }

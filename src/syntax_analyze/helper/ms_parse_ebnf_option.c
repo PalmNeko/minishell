@@ -12,13 +12,10 @@
 
 #include "parse_helper.h"
 
-int	ms_parse_ebnf_option(
-		t_token **tokens,
-		int pos,
-		t_list **syntax_lst,
+int	ms_parse_ebnf_option(t_token **tokens, int pos, t_list **syntax_lst,
 		t_parse_func *parsers)
 {
-	int		end_pos;
+	int	end_pos;
 
 	end_pos = pos;
 	end_pos = ms_parse_ebnf_one_method(tokens, pos, syntax_lst, parsers);

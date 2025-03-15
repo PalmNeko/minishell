@@ -13,7 +13,9 @@
 		"semantic_analyze_internal.h": "c",
 		"execution_type.h": "c",
 		"functional": "cpp",
-		"semantic_analyze_type.h": "c"
+		"semantic_analyze_type.h": "c",
+		"lexical_analyze.h": "c",
+		"ms_execute_pipeline.h": "c"
 	},
 	"editor.indentSize": "tabSize"
 }

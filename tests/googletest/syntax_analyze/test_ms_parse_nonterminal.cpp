@@ -3,12 +3,12 @@
 extern "C"
 {
 	#include "syntax_analyze.h"
-	#include "lexer.h"
+	#include "lexical_analyze.h"
 	#include "libms.h"
 };
 
 void test_runner_of_ms_parse(t_syntax_node *expect, const char *str, t_syntax_node *actual);
-void ms_lexical_analyze_destroy_token_wrapper(void *token);
+void ms_destroy_token_wrapper(void *token);
 
 //----------------------------------------
 // SY_DOUBLE_QUOTED_WORD
@@ -35,7 +35,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_SUCCESS)
     test_runner_of_ms_parse(expect, str, actual);
 
     ms_syntax_node_destroy(expect);
-    ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+    ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_SUCCESS2)
@@ -59,7 +59,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_SUCCESS2)
     test_runner_of_ms_parse(expect, str, actual);
 
     ms_syntax_node_destroy(expect);
-    ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+    ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 
@@ -72,14 +72,14 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_DOUBLE_QUOTED_WORD_FAIL)
 
     t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
 
-    expect->token = ms_dup_token(tokens[0]);
+    expect->token = ms_duplicate_token(tokens[0]);
     expect->start_pos = 0;
     expect->end_pos   = 1; 
 
     test_runner_of_ms_parse(expect, str, actual);
 
     ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
@@ -108,7 +108,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SINGLE_QUOTED_WORD_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2(reinterpret_cast<void**>(expect_tokens), ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2(reinterpret_cast<void**>(expect_tokens),  ms_destroy_token_wrapper);
 }
 
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_SINGLE_QUOTED_WORD_FAIL)
@@ -119,14 +119,14 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SINGLE_QUOTED_WORD_FAIL)
 	t_syntax_node *actual = ms_parse_single_quoted_word(tokens, 0);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1; 
 
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2(reinterpret_cast<void**>(tokens), ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2(reinterpret_cast<void**>(tokens),  ms_destroy_token_wrapper);
 }
 
 
@@ -157,7 +157,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_SUCCESS)
     test_runner_of_ms_parse(expect, str, actual);
 
     ms_syntax_node_destroy(expect);
-    ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+    ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 
 	t_token **expect_tokens2 = ms_lexical_analyze("word |");
 
@@ -175,7 +175,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_SUCCESS)
 	test_runner_of_ms_parse(expect2, "word ", actual2);
 
 	ms_syntax_node_destroy(expect2);
-	ms_destroy_ntp2((void**)expect_tokens2, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens2,  ms_destroy_token_wrapper);
 }
 
 // FAILED
@@ -188,14 +188,14 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_FAIL_CASE_1)
 	t_syntax_node *actual = ms_parse_word_list(tokens, 0);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1; 
 
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_FAIL_CASE_2)
@@ -206,14 +206,14 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_WORDLIST_FAIL_CASE_2)
 	t_syntax_node *actual = ms_parse_word_list(tokens, 0);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1;
 
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
 
@@ -238,7 +238,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_WORD_name_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 // SY_ASSIGNMENT_WORD
@@ -264,7 +264,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_WORD_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 // SY_REDIRECTION_WORD
@@ -289,7 +289,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS3)
@@ -313,7 +313,26 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_SUCCESS3)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
+}
+
+TEST(Syntax_Analyze_Parse_Nonterminal, SY_REDIRECTION_WORD_FAIL)
+{
+	const char *str = ">";
+
+	t_token **tokens = ms_lexical_analyze(str);
+
+	t_syntax_node *actual = ms_parse_pipeline(tokens, 0);
+
+	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
+	expect->token = ms_duplicate_token(tokens[0]);
+	expect->start_pos = 0;
+	expect->end_pos   = 1;
+
+	test_runner_of_ms_parse(expect, str, actual);
+
+	ms_syntax_node_destroy(expect);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
@@ -340,7 +359,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 
 	const char *str2 = "test | word";
 
@@ -364,7 +383,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS)
 
 	// clean up
 	ms_syntax_node_destroy(expect2);
-	ms_destroy_ntp2((void**)expect_tokens2, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens2,  ms_destroy_token_wrapper);
 }
 
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS2)
@@ -389,7 +408,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_SIMPLE_COMMAND_SUCCESS2)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
@@ -417,7 +436,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_ASSIGNMENT_COMMAND_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
@@ -443,7 +462,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_COMMAND_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 
 	const char *str2 = "test=word";
 
@@ -463,7 +482,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_COMMAND_SUCCESS)
 	test_runner_of_ms_parse(expect2, str2, actual2);
 
 	ms_syntax_node_destroy(expect2);
-	ms_destroy_ntp2((void**)expect_tokens2, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens2,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
@@ -492,7 +511,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_PIPELINE_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 // FAILED_CASE(DECLINEDが欲しい場合においてNULLを返してしまっている）
@@ -507,7 +526,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_PIPELINE_FAIL)
 
 	// 期待ノード (SY_DECLINED)
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[0]);
+	expect->token = ms_duplicate_token(tokens[0]);
 	expect->start_pos = 0;
 	expect->end_pos   = 1;
 
@@ -516,7 +535,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_PIPELINE_FAIL)
 
 	// 後片付け
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
@@ -551,7 +570,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_LIST_SUCCESS_CASE1)
 
 	// 後片付け
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 // multiple list
@@ -577,7 +596,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_LIST_SUCCESS_CASE2)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 //----------------------------------------
@@ -613,7 +632,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_COMPOUND_LIST_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 // 閉じ忘れ
@@ -624,16 +643,16 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_COMPOUND_LIST_FAIL)
 	t_token **tokens = ms_lexical_analyze(str);
 
 	t_syntax_node *expect = ms_syntax_node_create(SY_DECLINED);
-	expect->token = ms_dup_token(tokens[5]);
-	expect->start_pos = 5;
-	expect->end_pos   = 6;
+	expect->token = ms_duplicate_token(tokens[0]);
+	expect->start_pos = 0;
+	expect->end_pos   = 1;
 
 	t_syntax_node *actual = ms_parse_compound_list(tokens, 0);
 
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)tokens,  ms_destroy_token_wrapper);
 }
 
 
@@ -661,7 +680,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_LIST_WITH_COMPOUND_LIST_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 // ----------------------------------------
@@ -690,7 +709,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_USER_INPUT_SUCCESS)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 // ----------------------------------------
@@ -717,7 +736,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_INSTRUCTION_SUCCESS_CASE1)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_INSTRUCTION_SUCCESS_CASE2)
@@ -741,7 +760,7 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_INSTRUCTION_SUCCESS_CASE2)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }
 
 TEST(Syntax_Analyze_Parse_Nonterminal, SY_INSTRUCTION_SUCCESS_CASE3)
@@ -766,5 +785,5 @@ TEST(Syntax_Analyze_Parse_Nonterminal, SY_INSTRUCTION_SUCCESS_CASE3)
 	test_runner_of_ms_parse(expect, str, actual);
 
 	ms_syntax_node_destroy(expect);
-	ms_destroy_ntp2((void**)expect_tokens, ms_lexical_analyze_destroy_token_wrapper);
+	ms_destroy_ntp2((void**)expect_tokens,  ms_destroy_token_wrapper);
 }

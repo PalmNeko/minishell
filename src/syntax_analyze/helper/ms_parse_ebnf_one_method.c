@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse_ebnf_one_method.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 20:41:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 20:59:07 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:26:42 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 // -2 syntax_error
 // -1 ENOMEM
 // 0 > endpos
-int	ms_parse_ebnf_one_method(
-		t_token **tokens,
-		int pos,
-		t_list **syntax_lst,
+int	ms_parse_ebnf_one_method(t_token **tokens, int pos, t_list **syntax_lst,
 		t_parse_func *parsers)
 {
 	t_syntax_node	*node;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_syntax_node_copy.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:11:13 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 20:03:08 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/09 11:02:00 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "syntax_analyze.h"
-#include "lexer.h"
+#include "lexical_analyze.h"
 #include "libms.h"
+#include "syntax_analyze.h"
 
 static t_syntax_node	**ms_syntax_node_children_copy(
 							t_syntax_node **children);
@@ -29,7 +29,7 @@ t_syntax_node	*ms_syntax_node_copy(t_syntax_node *node)
 	new_node->end_pos = node->end_pos;
 	if (node->token)
 	{
-		new_node->token = ms_dup_token(node->token);
+		new_node->token = ms_duplicate_token(node->token);
 		if (new_node->token == NULL)
 			return (ms_syntax_node_destroy(new_node), NULL);
 	}
@@ -42,8 +42,7 @@ t_syntax_node	*ms_syntax_node_copy(t_syntax_node *node)
 	return (new_node);
 }
 
-static t_syntax_node	**ms_syntax_node_children_copy(
-							t_syntax_node **children)
+static t_syntax_node	**ms_syntax_node_children_copy(t_syntax_node **children)
 {
 	t_syntax_node	**new_children;
 	size_t			lst_size;
@@ -59,8 +58,8 @@ static t_syntax_node	**ms_syntax_node_children_copy(
 		new_children[i] = ms_syntax_node_copy(children[i]);
 		if (new_children[i] == NULL)
 		{
-			ms_destroy_ntp2(
-				(void **)new_children, ms_syntax_node_destroy_wrapper);
+			ms_destroy_ntp2((void **)new_children,
+				ms_syntax_node_destroy_wrapper);
 			return (NULL);
 		}
 		i++;
