@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 09:45:22 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/13 03:07:58 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:22:18 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	ms_parse_rule(t_token **tokens,
 
 	rule_lst = NULL;
 	parse_helper_f = ms_get_parse_func(rule->method);
-	if (parse_helper_f == NULL)
-		return (-3);
 	new_pos = parse_helper_f(tokens, pos, &rule_lst, rule->parsers);
 	if (new_pos < 0)
 		return (new_pos);
@@ -80,8 +78,8 @@ static t_syntax_node_list	*ms_syntax_node_lst_expand(t_syntax_node_list *lst)
 		while (*children != NULL)
 		{
 			copied = ms_syntax_node_copy(*children);
-			if (copied == NULL || ms_lst_append_node(&expanded_lst, copied) ==
-				-1)
+			if (copied == NULL
+				|| ms_lst_append_node(&expanded_lst, copied) == -1)
 				return (ft_lstclear(&expanded_lst,
 						ms_syntax_node_destroy_wrapper), NULL);
 			children++;

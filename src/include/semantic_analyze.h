@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semantic_analyze.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:13:45 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:13:46 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/15 18:18:55 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int					ms_set_readnodestream(t_syntax_node *node);
 void				ms_unset_readnodestream(void);
 t_syntax_node		*ms_read_node(void);
 t_list				*ms_get_next_line_node(void);
-char				*ms_word_list_to_delimiter_string(t_lsa_word_list *word_list);
+char				*ms_word_list_to_delimiter_string(
+						t_lsa_word_list *word_list);
 int					ms_lsa_set_heredoc(t_lsa_redirection *lsa_redirection,
 						t_syntax_node *delimiter_node);
 bool				ms_compare_heredoc_input(const char *input,
