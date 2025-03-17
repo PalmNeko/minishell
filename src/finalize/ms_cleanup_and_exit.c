@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/05 05:08:11 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:05:53 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ms_export_history(void);
 
 void	ms_cleanup_and_exit(int status)
 {
-	if (ms_is_interactive())
+	if (ms_is_interactive() && ! ms_has_meta(status, IS_CHILD))
 	{
 		printf("exit\n");
 		ms_add_mnsh_history("exit");
@@ -30,7 +30,7 @@ void	ms_cleanup_and_exit(int status)
 	ms_clear_history();
 	ms_clear_cdwd();
 	ms_clear_environ(NULL);
-	exit(status);
+	exit(ms_get_status_from_meta(status));
 }
 
 static void	ms_export_history(void)
