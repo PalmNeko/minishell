@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_run_pipeline.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:18:04 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/10 19:01:06 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:01:20 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ms_run_pipeline(t_lsa_pipeline *pipeline)
 			&& pipe(pipe_fds[CURRENT_PIPE]) == -1)
 			return (1);
 		ret = ms_run_pipeline_command(pipeline, index, pipe_fds, pid_list);
-		if (ret & IS_CHILD)
+		if (ms_has_meta(ret, IS_CHILD))
 			return (ret);
 		index++;
 	}

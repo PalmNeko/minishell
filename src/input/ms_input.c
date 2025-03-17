@@ -22,11 +22,6 @@ static char	*ms_get_user_input(t_minishell mnsh);
 static bool	ms_is_quoted_closed(const char *line);
 static int	ms_is_loop(int status);
 
-static int	ms_get_status_from_meta(int status)
-{
-	return (status & 0xff);
-}
-
 int	ms_input(t_minishell mnsh)
 {
 	char	*line;
@@ -51,7 +46,7 @@ int	ms_input(t_minishell mnsh)
 		}
 		free(line);
 	}
-	return (ms_get_status_from_meta(status));
+	return (status);
 }
 
 static char	*ms_get_user_input(t_minishell mnsh)
@@ -104,7 +99,7 @@ static bool	ms_is_quoted_closed(const char *line)
 
 static int	ms_is_loop(int status)
 {
-	if (status & IS_CHILD)
+	if (ms_has_meta(status, IS_CHILD))
 		return (0);
 	return (1);
 }
