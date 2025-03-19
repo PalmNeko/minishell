@@ -150,7 +150,7 @@ TEST(builtin_echo, valid2invalid_option)
 	const char *args[] = {"echo", "-n", "-na", NULL};
 
 	output = ms_get_output(args);
-	EXPECT_EQ(output, "-a\n");
+	EXPECT_EQ(output, "-na");
 }
 
 static std::string	ms_get_output(const char *args[])
