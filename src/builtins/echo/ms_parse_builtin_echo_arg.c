@@ -6,14 +6,13 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:46:25 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/19 13:19:02 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:21:13 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_echo_type.h"
 #include "libms.h"
 #include "ms_getopt.h"
-#include <stdio.h>
 
 int	ms_parse_builtin_echo_arg(
 		t_builtin_echo *parsed,
