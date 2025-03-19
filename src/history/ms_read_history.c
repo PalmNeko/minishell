@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 11:10:28 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 10:09:26 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:45:27 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ms_read_history(const char *filename)
 	t_list		*history_list;
 
 	history = ms_history();
+	ms_update_maxentries_from_env(&history);
 	ret_errno = ms_read_history_history(&history, filename);
 	history_list = history.history;
 	while (history_list != NULL)
