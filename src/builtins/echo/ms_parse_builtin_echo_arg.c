@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:46:25 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/19 13:14:20 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:19:02 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ms_parse_builtin_echo_arg(
 			opting.optind = pre_optind;
 			break ;
 		}
+		pre_optind = opting.optind;
 		parsed->is_n = true;
 	}
 	parsed->arg_index = opting.optind;
