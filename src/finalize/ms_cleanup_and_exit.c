@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/17 13:05:53 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:21:12 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	ms_cleanup_and_exit(int status)
 	{
 		printf("exit\n");
 		ms_add_mnsh_history("exit");
+		ms_export_history();
 	}
-	ms_export_history();
 	ms_clear_history();
 	ms_clear_cdwd();
 	ms_clear_environ(NULL);
