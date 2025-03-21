@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_simple_command_execution..c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:31:38 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/15 18:02:12 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:13:29 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "libms.h"
+#include "memento/memento.h"
 #include <stdlib.h>
 
 static int	ms_simple_command_execution_with_args(t_lsa_command *lsa_command);
@@ -19,9 +20,13 @@ static int	ms_simple_command_execution_no_args(t_lsa_command *lsa_command);
 
 int	ms_simple_command_execution(t_lsa_command *lsa_command)
 {
-	int	ret;
+	int					ret;
+	t_environ_memento	*env_memento;
 
 	ret = 0;
+	env_memento = ms_save_environ_memento();
+	if (env_memento == NULL)
+		return (1);
 	if (lsa_command->args)
 	{
 		ret = ms_simple_command_execution_with_args(lsa_command);
@@ -30,6 +35,9 @@ int	ms_simple_command_execution(t_lsa_command *lsa_command)
 	{
 		ret = ms_simple_command_execution_no_args(lsa_command);
 	}
+	if (ms_restore_environ_memento(env_memento) == -1)
+		ret = 1;
+	ms_memento_destroy(env_memento);
 	return (ret);
 }
 
