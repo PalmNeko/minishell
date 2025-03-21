@@ -22,7 +22,7 @@ static int	ms_execute_command_builtin(char **args);
 static int	ms_execute_command_external(char **args);
 
 /*Note
-	envpで渡すenvの属性について確認する（設定されているかどうか）
+	Need to check the envp attribute(Is set attribute?)
 */
 
 int	ms_execute_command(char **args)

@@ -21,7 +21,7 @@ void		ms_cleanup_and_exit(int status);
 t_minishell	*ms_get_minishell(void);
 void		ms_set_minishell(t_minishell *ms);
 
-// internal 行き
+// to internal
 void		ms_setup_variable(void);
 int			ms_setup_history(void);
 bool		ms_is_interactive(void);

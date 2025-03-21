@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:08:38 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/13 03:07:04 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/15 23:28:59 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,4 @@ typedef struct s_syntax_rule
 	bool					include_node;
 }							t_syntax_rule;
 
-#endif // SYNTAX_ANALYZE_TYPE_H
+#endif

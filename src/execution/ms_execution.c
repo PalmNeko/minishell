@@ -19,7 +19,7 @@
 #include <stdlib.h>
 
 /*notes
- * ENOMEMエラー時の処理を追加する必要あり
+ * must add ENOMEM case process.
  */
 
 int	ms_execution(const char *input)

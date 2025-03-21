@@ -13,7 +13,8 @@
 #include <unistd.h>
 #include <stdbool.h>
 /**
- * TODO: 仮の関数として作ってます。０を返したらインタラクティブ。
+ * TODO: This is temporary func.
+ * if return 0, current state is interactive.
  */
 int	ms_get_interactive_stat(void)
 {

@@ -6,19 +6,12 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:13:53 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/01/22 09:13:54 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/16 02:23:55 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 #include "semantic_analyze.h"
-
-/*
- * 下記における<list>の意味解析を担う
- * この関数の引数は以下の<list>を想定している
- * <instruction> ::= <list> (<newline> <all>*)
- * <COMPOUND_LIST> ::= <left_parenthesis> <list> <right_parenthesis>
- */
 
 static t_list			*_ms_lsa_lists(t_syntax_node *list_node);
 static t_lsa_list_type	ms_lsa_list_get_type(t_syntax_node *list_token_node);
