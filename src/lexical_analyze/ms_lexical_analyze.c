@@ -38,10 +38,6 @@ static int						compare_priority(t_token *temp_token,
 static bool						ms_is_same_priority_kind(t_token *temp_token,
 									t_token *token);
 
-/*
-  TK_DECLINEだった時の処理のロジックが甘い？(今回の場合TK_DECLINEは存在しないけど)
-  ->そもそもDECLINEになることを想定していない（入力ケース全てについて解析を行う前提）ので処理を抜く。
-*/
 t_token	**ms_lexical_analyze(const char *input)
 {
 	t_token_list	*lst;
