@@ -53,7 +53,7 @@ char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 }
 
 /*
-空白区切りだと"  s"のような文字列が空白区切りで分割されてしまう
+if space-separated string case, separate token T_T (not expect)
 */
 static char	**ms_get_expand_texts(t_syntax_node *word_list_node)
 {

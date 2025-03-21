@@ -19,7 +19,7 @@
 
 static int	ms_single_command_execution(t_lsa_pipeline *pipeline);
 
-// cat単一の時にCtrl+Cを押すとminishellごと抜けてしまう
+// when single cat , press Ctrl + C, exit minishell T_T
 int	ms_execute_pipeline(t_lsa_pipeline *pipeline)
 {
 	int	ret;
