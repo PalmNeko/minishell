@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_setup_history.c                                 :+:      :+:    :+:   */
+/*   ms_update_maxentries_from_env.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 12:14:00 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/19 14:16:44 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/19 13:43:28 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/19 14:01:52 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "history_internal_type.h"
 #include "libms.h"
-#include "history.h"
-#include "setup.h"
-#include <stdio.h>
 
-int	ms_setup_history(void)
+void	ms_update_maxentries_from_env(t_history *history)
 {
-	char	*filename;
-
-	if (ms_is_interactive() == false)
-		return (0);
-	filename = ms_getenv("HISTFILE");
-	if (filename == NULL)
-		filename = "~/.mnsh_history";
-	ms_read_history(filename);
-	return (0);
+	if (ms_getenv("HISTSIZE") == NULL)
+		history->history_max_entries = -1;
+	else
+		history->history_max_entries = ft_atoi(ms_getenv("HISTSIZE"));
 }
