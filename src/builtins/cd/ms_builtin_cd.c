@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 06:29:14 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/05 13:02:05 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:12:49 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 static int	ms_builtin_cd2(t_builtin_cd *parsed);
 static int	ms_setnewpwd(t_builtin_cd *parsed, const char *chdir_pathname);
@@ -51,6 +52,8 @@ static int	ms_builtin_cd2(t_builtin_cd *parsed)
 		return (ms_perror_cmd("cd", strerror(errno)), 1);
 	if (chdir(resolved_path) == -1)
 		return (ms_perror_cd(resolved_path), free(resolved_path), 1);
+	if (parsed->is_to_oldpwd)
+		printf("%s\n", resolved_path);
 	result = ms_setnewpwd(parsed, resolved_path);
 	free(resolved_path);
 	return (result);
