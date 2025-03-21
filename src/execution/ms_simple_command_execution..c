@@ -33,7 +33,6 @@ int	ms_simple_command_execution(t_lsa_command *lsa_command)
 	return (ret);
 }
 
-// memento(a moment) may add to the functions
 static int	ms_simple_command_execution_with_args(t_lsa_command *lsa_command)
 {
 	char	**args;
