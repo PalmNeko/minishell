@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:46:25 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/31 16:48:43 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:21:13 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ms_parse_builtin_echo_arg(
 		char *const envp[])
 {
 	int			argc;
+	int			pre_optind;
 	t_opting	opting;
 
 	(void)path;
@@ -29,10 +30,15 @@ int	ms_parse_builtin_echo_arg(
 	argc = (int)ms_ntpsize((void **)argv);
 	ms_getopt_init(&opting, argc, (char **)argv, "n");
 	opting.is_skip_double_hyphen = false;
+	pre_optind = opting.optind;
 	while (ms_getopt_parse(&opting))
 	{
 		if (opting.is_valid_optstatement == false)
+		{
+			opting.optind = pre_optind;
 			break ;
+		}
+		pre_optind = opting.optind;
 		parsed->is_n = true;
 	}
 	parsed->arg_index = opting.optind;

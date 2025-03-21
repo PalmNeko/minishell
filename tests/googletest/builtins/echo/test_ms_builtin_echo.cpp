@@ -133,6 +133,26 @@ TEST(builtin_echo, no_argument)
     EXPECT_EQ(output, "\n");
 }
 
+/** オプションが問題でも動作すること */
+TEST(builtin_echo, invalid_option)
+{
+	std::string output;
+	const char *args[] = {"echo", "-a", NULL};
+
+	output = ms_get_output(args);
+	EXPECT_EQ(output, "-a\n");
+}
+
+/** 正しいオプション => 不正なオプションでも動作すること */
+TEST(builtin_echo, valid2invalid_option)
+{
+	std::string output;
+	const char *args[] = {"echo", "-n", "-na", NULL};
+
+	output = ms_get_output(args);
+	EXPECT_EQ(output, "-na");
+}
+
 static std::string	ms_get_output(const char *args[])
 {
 	CaptureFd cap;
