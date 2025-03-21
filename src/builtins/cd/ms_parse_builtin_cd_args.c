@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 05:45:21 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 07:39:14 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:12:09 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ms_parse_builtin_cd_args(
 	parsed->chdir_pathname = NULL;
 	parsed->is_set_cwd_error = false;
 	parsed->symlink_follow = false;
+	parsed->is_to_oldpwd = false;
 	argc = (int)ms_ntpsize((void **)argv);
 	ms_getopt_init(&opting, argc, (char **)argv, "LPe");
 	status = __ms_parse_builtin_cd_args(parsed, &opting);
@@ -61,6 +62,8 @@ static int	__ms_parse_builtin_cd_args(t_builtin_cd *parsed, t_opting *opting)
 	args = opting->argv + opting->optind;
 	if (args[0] != NULL && args[1] != NULL)
 		return (ms_perror_cmd("cd", "too many arguments"), 1);
+	if (args[0] != NULL && ft_strcmp(args[0], "-") == 0)
+		parsed->is_to_oldpwd = true;
 	parsed->chdir_pathname = ms_get_cd_path(args[0]);
 	if (parsed->chdir_pathname == NULL)
 		return (ms_perror_cmd("cd", strerror(errno)), 1);
