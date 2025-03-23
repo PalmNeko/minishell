@@ -21,7 +21,7 @@ static int	ms_replace_joined_str_quoted_word(char **left,
 				const t_syntax_node *right);
 
 /**
- * @brief デリミタワードリストを文字列に変換する
+ * @brief convert delimita-word-list to string.
  */
 char	*ms_word_list_to_delimiter_string(t_lsa_word_list *word_list)
 {

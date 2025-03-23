@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 09:13:43 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/15 23:17:31 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/16 02:23:31 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include <stdlib.h>
 
 static t_lsa_list	*ms_create_lsa_list(void);
-
-/* Notice
- * 実装通りにしたが、関数名と挙動が一致してないからかしっくりこない
- */
 
 t_lsa_list	*ms_lsa_list(t_syntax_node *list_node)
 {

@@ -20,7 +20,7 @@
 static int		ms_expand_path(t_syntax_node *word_node, t_list **node_lst);
 static t_list	*ms_create_expanded_node_lst(char *expanded_string);
 
-// *.*などは後で考慮する。
+// not considered multi wildcard case...
 
 t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 {

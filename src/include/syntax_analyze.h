@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:09:33 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/09 08:02:02 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/16 01:59:04 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,4 @@ int				ms_parse_rule(t_token **tokens, int pos, t_list **syntax_lst,
 t_syntax_node	*ms_parse_rules(t_token **tokens, int pos, t_syntax_type type,
 					t_syntax_rule **rules);
 
-#endif // SYNTAX_ANALYZE_H
+#endif
