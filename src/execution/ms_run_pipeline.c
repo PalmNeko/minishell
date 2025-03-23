@@ -6,12 +6,13 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:18:04 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/23 11:51:44 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/23 12:00:58 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include "semantic_analyze.h"
 #include "ms_execute_pipeline.h"
 #include "execution.h"
@@ -113,11 +114,17 @@ static int	ms_wait_for_children(pid_t *pid_list, int cmd_count)
 {
 	int		status;
 	int		i;
+	pid_t	pid;
 
 	i = 0;
+	status = 0;
 	while (i < cmd_count)
 	{
-		waitpid(pid_list[i], &status, 0);
+		pid = waitpid(pid_list[i], &status, 0);
+		if (pid == -1 && errno == EINTR)
+			continue ;
+		else if (pid == -1 && errno == ECHILD)
+			break ;
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
