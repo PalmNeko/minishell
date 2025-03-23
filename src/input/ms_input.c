@@ -17,7 +17,9 @@
 #include "history.h"
 #include <readline/readline.h>
 #include <stdlib.h>
+#include <signal.h>
 
+static int	ms_run_command(char *line);
 static char	*ms_get_user_input(t_minishell mnsh);
 static bool	ms_is_quoted_closed(const char *line);
 static int	ms_is_loop(int status);
@@ -26,7 +28,6 @@ int	ms_input(t_minishell mnsh)
 {
 	char	*line;
 	int		status;
-	char	*stat_str;
 
 	(void)mnsh;
 	status = 0;
@@ -36,15 +37,30 @@ int	ms_input(t_minishell mnsh)
 		if (line == NULL)
 			break ;
 		ft_strrchr(line, '\n')[0] = '\0';
-		if (! g_rl_is_sigint)
-		{
-			ms_add_mnsh_history(line);
-			status = ms_execution(line);
-			stat_str = ft_itoa(ms_get_status_from_meta(status));
-			ms_setenv("?", stat_str, 1);
-			free(stat_str);
-		}
+		status = ms_run_command(line);
 		free(line);
+	}
+	return (status);
+}
+
+static int	ms_run_command(char *line)
+{
+	int		status;
+	char	*stat_str;
+
+	status = 0;
+	if (! g_rl_is_sigint)
+	{
+		ms_add_mnsh_history(line);
+		status = ms_execution(line);
+	}
+	if (g_rl_is_sigint)
+		status = 128 + SIGINT;
+	stat_str = ft_itoa(ms_get_status_from_meta(status));
+	if (stat_str != NULL)
+	{
+		ms_setenv("?", stat_str, 1);
+		free(stat_str);
 	}
 	return (status);
 }
@@ -60,7 +76,7 @@ static char	*ms_get_user_input(t_minishell mnsh)
 		line = ms_readline(ms_getenv("PS1"));
 		if (!line)
 			return (NULL);
-		if (line[0] != '\0')
+		if (line[0] != '\0' || g_rl_is_sigint)
 			break ;
 		free(line);
 	}
