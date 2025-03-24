@@ -52,7 +52,8 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **child_node_lst)
 	t_list			*expanded_node_lst;
 
 	expanded_node_lst = NULL;
-	if (word_node->type == SY_WORD)
+	if (word_node->type == SY_WORD
+		&& ft_strchr(word_node->token->token, '*'))
 	{
 		expanded_string = ms_expand_path2((char *)word_node->token->token);
 		if (expanded_string == NULL)
