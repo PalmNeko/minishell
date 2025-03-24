@@ -32,3 +32,4 @@ def test_double_quote_blank():
 		expected_stdout = "Hello   World\n",
 		expected_stderr = ""
 	)
+	

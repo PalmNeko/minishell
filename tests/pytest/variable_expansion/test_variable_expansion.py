@@ -19,3 +19,4 @@ def test_assignment():
 		expected_stdout = result + result2 + result3 + result4,
 		expected_stderr = ""
 	)
+	
