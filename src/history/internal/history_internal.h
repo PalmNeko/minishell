@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 07:22:08 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/19 12:10:15 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:45:12 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int			ms_write_history_history(t_history *history, const char *filename);
 void		ms_init_history(t_history *history);
 int			ms_append_history_history(
 				t_history *history, int nelements, const char *filename);
+void		ms_update_maxentries_from_env(t_history *history);
+
 /**
  * variable
  */
