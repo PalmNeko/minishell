@@ -8,5 +8,6 @@ cd "$(dirname $0)"
 LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
 HOGE=hoge
-echo "Hello,$HOGE"
+echo "$HOGE"
+echo "some_string,$HOGE"
 EOF
