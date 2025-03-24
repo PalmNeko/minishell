@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 05:45:21 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/21 11:12:09 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:53:07 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ static int	__ms_parse_builtin_cd_args(t_builtin_cd *parsed, t_opting *opting)
 		return (ms_perror_cmd("cd", "too many arguments"), 1);
 	if (args[0] != NULL && ft_strcmp(args[0], "-") == 0)
 		parsed->is_to_oldpwd = true;
-	parsed->chdir_pathname = ms_get_cd_path(args[0]);
+	parsed->chdir_pathname = NULL;
+	if (ms_get_cd_path(args[0], &parsed->chdir_pathname) == 1)
+		return (1);
 	if (parsed->chdir_pathname == NULL)
 		return (ms_perror_cmd("cd", strerror(errno)), 1);
 	return (0);

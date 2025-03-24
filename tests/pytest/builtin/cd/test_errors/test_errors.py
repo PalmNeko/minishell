@@ -19,9 +19,8 @@ def test_invalid_option():
         expected_stdout = "2\n",
         expected_stderr = "minishell: cd: -A: invalid option\n" "cd: usage: cd [-L|[-P [-e]]] [dir]\n")
 
-@pytest.mark.skip(reason="デバッグの時用")
 def test_HOME_not_set():
-    script_tester.test("builtin/cd/test_errors/too_many_arguments.sh",
+    script_tester.test("builtin/cd/test_errors/HOME_not_set.sh",
         expected_stdout = "1\n",
         expected_stderr = "minishell: cd: HOME not set\n")
 

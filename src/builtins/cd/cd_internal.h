@@ -16,7 +16,7 @@
 # include "cd_internal_type.h"
 # include <stdbool.h>
 
-char	*ms_get_cd_path(const char *arg_path);
+int		ms_get_cd_path(const char *arg_path, char **cd_path);
 bool	ms_is_use_cdpath(const char *path);
 void	ms_print_usage_cd(void);
 char	*ms_resolve_with_cdpath(const char *path);
