@@ -50,11 +50,10 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **child_node_lst)
 {
 	char			*expanded_string;
 	t_list			*expanded_node_lst;
-	const char		*token_string = word_node->token->token;
 
 	expanded_node_lst = NULL;
 	if (word_node->type == SY_WORD
-		&& ft_strchr(token_string, '*'))
+		&& ft_strchr(word_node->token->token, '*'))
 	{
 		expanded_string = ms_expand_path2((char *)word_node->token->token);
 		if (expanded_string == NULL)
