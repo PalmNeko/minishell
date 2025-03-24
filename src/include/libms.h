@@ -62,6 +62,7 @@ t_syntax_node	*ms_duplicate_node(t_syntax_node *node);
 
 int				ms_add_meta(int status, int meta);
 bool			ms_has_meta(int status, int meta);
+int				ms_get_meta(int status);
 
 int				ms_add_string_to_lst(t_list **file_list_lst, char *filename);
 int				ms_get_status_from_meta(int status);
