@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 05:19:30 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/25 05:58:33 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/25 06:22:41 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,4 @@ static void	ms_setup_special_export(void)
 	ms_add_export("OLDPWD");
 	ms_add_export("PWD");
 	ms_add_export("SHLVL");
-	ms_remove_export("_");
 }

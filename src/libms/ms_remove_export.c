@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 05:30:58 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/25 05:48:43 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/25 06:20:30 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 #include <stdlib.h>
 
 /**
- * @brief Add an export variable.
- * @param name The name of the export variable.
- * @return 0 on success, -1 on error.
+ * @attention this function is happened to memory leak at ft_lstdelone.
  */
 int	ms_remove_export(const char *name)
 {
