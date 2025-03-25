@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 05:19:30 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/25 05:47:36 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/25 05:58:33 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ms_setup_inherit_export(void)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		name_end = ft_strrchr(environ[i], '=');
+		name_end = ft_strchr(environ[i], '=');
 		if (name_end == NULL || name_end == environ[i])
 			continue ;
 		name = ft_strndup(environ[i], name_end - environ[i]);
