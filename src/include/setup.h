@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:30:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 07:30:11 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/25 05:21:15 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void		ms_setup_variable(void);
 int			ms_setup_history(void);
 bool		ms_is_interactive(void);
 int			ms_setup_global_variables(void);
+void		ms_setup_export_environ(void);
 
 #endif
