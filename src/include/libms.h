@@ -95,5 +95,7 @@ t_list			*ms_get_exports(void);
 void			ms_set_exports(t_list *exports);
 void			ms_clear_exports(void);
 int				ms_add_export(const char *name);
+t_list			*ms_find_export(const char *name);
+int				ms_remove_export(const char *name);
 
 #endif
