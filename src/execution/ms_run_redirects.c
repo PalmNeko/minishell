@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:37:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/03 05:32:28 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/26 01:34:03 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	ms_redirect_output(t_lsa_redirection *redirect)
 	filename = ms_expansion(redirect->filename)[0];
 	if (filename == NULL)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	free(filename);
 	if (fd == -1)
 		return (-1);
@@ -89,7 +89,7 @@ static int	ms_redirect_append(t_lsa_redirection *redirect)
 	filename = ms_expansion(redirect->filename)[0];
 	if (filename == NULL)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	free(filename);
 	if (fd == -1)
 		return (-1);
