@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 11:20:46 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 05:53:15 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/26 03:07:41 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	ms_update_histcmd(void)
 	if (ms_unstifle_history() == 0)
 		ms_reset_histcmd();
 	history = ms_history();
+	if (history.enable_history_cmd == false)
+		return ;
 	if (ms_unstifle_history() != 0 && history.history_cmd == 0)
 	{
 		history.history_cmd = 1;
