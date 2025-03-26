@@ -6,12 +6,13 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:37:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/26 01:34:03 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/26 01:52:31 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "semantic_analyze.h"
+#include "libms.h"
 #include <fcntl.h>
 #include <stdlib.h>
 
@@ -47,12 +48,16 @@ static int	ms_redirect_input(t_lsa_redirection *redirect)
 {
 	int		fd;
 	char	*filename;
+	char	**expanded_texts;
 
-	filename = ms_expansion(redirect->filename)[0];
+	expanded_texts = ms_expansion(redirect->filename);
+	if (expanded_texts == NULL)
+		return (-1);
+	filename = expanded_texts[0];
 	if (filename == NULL)
 		return (-1);
 	fd = open(filename, O_RDONLY);
-	free(filename);
+	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
 		return (-1);
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -66,12 +71,16 @@ static int	ms_redirect_output(t_lsa_redirection *redirect)
 {
 	int		fd;
 	char	*filename;
+	char	**expanded_texts;
 
-	filename = ms_expansion(redirect->filename)[0];
+	expanded_texts = ms_expansion(redirect->filename);
+	if (expanded_texts == NULL)
+		return (-1);
+	filename = expanded_texts[0];
 	if (filename == NULL)
 		return (-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	free(filename);
+	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
 		return (-1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
@@ -85,12 +94,16 @@ static int	ms_redirect_append(t_lsa_redirection *redirect)
 {
 	int		fd;
 	char	*filename;
+	char	**expanded_texts;
 
-	filename = ms_expansion(redirect->filename)[0];
+	expanded_texts = ms_expansion(redirect->filename);
+	if (expanded_texts == NULL)
+		return (-1);
+	filename = expanded_texts[0];
 	if (filename == NULL)
 		return (-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	free(filename);
+	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
 		return (-1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
