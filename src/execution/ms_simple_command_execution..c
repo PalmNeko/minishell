@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:31:38 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/19 12:13:29 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/26 06:50:45 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ static int	ms_simple_command_execution_no_args(t_lsa_command *lsa_command)
 		ret = ms_run_assignment_variables(lsa_command->assignments);
 	if (lsa_command->redirects)
 		ret = ms_run_redirects(lsa_command->redirects);
+	if (ret == -1)
+		return (1);
 	return (ret);
 }
