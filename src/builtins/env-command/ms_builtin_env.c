@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 19:31:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/26 03:50:07 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/26 04:55:11 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ static void	ms_print_usage_env(void)
 static void	ms_print_environ(void)
 {
 	char	**names;
+	char	**head;
 	char	*value;
 
 	names = ms_export_names();
 	if (names == NULL)
 		return ;
+	head = names;
 	while (*names != NULL)
 	{
 		value = ms_getenv(*names);
@@ -74,5 +76,5 @@ static void	ms_print_environ(void)
 			printf("%s=%s\n", *names, value);
 		names++;
 	}
-	ms_destroy_ntp(names);
+	ms_destroy_ntp(head);
 }
