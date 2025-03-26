@@ -6,14 +6,17 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:37:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/03 05:32:28 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/26 05:46:38 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "semantic_analyze.h"
+#include "libms.h"
 #include <fcntl.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 
 static int	ms_redirect_input(t_lsa_redirection *redirect);
 static int	ms_redirect_output(t_lsa_redirection *redirect);
@@ -52,9 +55,9 @@ static int	ms_redirect_input(t_lsa_redirection *redirect)
 	if (filename == NULL)
 		return (-1);
 	fd = open(filename, O_RDONLY);
-	free(filename);
 	if (fd == -1)
-		return (-1);
+		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
+	free(filename);
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (-1);
 	if (close(fd) == -1)
@@ -71,9 +74,9 @@ static int	ms_redirect_output(t_lsa_redirection *redirect)
 	if (filename == NULL)
 		return (-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	free(filename);
 	if (fd == -1)
-		return (-1);
+		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
+	free(filename);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
 	if (close(fd) == -1)
@@ -90,9 +93,9 @@ static int	ms_redirect_append(t_lsa_redirection *redirect)
 	if (filename == NULL)
 		return (-1);
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	free(filename);
 	if (fd == -1)
-		return (-1);
+		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
+	free(filename);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
 	if (close(fd) == -1)
