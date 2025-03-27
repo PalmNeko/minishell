@@ -6,15 +6,13 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 07:38:27 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 05:53:33 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/25 05:32:12 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 #include "libft.h"
 #include <stdlib.h>
-
-static t_list	*ms_find_export(const char *name);
 
 /**
  * @brief Add an export variable.
@@ -42,18 +40,4 @@ int	ms_add_export(const char *name)
 	ft_lstadd_back(&env_list, newlst);
 	ms_set_exports(env_list);
 	return (0);
-}
-
-static t_list	*ms_find_export(const char *name)
-{
-	t_list	*envlst;
-
-	envlst = ms_get_exports();
-	while (envlst != NULL)
-	{
-		if (ft_strcmp(envlst->content, name) == 0)
-			return (envlst);
-		envlst = envlst->next;
-	}
-	return (NULL);
 }

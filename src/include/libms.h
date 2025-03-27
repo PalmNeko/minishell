@@ -66,6 +66,7 @@ int				ms_get_meta(int status);
 
 int				ms_add_string_to_lst(t_list **file_list_lst, char *filename);
 int				ms_get_status_from_meta(int status);
+bool			ms_isadir(const char *path);
 
 // environment variable
 char			*ms_getenv(const char *name);
@@ -95,5 +96,6 @@ t_list			*ms_get_exports(void);
 void			ms_set_exports(t_list *exports);
 void			ms_clear_exports(void);
 int				ms_add_export(const char *name);
+t_list			*ms_find_export(const char *name);
 
 #endif
