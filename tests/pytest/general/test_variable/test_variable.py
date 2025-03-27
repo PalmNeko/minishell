@@ -44,3 +44,10 @@ def test_SHLVL_invalid_value():
         expected_stderr = (
 			""
 			))
+
+def test_HISTCMD_unset():
+    script_tester.test("general/test_variable/test_HISTCMD_unset.sh",
+        expected_stdout = (
+            "3\n"
+            "3\n"),
+        expected_stderr = "")
