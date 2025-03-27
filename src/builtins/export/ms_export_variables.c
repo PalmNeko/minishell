@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:04:28 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/27 11:03:04 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:22:03 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@ static int	ms_export_error_not_a_valid_identifier(const char *arg);
 int	ms_export_variables(const char **args)
 {
 	int		i;
+	bool	is_error;
 
 	i = 0;
+	is_error = false;
 	while (args[i] != NULL)
 	{
-		ms_export_variable(args[i]);
+		is_error |= ms_export_variable(args[i]);
 		i++;
 	}
+	if (is_error)
+		return (1);
 	return (0);
 }
 
