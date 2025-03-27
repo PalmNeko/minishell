@@ -66,6 +66,7 @@ int				ms_get_meta(int status);
 
 int				ms_add_string_to_lst(t_list **file_list_lst, char *filename);
 int				ms_get_status_from_meta(int status);
+int				ms_shell_atoi(const char *str);
 bool			ms_isadir(const char *path);
 
 // environment variable
