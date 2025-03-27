@@ -20,6 +20,7 @@
 
 /** string.h */
 char			*ms_strpbrk(const char *s, const char *accept);
+char			*ms_strstr(const char *haystack, const char *needle);
 
 /** unistd.h */
 char			*ms_get_current_dir_name(void);
