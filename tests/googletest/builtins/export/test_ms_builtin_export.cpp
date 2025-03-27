@@ -13,12 +13,13 @@ extern "C" {
 IoCapture *testBuiltinExport(const char *path, char *const *argv, char *const *envp)
 {
 	IoCapture *term = new IoCapture;
+	int status;
 
 	term->boot();
 	if (term->isCapturing())
 	{
-		ms_builtin_export(path, (char *const *)argv, envp);
-		exit(0);
+		status = ms_builtin_export(path, (char *const *)argv, envp);
+		exit(status);
 	}
 	term->exit();
 	return term;
@@ -103,5 +104,84 @@ TEST(ms_builtin_export, invalid_optin)
 	term = testBuiltinExport(NULL, (char *const*)args, NULL);
     EXPECT_EQ(term->getStdout(), expectStdout);
     EXPECT_EQ(term->getStderr(), expectStderr);
+	delete term;
+}
+
+TEST(ms_builtin_export, name_length_zero_error)
+{
+	std::string expectStderr;
+	std::string expectStdout;
+	int	expectStatus;
+	const char 	*args[] = {"export", "=321", "=", "", "+=", NULL};
+
+	expectStdout =
+		"";
+	expectStderr =
+		"minishell: export: `=321': not a valid identifier\n"
+		"minishell: export: `=': not a valid identifier\n"
+		"minishell: export: `': not a valid identifier\n"
+		"minishell: export: `+=': not a valid identifier\n"
+		;
+	expectStatus = 1;
+
+	// テスト
+	IoCapture 	*term;
+	term = testBuiltinExport(NULL, (char *const*)args, NULL);
+    EXPECT_EQ(term->getStdout(), expectStdout);
+    EXPECT_EQ(term->getStderr(), expectStderr);
+    EXPECT_EQ(term->getStatus(), expectStatus);
+	delete term;
+}
+
+TEST(ms_builtin_export, invalid_sign_error)
+{
+	std::string expectStderr;
+	std::string expectStdout;
+	int	expectStatus;
+	const char 	*args[] = {"export", "$=321", "!=", "#", "~+=", NULL};
+
+	expectStdout =
+		"";
+	expectStderr =
+		"minishell: export: `$=321': not a valid identifier\n"
+		"minishell: export: `!=': not a valid identifier\n"
+		"minishell: export: `#': not a valid identifier\n"
+		"minishell: export: `~+=': not a valid identifier\n"
+		;
+	expectStatus = 1;
+
+	// テスト
+	IoCapture 	*term;
+	term = testBuiltinExport(NULL, (char *const*)args, NULL);
+    EXPECT_EQ(term->getStdout(), expectStdout);
+    EXPECT_EQ(term->getStderr(), expectStderr);
+    EXPECT_EQ(term->getStatus(), expectStatus);
+	delete term;
+}
+
+// 名前の最初に数字が来る場合　エラー
+TEST(ms_builtin_export, first_number_error)
+{
+	std::string expectStderr;
+	std::string expectStdout;
+	int	expectStatus;
+	const char 	*args[] = {"export", "1asd", "3dfwe=", "123", "89+=a", NULL};
+
+	expectStdout =
+		"";
+	expectStderr =
+		"minishell: export: `1asd': not a valid identifier\n"
+		"minishell: export: `3dfwe=': not a valid identifier\n"
+		"minishell: export: `123': not a valid identifier\n"
+		"minishell: export: `89+=a': not a valid identifier\n"
+		;
+	expectStatus = 1;
+
+	// テスト
+	IoCapture 	*term;
+	term = testBuiltinExport(NULL, (char *const*)args, NULL);
+    EXPECT_EQ(term->getStdout(), expectStdout);
+    EXPECT_EQ(term->getStderr(), expectStderr);
+    EXPECT_EQ(term->getStatus(), expectStatus);
 	delete term;
 }
