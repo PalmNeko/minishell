@@ -27,6 +27,9 @@ static const t_expand_func	g_expand_funcs[] = {
 };
 
 static char	**ms_get_expand_texts(t_syntax_node *word_list_node);
+static bool	ms_is_chain_node(t_syntax_node *parent_node, int index);
+static int	ms_get_child_token_string(t_syntax_node *child_node,
+				char **string_ptr, bool join_flag);
 
 char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 {
@@ -52,34 +55,57 @@ char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 	return (expanded_texts);
 }
 
-/*
-if space-separated string case, separate token T_T (not expect)
-*/
 static char	**ms_get_expand_texts(t_syntax_node *word_list_node)
 {
 	char			**expanded_texts;
-	char			*expanded_text;
-	char			*temp;
-	char			*token;
+	char			*token_string;
 	size_t			i;
+	t_list			*expanded_text_lst;
+	bool			join_flag;
 
+	join_flag = false;
+	expanded_text_lst = NULL;
 	i = 0;
-	expanded_text = ft_strdup("");
-	if (expanded_text == NULL)
-		return (NULL);
-	while (word_list_node->children[i])
+	while (word_list_node->children[i] != NULL)
 	{
-		token = (char *)word_list_node->children[i]->token->token;
-		temp = ft_strjoin(expanded_text, token);
-		free(expanded_text);
-		if (temp == NULL)
-			return (NULL);
-		expanded_text = temp;
+		if (ms_get_child_token_string(word_list_node->children[i],
+				&token_string, join_flag) == -1)
+			return (ft_lstclear(&expanded_text_lst, free), NULL);
+		join_flag = ms_is_chain_node(word_list_node, i);
+		if (!join_flag)
+			if (ms_lst_append_tail(&expanded_text_lst, token_string) == -1)
+				return (ft_lstclear(&expanded_text_lst, free), NULL);
 		i++;
 	}
-	expanded_texts = ft_split(expanded_text, ' ');
-	free(expanded_text);
+	expanded_texts = ms_lst_to_ntp(&expanded_text_lst, (void *)ft_strdup, free);
 	if (expanded_texts == NULL)
 		return (NULL);
 	return (expanded_texts);
+}
+
+static bool	ms_is_chain_node(t_syntax_node *parent_node, int index)
+{
+	return (parent_node->children[index + 1] != NULL
+		&& (parent_node->children[index]->end_pos
+			== parent_node->children[index + 1]->start_pos));
+}
+
+static int	ms_get_child_token_string(t_syntax_node *child_node,
+	char **string_ptr, bool join_flag)
+{
+	const char	*token_string = child_node->token->token;
+
+	if (join_flag)
+	{
+		if (ms_replace_joined_str(string_ptr, token_string) == NULL)
+		{
+			free(*string_ptr);
+			*string_ptr = NULL;
+		}
+	}
+	else
+		*string_ptr = ft_strdup(token_string);
+	if (*string_ptr == NULL)
+		return (-1);
+	return (0);
 }
