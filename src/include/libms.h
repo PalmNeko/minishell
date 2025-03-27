@@ -92,6 +92,7 @@ void			ms_perror_cmd2(
 					const char *name, const char *type, const char *msg);
 
 // exports
+char			**ms_export_names(void);
 t_list			*ms_get_exports(void);
 void			ms_set_exports(t_list *exports);
 void			ms_clear_exports(void);

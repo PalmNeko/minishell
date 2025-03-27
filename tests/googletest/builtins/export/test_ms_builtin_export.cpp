@@ -41,6 +41,7 @@ TEST(ms_builtin_export, basic)
 
 	// 設定
 	ms_clear_environ(NULL);
+	ms_clear_exports();
 	ms_setenv("Alice", "10", 1);
 	ms_setenv("Chocolate", "", 1);
 	ms_add_export("Bob");
