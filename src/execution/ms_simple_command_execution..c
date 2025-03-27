@@ -53,6 +53,8 @@ static int	ms_simple_command_execution_with_args(t_lsa_command *lsa_command)
 		ret = ms_run_assignment_variables(lsa_command->assignments);
 	if (lsa_command->redirects)
 		ret = ms_run_redirects(lsa_command->redirects);
+	if (ret == -1)
+		return (ms_destroy_ntp2((void **)args, free), 1);
 	ret = ms_execute_command(args);
 	ms_destroy_ntp2((void **)args, free);
 	return (ret);
