@@ -23,5 +23,5 @@ bool	ms_isadir(const char *path)
 		return (false);
 	if (S_ISDIR(buf.st_mode))
 		return (true);
-	return (true);
+	return (false);
 }
