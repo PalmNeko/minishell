@@ -16,3 +16,11 @@
    ...
    fun:add_history
 }
+
+{
+   usr_bin_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/bin/*
+}

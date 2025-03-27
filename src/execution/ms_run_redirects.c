@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:37:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/26 05:46:38 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:13:08 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,16 @@ static int	ms_redirect_input(t_lsa_redirection *redirect)
 {
 	int		fd;
 	char	*filename;
+	char	**expanded_texts;
 
-	filename = ms_expansion(redirect->filename)[0];
+	expanded_texts = ms_expansion(redirect->filename);
+	if (expanded_texts == NULL)
+		return (-1);
+	filename = expanded_texts[0];
 	if (filename == NULL)
 		return (-1);
 	fd = open(filename, O_RDONLY);
+	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
 		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
 	free(filename);
@@ -69,11 +74,16 @@ static int	ms_redirect_output(t_lsa_redirection *redirect)
 {
 	int		fd;
 	char	*filename;
+	char	**expanded_texts;
 
-	filename = ms_expansion(redirect->filename)[0];
+	expanded_texts = ms_expansion(redirect->filename);
+	if (expanded_texts == NULL)
+		return (-1);
+	filename = expanded_texts[0];
 	if (filename == NULL)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
 		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
 	free(filename);
@@ -88,11 +98,16 @@ static int	ms_redirect_append(t_lsa_redirection *redirect)
 {
 	int		fd;
 	char	*filename;
+	char	**expanded_texts;
 
-	filename = ms_expansion(redirect->filename)[0];
+	expanded_texts = ms_expansion(redirect->filename);
+	if (expanded_texts == NULL)
+		return (-1);
+	filename = expanded_texts[0];
 	if (filename == NULL)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
+	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
 		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
 	free(filename);

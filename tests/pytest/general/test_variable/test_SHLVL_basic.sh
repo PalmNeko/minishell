@@ -7,7 +7,5 @@ cd "$(dirname $0)"
 # テスト
 LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
-HOGE=hoge
-echo "$HOGE"
-echo "some_string,$HOGE"
+echo $SHLVL
 EOF

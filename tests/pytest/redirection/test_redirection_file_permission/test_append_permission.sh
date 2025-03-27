@@ -6,8 +6,10 @@ cd "$(dirname $0)"
 
 # テスト
 LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
+umask 000
 $LEAKCHECK $PROG << "EOF"
-HOGE=hoge
-echo "$HOGE"
-echo "some_string,$HOGE"
+>> tmp.test
+ls -l tmp.test | awk '{print $1}'
 EOF
+
+rm -f tmp.test
