@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execute_command.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:27:56 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/10 01:48:11 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:36:57 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 static char	*ms_execute_command_get_path(char *command, char *envpath);
 static int	ms_execute_command_builtin(char **args);
@@ -87,6 +88,7 @@ static int	ms_execute_command_external(char **args)
 	char	*path;
 	char	*envpath;
 	int		ret;
+	int		enobuf;
 
 	envp = ms_export_env();
 	path = args[0];
@@ -101,6 +103,10 @@ static int	ms_execute_command_external(char **args)
 		}
 	}
 	ret = execve(path, args, envp);
+	enobuf = errno;
+	if (errno == EACCES && ms_isadir(path))
+		enobuf = EISDIR;
+	errno = enobuf;
 	ms_destroy_ntp2((void **)envp, free);
 	return (ret);
 }
