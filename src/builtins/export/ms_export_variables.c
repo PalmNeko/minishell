@@ -6,12 +6,13 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:04:28 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/27 08:10:31 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:03:04 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 #include "libft.h"
+#include "export_internal.h"
 #include <stdlib.h>
 #include <stddef.h>
 
@@ -40,12 +41,12 @@ static int	ms_export_variable(const char *arg)
 {
 	char	*name_end;
 
+	if (ms_export_variable_validate_arg(arg) == false)
+		return (ms_export_error_not_a_valid_identifier(arg), 1);
 	name_end = ft_strchr(arg, '=');
 	if (name_end == NULL)
-		return (1);
-	if (name_end == NULL || arg == name_end)
-		return (ms_export_error_not_a_valid_identifier(arg), 1);
-	if (name_end[-1] == '+')
+		return (ms_export_set_variable(arg));
+	else if (name_end - arg >= 1 && name_end[-1] == '+')
 		return (ms_export_append_variable(arg));
 	else
 		return (ms_export_set_variable(arg));

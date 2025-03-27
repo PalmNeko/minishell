@@ -18,5 +18,6 @@
 int		ms_export_print_command(void);
 int		ms_export_variables(const char **args);
 char	**ms_export_environs(void);
+bool	ms_export_variable_validate_arg(const char *arg);
 
 #endif
