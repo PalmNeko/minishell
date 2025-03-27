@@ -47,6 +47,7 @@ static int	ms_simple_command_execution_with_args(t_lsa_command *lsa_command)
 	int		ret;
 
 	args = ms_expand_commands(lsa_command->args);
+	ret = 0;
 	if (args == NULL)
 		return (1);
 	if (lsa_command->assignments)

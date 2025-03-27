@@ -29,6 +29,11 @@ TestResult test_runner_of_ms_input(const char *input)
 	testing::internal::CaptureStdout();
 	testing::internal::CaptureStderr();
 	status = ms_execution(input);
+	if (ms_has_meta(status, IS_CHILD))
+	{
+		status = ms_get_status_from_meta(status);
+		exit(status);
+	}
 	stdOut = testing::internal::GetCapturedStdout();
 	stdErr = testing::internal::GetCapturedStderr();
 	t = std::make_tuple(stdOut, stdErr, status);
@@ -50,6 +55,26 @@ TEST(Execute, ms_execution_redirect_error_when_file_missing)
 {
 	TestResult expect("", "minishell: no_such_file: No such file or directory\n", 1);
 	TestResult result = test_runner_of_ms_input("< no_such_file");
+
+	ASSERT_EQ(getStdout(expect), getStdout(result));
+	ASSERT_EQ(getStderr(expect), getStderr(result));
+	ASSERT_EQ(getStatus(expect), getStatus(result));
+}
+
+TEST(Execute, ms_execution_redirect_error_when_file_missing_exist_external_command)
+{
+	TestResult expect("", "minishell: no_such_file: No such file or directory\n", 1);
+	TestResult result = test_runner_of_ms_input("cat < no_such_file");
+
+	ASSERT_EQ(getStdout(expect), getStdout(result));
+	ASSERT_EQ(getStderr(expect), getStderr(result));
+	ASSERT_EQ(getStatus(expect), getStatus(result));
+}
+
+TEST(Execute, ms_execution_redirect_error_when_file_missing_exist_builtin_command)
+{
+	TestResult expect("", "minishell: no_such_file: No such file or directory\n", 1);
+	TestResult result = test_runner_of_ms_input("echo < no_such_file");
 
 	ASSERT_EQ(getStdout(expect), getStdout(result));
 	ASSERT_EQ(getStderr(expect), getStderr(result));
