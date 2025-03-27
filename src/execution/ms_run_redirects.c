@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:37:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/27 09:13:08 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:19:01 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ static int	ms_redirect_input(t_lsa_redirection *redirect)
 	fd = open(filename, O_RDONLY);
 	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
-		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
-	free(filename);
+		return (ms_perror_cmd(filename, strerror(errno)), -1);
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (-1);
 	if (close(fd) == -1)
@@ -85,8 +84,7 @@ static int	ms_redirect_output(t_lsa_redirection *redirect)
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
-		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
-	free(filename);
+		return (ms_perror_cmd(filename, strerror(errno)), -1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
 	if (close(fd) == -1)
@@ -109,8 +107,7 @@ static int	ms_redirect_append(t_lsa_redirection *redirect)
 	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	ms_destroy_ntp(expanded_texts);
 	if (fd == -1)
-		return (ms_perror_cmd(filename, strerror(errno)), free(filename), -1);
-	free(filename);
+		return (ms_perror_cmd(filename, strerror(errno)), -1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
 	if (close(fd) == -1)
