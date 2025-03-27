@@ -20,3 +20,9 @@ def test_absolute_path():
         expected_stdout = result.stdout,
         expected_stderr = ""
         )
+
+def test_error_will_run_directory():
+    script_tester.test("general/test_command/test_error_will_run_directory.sh",
+        expected_stdout = "126\n",
+        expected_stderr = "minishell: ./: Is a directory\n"
+        )

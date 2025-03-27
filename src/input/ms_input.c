@@ -36,7 +36,6 @@ int	ms_input(t_minishell mnsh)
 		line = ms_get_user_input(mnsh);
 		if (line == NULL)
 			break ;
-		ft_strrchr(line, '\n')[0] = '\0';
 		status = ms_run_command(line);
 		free(line);
 	}
@@ -80,14 +79,15 @@ static char	*ms_get_user_input(t_minishell mnsh)
 			break ;
 		free(line);
 	}
-	if (ms_replace_joined_str(&line, "\n") == NULL)
-		return (free(line), NULL);
 	if (!ms_is_quoted_closed(line))
 		return (line);
 	heredoc_input = ms_input_heredoc(mnsh, line);
 	if (heredoc_input == NULL)
 		return (free(line), NULL);
-	if (ms_replace_joined_str(&line, heredoc_input) == NULL)
+	if (heredoc_input[0] == '\0')
+		return (free(heredoc_input), line);
+	if (ms_replace_joined_str(&line, "\n") == NULL
+		|| ms_replace_joined_str(&line, heredoc_input) == NULL)
 		return (free(line), free(heredoc_input), NULL);
 	free(heredoc_input);
 	return (line);
@@ -98,6 +98,8 @@ static bool	ms_is_quoted_closed(const char *line)
 	char	*first_line_end;
 
 	first_line_end = ft_strchr(line, '\n');
+	if (first_line_end == NULL)
+		first_line_end = ft_strchr(line, '\0');
 	if (first_line_end == NULL)
 		return (false);
 	while (*line != '\0')
