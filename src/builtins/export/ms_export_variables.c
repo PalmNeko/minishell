@@ -6,13 +6,12 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 11:04:28 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/26 12:23:39 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/27 08:10:31 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 #include "libft.h"
-#include "export_internal_def.h"
 #include <stdlib.h>
 #include <stddef.h>
 
@@ -90,8 +89,9 @@ static int	ms_export_append_variable(const char *arg)
 	if (ms_add_export(name) == -1)
 		return (free(name), 1);
 	if (ms_getenv(name) == NULL)
-		return (free(name), 0);
-	value = ft_strdup(ms_getenv(name));
+		value = ft_strdup("");
+	else
+		value = ft_strdup(ms_getenv(name));
 	if (value == NULL)
 		return (free(name), 1);
 	if (ms_replace_joined_str(&value, name_end + 2) == NULL)
