@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_setup.c                                         :+:      :+:    :+:   */
+/*   ms_isadir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:29:00 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/25 05:21:36 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/25 09:22:47 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/25 09:37:37 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "setup.h"
-#include "setup_internal.h"
-#include "readline.h"
+#include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
-t_minishell	*ms_setup(void)
+bool	ms_isadir(const char *path)
 {
-	t_minishell	*ms;
+	struct stat	buf;
 
-	ms_setup_variable();
-	ms_setup_history();
-	ms_setup_readline_behavior();
-	ms_setup_global_variables();
-	ms_setup_export_environ();
-	ms = ms_get_minishell();
-	*ms = (t_minishell){
-		.ms_malloc_list = NULL,
-		.ms_shell_var = NULL,
-	};
-	return (ms);
+	if (stat(path, &buf) == -1)
+		return (false);
+	if (S_ISDIR(buf.st_mode))
+		return (true);
+	return (false);
 }

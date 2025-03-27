@@ -24,7 +24,6 @@ def test_HOME_not_set():
         expected_stdout = "1\n",
         expected_stderr = "minishell: cd: HOME not set\n")
 
-@pytest.mark.skip(reason="デバッグの時用")
 def test_OLDPWD_not_set():
     script_tester.test("builtin/cd/test_errors/OLDPWD_not_set.sh",
         expected_stdout = "1\n",
