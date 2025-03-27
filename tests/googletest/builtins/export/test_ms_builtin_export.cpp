@@ -62,7 +62,7 @@ TEST(ms_builtin_export, basic)
 TEST(ms_builtin_export, can_set_environ)
 {
 	const char 	*args[] = {"export", "A==123", "B=321=", "C=", "D", NULL};
-
+	const char 	*args2[] = {"export", "A+==123", "B+=", NULL};
 
 	// 設定
 	ms_clear_environ(NULL);
@@ -76,6 +76,13 @@ TEST(ms_builtin_export, can_set_environ)
 	EXPECT_STREQ(ms_getenv("B"), "321=");
 	EXPECT_STREQ(ms_getenv("C"), "");
 	EXPECT_EQ(ms_getenv("D"), nullptr);
+
+	// 実行
+	ms_builtin_export(NULL, (char *const *)args2, NULL);
+
+	// テスト
+	EXPECT_STREQ(ms_getenv("A"), "=123=123");
+	EXPECT_STREQ(ms_getenv("B"), "321=");
 }
 
 /** エラーのテスト */
