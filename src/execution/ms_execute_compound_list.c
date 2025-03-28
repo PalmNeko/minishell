@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execute_compound_list.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:22:22 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:22:23 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/28 05:44:02 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int	ms_execute_compound_lists(t_lsa_list **lists)
 	if (pid == 0)
 	{
 		ret = ms_execute_lists(lists);
-		exit(ret);
+		ret = ms_add_meta(ret, IS_CHILD);
 	}
-	waitpid(pid, &ret, 0);
+	else
+		waitpid(pid, &ret, 0);
 	return (ret);
 }
