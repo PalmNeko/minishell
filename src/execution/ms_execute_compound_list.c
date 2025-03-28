@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_execute_compound_list.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:22:22 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:22:23 by nyts             ###   ########.fr       */
+/*   Updated: 2025/03/28 07:01:45 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+static void	ms_increase_mnsh_subshell(void);
 
 int	ms_execute_compound_lists(t_lsa_list **lists)
 {
@@ -28,9 +30,27 @@ int	ms_execute_compound_lists(t_lsa_list **lists)
 		return (1);
 	if (pid == 0)
 	{
+		if (ms_is_mnsh_subshell_var_enabled())
+			ms_increase_mnsh_subshell();
 		ret = ms_execute_lists(lists);
-		exit(ret);
+		ret = ms_add_meta(ret, IS_CHILD);
 	}
-	waitpid(pid, &ret, 0);
+	else
+		waitpid(pid, &ret, 0);
 	return (ret);
+}
+
+static void	ms_increase_mnsh_subshell(void)
+{
+	int		subshell;
+	char	*subshell_str;
+
+	subshell_str = ms_getenv("MNSH_SUBSHELL");
+	if (subshell_str == NULL)
+		return ;
+	subshell = ms_shell_atoi(subshell_str);
+	subshell++;
+	subshell_str = ft_itoa(subshell);
+	ms_setenv("MNSH_SUBSHELL", subshell_str, 1);
+	free(subshell_str);
 }

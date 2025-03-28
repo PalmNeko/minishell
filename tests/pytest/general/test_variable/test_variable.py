@@ -51,3 +51,26 @@ def test_HISTCMD_unset():
             "3\n"
             "3\n"),
         expected_stderr = "")
+
+def test_MNSH_SUBSHELL_overflow():
+    script_tester.test("general/test_variable/test_MNSH_SUBSHELL_overflow.sh",
+        expected_stdout = (
+            "-2147483648\n"
+            "0\n"),
+        expected_stderr = "")
+
+def test_MNSH_SUBSHELL_unset():
+    script_tester.test("general/test_variable/test_MNSH_SUBSHELL_unset.sh",
+        expected_stdout = (
+            "\n"
+            "3\n"
+            "0\n"),
+        expected_stderr = "")
+
+def test_MNSH_SUBSHELL_basic():
+    script_tester.test("general/test_variable/test_MNSH_SUBSHELL_basic.sh",
+        expected_stdout = (
+            "2\n"
+            "5\n"
+            "0\n"),
+        expected_stderr = "")

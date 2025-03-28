@@ -33,6 +33,7 @@ int	ms_input(t_minishell mnsh)
 	status = 0;
 	while (ms_is_loop(status))
 	{
+		ms_update_environs();
 		line = ms_get_user_input(mnsh);
 		if (line == NULL)
 			break ;

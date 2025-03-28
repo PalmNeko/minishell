@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_execute_lists.c                                 :+:      :+:    :+:   */
+/*   ms_mnsh_subshell.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 02:29:32 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/28 05:45:12 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/28 06:38:24 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/28 06:57:38 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "libms.h"
+#include <stdbool.h>
 
-int	ms_execute_lists(t_lsa_list **lists)
+static bool	g_mnsh_subshell_var_enabled = true;
+
+bool	ms_is_mnsh_subshell_var_enabled(void)
 {
-	int	ret;
-	int	i;
+	return (g_mnsh_subshell_var_enabled);
+}
 
-	ret = 0;
-	i = 0;
-	while (lists[i] && ms_has_meta(ret, IS_CHILD) == false)
-	{
-		if (lists[i]->type == LSA_LIST_AND && ret != 0)
-			break ;
-		if (lists[i]->type == LSA_LIST_OR && ret == 0)
-			break ;
-		ret = ms_execute_list(lists[i]);
-		i++;
-	}
-	return (ret);
+void	ms_set_mnsh_subshell_var_enabled(bool enable)
+{
+	g_mnsh_subshell_var_enabled = enable;
 }
