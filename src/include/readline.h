@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 10:09:32 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/30 19:29:48 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/28 08:09:49 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 char	*ms_readline(const char *prompt);
 int		ms_setup_readline_handler(void);
 int		ms_setup_readline_behavior(void);
+void	ms_clear_readline_buffer(void);
 
 #endif
