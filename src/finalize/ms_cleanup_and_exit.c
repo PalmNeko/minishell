@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/25 05:47:00 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/28 08:10:19 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libms.h"
 #include "history.h"
 #include "builtin_internal.h"
+#include "readline.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -21,6 +22,7 @@ static void	ms_export_history(void);
 
 void	ms_cleanup_and_exit(int status)
 {
+	ms_clear_readline_buffer();
 	if (ms_is_interactive() && ! ms_has_meta(status, IS_CHILD))
 	{
 		printf("exit\n");
