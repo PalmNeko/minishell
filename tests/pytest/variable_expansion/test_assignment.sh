@@ -16,4 +16,6 @@ echo $HOGE
 HOGE=hoge
 HOGE=$HOGE$HOGE$HOGE
 echo 'assignment($HOGE=hoge) self three time. '$HOGE
+HOGE=
+echo 'assignment($HOGE=) empty. "'$HOGE'"'
 EOF
