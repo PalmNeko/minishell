@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_run_assignment_variables.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 19:21:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/08 19:21:42 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:02:09 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static char	*ms_expand_assignment_variables(t_lsa_word_list *word_list)
 	char	**expanded_texts;
 	char	*expanded_text;
 
+	if (word_list->word_list == NULL)
+		return (ft_strdup(""));
 	expanded_texts = ms_expansion(word_list);
 	if (expanded_texts == NULL)
 		return (NULL);

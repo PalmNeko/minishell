@@ -15,8 +15,8 @@ def test_assignment():
 	result2 = "value  include   space" + "\n"
 	result3 = "join double quoted & non_quoted & single quoted" + "\n"
 	result4 = "assignment($HOGE=hoge) self three time. hogehogehoge" + "\n"
+	result5 = "assignment($HOGE=) empty. \"\"" + "\n"
 	script_tester.test("variable_expansion/test_assignment.sh",
-		expected_stdout = result + result2 + result3 + result4,
+		expected_stdout = result + result2 + result3 + result4 + result5,
 		expected_stderr = ""
 	)
-	
