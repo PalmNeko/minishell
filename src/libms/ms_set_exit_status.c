@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_execute_list.c                                  :+:      :+:    :+:   */
+/*   ms_set_exit_status.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 02:37:50 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/29 12:39:15 by rnakatan         ###   ########.fr       */
+/*   Created: 2025/03/29 12:14:43 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/03/29 12:38:02 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-#include "libms.h"
-#include <readline.h>
 #include <signal.h>
+#include <readline.h>
 #include <stdlib.h>
+#include "libft.h"
+#include "libms.h"
 
-int	ms_execute_list(t_lsa_list *list)
+/**
+ * set minishell's exit status.
+ * -> insert $?
+ */
+
+
+int	ms_set_exit_status(int ret)
 {
-	int	ret;
+	char	*stat_str;
+	int		status;
 
-	if (list->pipeline)
-	{
-		ret = ms_execute_pipeline(list->pipeline);
-		ms_set_exit_status(ret);
-	}
-	else
-		ret = ms_execute_compound_lists(list->compound_list);
-	return (ret);
+	status = ms_get_status_from_meta(ret);
+	if (g_rl_is_sigint)
+		status += 128 + SIGINT;
+	stat_str = ft_itoa(status);
+	ms_setenv("?", stat_str, 1);
+	free(stat_str);
+	return (0);
 }
