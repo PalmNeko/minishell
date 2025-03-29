@@ -37,29 +37,40 @@ char	*ms_normalize_path(const char *path)
 		if (ms_normalize_path_join(&lst, *(paths++)) != 0)
 		{
 			ms_destroy_ntp(root);
-			ft_lstclear(&lst, (void (*)(void *))ft_voidnop);
+			ft_lstclear(&lst, free);
 			return (NULL);
 		}
 	}
 	joined = ms_normalize_pathlst_join(lst);
 	ms_destroy_ntp(root);
-	ft_lstclear(&lst, (void (*)(void *))ft_voidnop);
+	ft_lstclear(&lst, free);
 	return (joined);
 }
 
 int	ms_normalize_path_join(t_list **lst, char *path)
 {
 	t_list	*tmp;
+	char	*dup_path;
 
-	tmp = ft_lstnew(path);
-	if (tmp == NULL)
-		return (1);
 	if (ft_strcmp(path, ".") == 0)
-		return (free(tmp), 0);
+		return (0);
 	else if (ft_strcmp(path, "..") == 0)
-		ft_lstpop(lst);
+	{
+		tmp = ft_lstpop(lst);
+		if (tmp == NULL)
+			return (0);
+		ft_lstdelone(tmp, free);
+	}
 	else
+	{
+		dup_path = ft_strdup(path);
+		if (dup_path == NULL)
+			return (1);
+		tmp = ft_lstnew(dup_path);
+		if (tmp == NULL)
+			return (free(dup_path), 1);
 		ft_lstpush(lst, tmp);
+	}
 	return (0);
 }
 
