@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathname_expansion.h                               :+:      :+:    :+:   */
+/*   ms_wordlist_perror.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 03:35:42 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/31 14:58:31 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/31 17:53:36 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/31 17:54:52 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATHNAME_EXPANSION_H
-# define PATHNAME_EXPANSION_H
+#include "syntax_analyze.h"
+#include "semantic_analyze.h"
 
-char			**ms_pathname_expansion_wildcard(char *token, char *dir_name);
-char			*ms_expand_path2(char *token);
-t_syntax_node	*ms_remove_null_children(t_syntax_node *node);
-
-#endif
+void	ms_wordlist_perror(const t_lsa_word_list *word_list, const char *msg)
+{
+	ms_syntax_node_perror(
+		word_list->word_list, msg);
+	return ;
+}

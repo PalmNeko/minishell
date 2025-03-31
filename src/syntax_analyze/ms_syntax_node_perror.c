@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathname_expansion.h                               :+:      :+:    :+:   */
+/*   ms_syntax_node_perror.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 03:35:42 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/31 14:58:31 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/31 17:49:02 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/31 17:56:18 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATHNAME_EXPANSION_H
-# define PATHNAME_EXPANSION_H
+#include "libms.h"
+#include "syntax_analyze.h"
+#include <stdlib.h>
 
-char			**ms_pathname_expansion_wildcard(char *token, char *dir_name);
-char			*ms_expand_path2(char *token);
-t_syntax_node	*ms_remove_null_children(t_syntax_node *node);
+void	ms_syntax_node_perror(const t_syntax_node *node, const char *msg)
+{
+	char	*node_text;
 
-#endif
+	node_text = ms_syntax_node_to_string(node);
+	if (node_text == NULL)
+		return ;
+	ms_perror_cmd(node_text, msg);
+	free(node_text);
+	return ;
+}

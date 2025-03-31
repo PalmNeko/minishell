@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathname_expansion.h                               :+:      :+:    :+:   */
+/*   ms_syntax_node_ntp_destroy.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 03:35:42 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/31 14:58:31 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/31 14:51:13 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/31 14:59:48 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATHNAME_EXPANSION_H
-# define PATHNAME_EXPANSION_H
+#include "libms.h"
+#include "syntax_analyze.h"
+#include <stdlib.h>
 
-char			**ms_pathname_expansion_wildcard(char *token, char *dir_name);
-char			*ms_expand_path2(char *token);
-t_syntax_node	*ms_remove_null_children(t_syntax_node *node);
+void	ms_syntax_node_ntp_destroy(t_syntax_node **nodes)
+{
+	int	i;
 
-#endif
+	if (nodes == NULL)
+		return ;
+	i = 0;
+	while (nodes[i] != NULL)
+	{
+		ms_syntax_node_destroy(nodes[i]);
+		i++;
+	}
+	free(nodes);
+	return ;
+}
