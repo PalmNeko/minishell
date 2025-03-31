@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parse_assignment_word.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 21:19:49 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/12 03:38:43 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:52:44 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static const t_syntax_rule	*g_ms_assignment_word_rule_list[] = {
 	false,
 	true}},
 	(t_syntax_rule[]){{
-	EBNF_ONE,
+	EBNF_OPTION,
 	(t_parse_func *)g_ms_assignment_word_value_funcs,
 	false,
 	true}},
