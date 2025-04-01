@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -g -O0 -I $(SRC_DIR)/include -I includ
 CC       = cc
 CFLAGS   = $(CXXFLAGS)
 LDFLAGS  = -L.
-LDLIBS   = -lmsh -pthread -lgtest_main -lgtest
+LDLIBS   = -lmsh -pthread -lgtest_main -lgtest -lreadline
 
 CACHEDIR = cache
 
