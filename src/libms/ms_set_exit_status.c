@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_set_exit_status.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:14:43 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/29 12:38:02 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/04/01 08:57:49 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
  * set minishell's exit status.
  * -> insert $?
  */
-
 
 int	ms_set_exit_status(int ret)
 {
