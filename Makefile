@@ -16,4 +16,4 @@ test_pytest:
 	bash tests/pytest/run_test.sh
 
 test_norm:
-	! (norminette src | grep -v OK) && echo "Norminette OK" || false
+	! (bash -c "norminette src" | grep -v OK) && echo "Norminette OK" || false
