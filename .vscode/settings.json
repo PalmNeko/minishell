@@ -15,7 +15,8 @@
 		"functional": "cpp",
 		"semantic_analyze_type.h": "c",
 		"lexical_analyze.h": "c",
-		"ms_execute_pipeline.h": "c"
+		"ms_execute_pipeline.h": "c",
+		"readline.h": "c"
 	},
 	"editor.indentSize": "tabSize"
 }
