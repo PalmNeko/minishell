@@ -72,6 +72,7 @@ int				ms_get_status_from_meta(int status);
 int				ms_shell_atoi(const char *str);
 bool			ms_isadir(const char *path);
 void			ms_update_environs(void);
+char			*ms_dup_escapedstr(const char *str);
 
 // environment variable
 char			*ms_getenv(const char *name);
