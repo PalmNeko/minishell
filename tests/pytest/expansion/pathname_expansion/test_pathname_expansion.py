@@ -5,14 +5,14 @@ import subprocess
 dirname = "expansion/pathname_expansion/"
 
 def test_only():
-	result = "aaaa  bbbb  cccc  dddd.sh  eeee.sh\n"
+	result = "aaaa\nbbbb\ncccc\ndddd.sh\neeee.sh\n"
 	script_tester.test(dirname + "test_include_only_wildcard.sh",
 		expected_stdout = result,
 		expected_stderr = ""
 	)
 
 def test_include_single():
-	result = "dddd.sh  eeee.sh\n"
+	result = "\ndddd.sh\neeee.sh\n"
 	result2 = "no*match\n"
 	script_tester.test(dirname + "test_include_single_wildcard.sh",
 		expected_stdout = result + result2,

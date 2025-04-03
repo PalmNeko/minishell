@@ -9,7 +9,7 @@ cd "$(dirname $0)"
 cd testdir
 LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
-echo *
+echo * | tr ' ' '\n' | grep -vE "^$" | sort
 EOF
 cd ../
 rm -rf testdir
