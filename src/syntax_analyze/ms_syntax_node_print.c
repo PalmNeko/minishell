@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_syntax_node_print.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:52:26 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/09 10:59:57 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/04/03 08:40:47 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ static void	**g_list[] = {
 	(void *[]){
 	(t_syntax_type[]){SY_RIGHT_PARENTHESIS},
 	"SY_RIGHT_PARENTHESIS",
+	"\x1b[31;4m"},
+	(void *[]){
+	(t_syntax_type[]){SY_NULL_WORD},
+	"SY_NULL_WORD",
 	"\x1b[31;4m"},
 	(void *[]){
 	(t_syntax_type[]){SY_ALL},

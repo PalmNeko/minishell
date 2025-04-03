@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:32:03 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/10 01:30:27 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/04/03 09:22:48 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	**ms_get_expand_texts(t_syntax_node *word_list_node)
 				&token_string, join_flag) == -1)
 			return (ft_lstclear(&expanded_text_lst, free), NULL);
 		join_flag = ms_is_chain_node(word_list_node, i);
-		if (!join_flag)
+		if (!join_flag && word_list_node->children[i]->type != SY_NULL_WORD)
 			if (ms_lst_append_tail(&expanded_text_lst, token_string) == -1)
 				return (ft_lstclear(&expanded_text_lst, free), NULL);
 		i++;

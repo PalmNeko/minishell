@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analyze_type.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:08:38 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/15 23:28:59 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/04/03 08:37:43 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef enum e_syntax_type
 	SY_COMPOUND_LIST,
 	SY_USER_INPUT,
 	SY_INSTRUCTION,
+	SY_NULL_WORD,
 	SY_ACCEPTED,
 }							t_syntax_type;
 

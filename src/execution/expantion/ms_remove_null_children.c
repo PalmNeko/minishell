@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:07:46 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/31 14:55:16 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/03 08:43:42 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static int	ms_node_is_not_null(const t_syntax_node *node);
 
 t_syntax_node	*ms_remove_null_children(t_syntax_node *node)
 {
-	t_syntax_node	*filtered_node;
+	t_syntax_node	**children;
 
-	filtered_node = ms_syntax_node_filter(node, ms_node_is_not_null);
-	if (filtered_node == NULL)
-		return (NULL);
-	ms_syntax_node_ntp_destroy(node->children);
-	node->children = filtered_node->children;
-	filtered_node->children = NULL;
-	ms_syntax_node_destroy(filtered_node);
+	children = node->children;
+	while (*children != NULL)
+	{
+		if (ms_node_is_not_null(*children) == 0)
+			(*children)->type = SY_NULL_WORD;
+		children++;
+	}
 	return (node);
 }
 
