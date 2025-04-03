@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 19:27:53 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/15 23:16:57 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/29 14:59:40 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **child_node_lst)
 		if (expanded_string == NULL)
 			return (-1);
 		if (expanded_string[0] == '\0')
-			return (ms_lst_append_tail(child_node_lst,
-					ms_duplicate_node(word_node)));
+			return (free(expanded_string),
+				ms_lst_append_tail(child_node_lst
+					, ms_duplicate_node(word_node)));
 		expanded_node_lst = ms_create_expanded_node_lst(expanded_string);
 		free(expanded_string);
 		ft_lstadd_back(child_node_lst, expanded_node_lst);
