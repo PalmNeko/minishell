@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:09:33 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/31 17:56:51 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/03 08:03:55 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_syntax_node	*ms_syntax_node_filter(
 int				ms_syntax_node_check_declined(t_syntax_node *node);
 void			ms_syntax_node_ntp_destroy(t_syntax_node **nodes);
 char			*ms_syntax_node_to_string(const t_syntax_node *node);
-void			ms_syntax_node_perror(const t_syntax_node *node, const char *msg);
+void			ms_syntax_node_perror(
+					const t_syntax_node *node, const char *msg);
 
 void			ms_syntax_node_print(t_syntax_node *node);
 t_syntax_node	*ms_syntax_node_find_child(t_syntax_node *node,
