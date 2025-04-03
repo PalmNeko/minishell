@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 17:29:38 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/25 08:35:59 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/28 07:21:30 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	ms_setup_only_interactive_var(void)
 	ms_setenv("TMPDIR", "/tmp", 0);
 	ms_setenv("PS1", "minishell $ ", 0);
 	ms_setenv("PS2", "> ", 0);
-	ms_setenv("MNSH_SUBSHELL", "0", 0);
 }
 
 static void	ms_setup_common_variable(void)
@@ -52,6 +51,7 @@ static void	ms_setup_common_variable(void)
 	ms_setenv("?", "0", 0);
 	free(cwd);
 	ms_setup_shlvl();
+	ms_setenv("MNSH_SUBSHELL", "0", 0);
 }
 
 static void	ms_setup_shlvl(void)

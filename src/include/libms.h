@@ -65,10 +65,13 @@ int				ms_add_meta(int status, int meta);
 bool			ms_has_meta(int status, int meta);
 int				ms_get_meta(int status);
 
+int				ms_set_exit_status(int ret);
+
 int				ms_add_string_to_lst(t_list **file_list_lst, char *filename);
 int				ms_get_status_from_meta(int status);
 int				ms_shell_atoi(const char *str);
 bool			ms_isadir(const char *path);
+void			ms_update_environs(void);
 
 // environment variable
 char			*ms_getenv(const char *name);
@@ -100,5 +103,9 @@ void			ms_set_exports(t_list *exports);
 void			ms_clear_exports(void);
 int				ms_add_export(const char *name);
 t_list			*ms_find_export(const char *name);
+
+// mnsh_subshell
+bool			ms_is_mnsh_subshell_var_enabled(void);
+void			ms_set_mnsh_subshell_var_enabled(bool enable);
 
 #endif

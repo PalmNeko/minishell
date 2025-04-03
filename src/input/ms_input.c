@@ -33,6 +33,7 @@ int	ms_input(t_minishell mnsh)
 	status = 0;
 	while (ms_is_loop(status))
 	{
+		ms_update_environs();
 		line = ms_get_user_input(mnsh);
 		if (line == NULL)
 			break ;
@@ -44,24 +45,17 @@ int	ms_input(t_minishell mnsh)
 
 static int	ms_run_command(char *line)
 {
-	int		status;
-	char	*stat_str;
+	int		ret;
 
-	status = 0;
+	ret = 0;
 	if (! g_rl_is_sigint)
 	{
 		ms_add_mnsh_history(line);
-		status = ms_execution(line);
-		stat_str = ft_itoa(ms_get_status_from_meta(status));
-		ms_setenv("?", stat_str, 1);
-		free(stat_str);
+		ret = ms_execution(line);
 	}
 	if (g_rl_is_sigint)
-		status = 128 + SIGINT + ms_get_meta(status);
-	stat_str = ft_itoa(ms_get_status_from_meta(status));
-	ms_setenv("?", stat_str, 1);
-	free(stat_str);
-	return (status);
+		ms_set_exit_status(ret);
+	return (ret);
 }
 
 static char	*ms_get_user_input(t_minishell mnsh)

@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 17:44:22 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/15 17:56:32 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/29 15:41:44 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*ms_expand_path2(char *token)
 	if (expanded_tokens_list == NULL)
 		return (NULL);
 	expanded_token_list = ms_get_expanded_token(expanded_tokens_list);
+	ms_destroy_ntp2((void **)expanded_tokens_list, free);
 	if (expanded_token_list == NULL)
 		return (NULL);
 	expanded_string = ms_join_ntp((const char **)expanded_token_list, " ");

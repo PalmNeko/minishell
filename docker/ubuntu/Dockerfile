@@ -1,5 +1,7 @@
 FROM ubuntu:22.04 AS base
 
+ARG NORM_VERSION=3.3.51
+
 RUN <<EOF
 apt update -y
 apt upgrade -y
@@ -9,7 +11,7 @@ apt install -y \
 	python3-pip \
 	git \
 	libreadline-dev
-pip install pytest
+pip install pytest norminette==${NORM_VERSION}
 EOF
 
 # Installing
@@ -56,13 +58,9 @@ WORKDIR /home/minishell
 # デバッグ用の環境
 FROM final AS debug
 
-ARG NORM_VERSION=3.3.51
-
 RUN <<EOF
 apt-get update -y
 apt-get upgrade -y
 apt-get install -y \
 	lldb
-pip install \
-	norminette==${NORM_VERSION}
 EOF

@@ -16,4 +16,5 @@ test_pytest:
 	bash tests/pytest/run_test.sh
 
 test_norm:
-	! (norminette src | grep -v OK) && echo "Norminette OK" || false
+	test -f /usr/local/bin/norminette || (echo "Norminette not found, please install it" && exit 1)
+	! (/usr/local/bin/norminette src | grep -v OK) && echo "Norminette OK" || false

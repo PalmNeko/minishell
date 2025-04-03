@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_execute_lists.c                                 :+:      :+:    :+:   */
+/*   ms_set_exit_status.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 02:29:32 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/28 05:45:12 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/29 12:14:43 by rnakatan          #+#    #+#             */
+/*   Updated: 2025/04/01 08:57:49 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include <signal.h>
+#include <readline.h>
+#include <stdlib.h>
+#include "libft.h"
 #include "libms.h"
 
-int	ms_execute_lists(t_lsa_list **lists)
-{
-	int	ret;
-	int	i;
+/**
+ * set minishell's exit status.
+ * -> insert $?
+ */
 
-	ret = 0;
-	i = 0;
-	while (lists[i] && ms_has_meta(ret, IS_CHILD) == false)
-	{
-		if (lists[i]->type == LSA_LIST_AND && ret != 0)
-			break ;
-		if (lists[i]->type == LSA_LIST_OR && ret == 0)
-			break ;
-		ret = ms_execute_list(lists[i]);
-		i++;
-	}
-	return (ret);
+int	ms_set_exit_status(int ret)
+{
+	char	*stat_str;
+	int		status;
+
+	status = ms_get_status_from_meta(ret);
+	if (g_rl_is_sigint)
+		status += 128 + SIGINT;
+	stat_str = ft_itoa(status);
+	ms_setenv("?", stat_str, 1);
+	free(stat_str);
+	return (0);
 }
