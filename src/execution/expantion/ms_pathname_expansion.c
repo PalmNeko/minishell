@@ -60,8 +60,8 @@ static int	ms_expand_path(t_syntax_node *word_node, t_list **child_node_lst)
 			return (-1);
 		if (expanded_string[0] == '\0')
 			return (free(expanded_string),
-					ms_lst_append_tail(child_node_lst,
-					ms_duplicate_node(word_node)));
+				ms_lst_append_tail(child_node_lst
+					, ms_duplicate_node(word_node)));
 		expanded_node_lst = ms_create_expanded_node_lst(expanded_string);
 		free(expanded_string);
 		ft_lstadd_back(child_node_lst, expanded_node_lst);

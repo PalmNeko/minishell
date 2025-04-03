@@ -34,7 +34,7 @@ char	*ms_expand_path2(char *token)
 	if (expanded_tokens_list == NULL)
 		return (NULL);
 	expanded_token_list = ms_get_expanded_token(expanded_tokens_list);
-	ms_destroy_ntp2((void **)expanded_tokens_list,free);
+	ms_destroy_ntp2((void **)expanded_tokens_list, free);
 	if (expanded_token_list == NULL)
 		return (NULL);
 	expanded_string = ms_join_ntp((const char **)expanded_token_list, " ");
