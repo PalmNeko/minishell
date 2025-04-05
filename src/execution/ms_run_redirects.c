@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 14:37:41 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/27 09:38:52 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:06:13 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ static int	ms_redirect_input(t_lsa_redirection *redirect)
 	char	**expanded_texts;
 
 	expanded_texts = ms_expansion(redirect->filename);
-	if (expanded_texts == NULL || expanded_texts[0] == NULL)
-		return (-1);
+	if (expanded_texts == NULL || ms_ntpsize((void **)expanded_texts) != 1)
+		return (ms_wordlist_perror(redirect->filename, "ambiguous redirect")
+			, ms_destroy_ntp(expanded_texts), -1);
 	filename = ft_strdup(expanded_texts[0]);
 	ms_destroy_ntp(expanded_texts);
 	if (filename == NULL)
@@ -77,8 +78,9 @@ static int	ms_redirect_output(t_lsa_redirection *redirect)
 	char	**expanded_texts;
 
 	expanded_texts = ms_expansion(redirect->filename);
-	if (expanded_texts == NULL || expanded_texts[0] == NULL)
-		return (-1);
+	if (expanded_texts == NULL || ms_ntpsize((void **)expanded_texts) != 1)
+		return (ms_wordlist_perror(redirect->filename, "ambiguous redirect")
+			, ms_destroy_ntp(expanded_texts), -1);
 	filename = ft_strdup(expanded_texts[0]);
 	ms_destroy_ntp(expanded_texts);
 	if (filename == NULL)
@@ -101,8 +103,9 @@ static int	ms_redirect_append(t_lsa_redirection *redirect)
 	char	**expanded_texts;
 
 	expanded_texts = ms_expansion(redirect->filename);
-	if (expanded_texts == NULL || expanded_texts[0] == NULL)
-		return (-1);
+	if (expanded_texts == NULL || ms_ntpsize((void **)expanded_texts) != 1)
+		return (ms_wordlist_perror(redirect->filename, "ambiguous redirect")
+			, ms_destroy_ntp(expanded_texts), -1);
 	filename = ft_strdup(expanded_texts[0]);
 	ms_destroy_ntp(expanded_texts);
 	if (filename == NULL)

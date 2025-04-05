@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_memento_destroy.c                               :+:      :+:    :+:   */
+/*   ms_wordlist_perror.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 12:12:52 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/05 02:16:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/31 17:53:36 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/31 17:54:52 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memento_type.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "syntax_analyze.h"
+#include "semantic_analyze.h"
 
-void	ms_memento_destroy(t_environ_memento *memento)
+void	ms_wordlist_perror(const t_lsa_word_list *word_list, const char *msg)
 {
-	close(memento->stdin_fd);
-	close(memento->stdout_fd);
-	close(memento->stderr_fd);
-	free(memento);
+	ms_syntax_node_perror(
+		word_list->word_list, msg);
+	return ;
 }

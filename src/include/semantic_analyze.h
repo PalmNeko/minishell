@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semantic_analyze.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:13:45 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/15 18:18:55 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:55:22 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_lsa_redirection	*ms_lsa_redirection(t_syntax_node *redirection_node);
 t_lsa_pipeline		*ms_lsa_pipeline(t_syntax_node *pipeline_node);
 t_lsa_list			*ms_lsa_list(t_syntax_node *list_node);
 t_lsa_list			**ms_lsa_lists(t_syntax_node *lists_node);
+void				ms_wordlist_perror(
+						const t_lsa_word_list *word_list, const char *msg);
 
 int					ms_set_readnodestream(t_syntax_node *node);
 void				ms_unset_readnodestream(void);

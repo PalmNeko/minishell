@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pathname_expansion.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 19:27:53 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/29 14:59:40 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/04/03 08:29:43 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 	ms_destroy_ntp2((void **)word_list->children,
 		ms_syntax_node_destroy_wrapper);
 	word_list->children = new_children;
+	ms_remove_null_children(word_list);
 	return (word_list);
 }
 

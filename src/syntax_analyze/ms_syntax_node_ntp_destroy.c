@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_memento_destroy.c                               :+:      :+:    :+:   */
+/*   ms_syntax_node_ntp_destroy.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 12:12:52 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/05 02:16:16 by tookuyam         ###   ########.fr       */
+/*   Created: 2025/03/31 14:51:13 by tookuyam          #+#    #+#             */
+/*   Updated: 2025/03/31 14:59:48 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memento_type.h"
+#include "libms.h"
+#include "syntax_analyze.h"
 #include <stdlib.h>
-#include <unistd.h>
 
-void	ms_memento_destroy(t_environ_memento *memento)
+void	ms_syntax_node_ntp_destroy(t_syntax_node **nodes)
 {
-	close(memento->stdin_fd);
-	close(memento->stdout_fd);
-	close(memento->stderr_fd);
-	free(memento);
+	int	i;
+
+	if (nodes == NULL)
+		return ;
+	i = 0;
+	while (nodes[i] != NULL)
+	{
+		ms_syntax_node_destroy(nodes[i]);
+		i++;
+	}
+	free(nodes);
+	return ;
 }
