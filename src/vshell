@@ -1,0 +1,13 @@
+#!/bin/bash
+
+valgrind \
+	-q \
+	--leak-check=full \
+	--show-leak-kinds=all \
+	--suppressions=.supp \
+	--track-origins=yes \
+	--trace-children=yes \
+	--error-exitcode=230 \
+	--track-fds=all \
+	./minishell
+	# --gen-suppressions=yes \
