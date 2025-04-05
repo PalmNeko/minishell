@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 05:55:29 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:31:56 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/05 06:52:20 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ms_setup_readline_handler(void)
 {
 	rl_startup_hook = ms_startup_hook_handler;
 	rl_event_hook = ms_event_hook_handler;
+	rl_outstream = stderr;
 	set_signal_handler(SIGINT, ms_handle_sigint);
 	set_signal_handler(SIGQUIT, SIG_IGN);
 	return (0);
