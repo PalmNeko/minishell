@@ -10,7 +10,6 @@ mkdir -p tmp
 # テスト
 # PROG="bash"
 export HOGE1=$'\a \b \e \f \n \r \t \v \\ \'' HOGE2=$'\001 \020 \x7f \x8f \xff'
-LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
 cd "$HOGE1"
 cd "$HOGE2"

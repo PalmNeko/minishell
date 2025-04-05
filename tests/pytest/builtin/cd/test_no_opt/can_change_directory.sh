@@ -13,7 +13,6 @@ mkdir -p physical_dir
 ln -s physical_dir symbolic_dir
 
 # テスト
-LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
 cd physical_dir
 pwd

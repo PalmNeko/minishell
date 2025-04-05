@@ -9,7 +9,6 @@ mkdir tmp
 
 # テスト
 # PROG="bash"
-LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
 pwd
 cd tmp
