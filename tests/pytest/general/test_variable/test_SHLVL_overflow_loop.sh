@@ -12,7 +12,6 @@ cd "$(dirname $0)"
 # SHLVL = INT_MAX*2 + 1 は 0 (-1として判断される)
 # SHLVL = INT_MAX*2 + 2 は 1 (0として判断される)
 # ここでは、INT_MAX*2 + 2 + 2　が　3 として解釈されるものとして計算する
-LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 SHLVL=4294967298 # INT_MAX*2 + 2 + 2
 $LEAKCHECK $PROG << "EOF"
 echo $SHLVL

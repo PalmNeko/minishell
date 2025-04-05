@@ -7,7 +7,6 @@ cd "$(dirname $0)"
 # テスト
 . "module/create_testdir.sh"
 cd testdir
-LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
 echo * | tr ' ' '\n' | grep -vE "^$" | sort
 EOF

@@ -10,7 +10,6 @@ cd "$(dirname $0)"
 
 cd ../../../
 # テスト
-LEAKCHECK="valgrind -q --error-exitcode=12 --leak-check=full"
 $LEAKCHECK $PROG << "EOF"
 cd .
 echo $PWD
