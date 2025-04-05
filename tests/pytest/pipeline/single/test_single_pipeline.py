@@ -19,7 +19,7 @@ def test_double_quote_word():
 		expected_stderr = ""
 	)
 
-@pytest.mark.skip(reason="該当issueで修正予定のため")
+# @pytest.mark.skip(reason="該当issueで修正予定のため")
 # echo "$HOGE" -> OK, echo "some_string,$HOGE" -> NG 
 def test_double_quote_variable():
 	script_tester.test("pipeline/single/test_double_quoted_word_variable.sh",
@@ -33,3 +33,8 @@ def test_double_quote_blank():
 		expected_stderr = ""
 	)
 	
+def test_variable_before_string():
+	script_tester.test("pipeline/single/test_variable_before_join_string.sh",
+		expected_stdout = "Hellohoge\nHellohoge 2\n",
+		expected_stderr = ""
+	)
