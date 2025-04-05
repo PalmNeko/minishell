@@ -38,3 +38,9 @@ def test_variable_before_string():
 		expected_stdout = "Hellohoge\nHellohoge 2\n",
 		expected_stderr = ""
 	)
+
+def test_syntax_error():
+	script_tester.test("pipeline/single/test_syntax_error_status.sh",
+		expected_stdout = "2\n0\n",
+		expected_stderr = ""
+	)
