@@ -185,3 +185,30 @@ TEST(ms_builtin_export, first_number_error)
     EXPECT_EQ(term->getStatus(), expectStatus);
 	delete term;
 }
+
+// エスケープする
+TEST(ms_builtin_export, escaped_char)
+{
+	std::string expectStderr;
+	std::string expectStdout;
+	int	expectStatus;
+	const char 	*args[] = {"export", NULL};
+
+	expectStdout = "declare -x HOGE=\"\\\\\\\"\"\n";
+	expectStderr = "";
+	expectStatus = 0;
+
+	// 設定
+	ms_clear_environ(NULL);
+	ms_clear_exports();
+	ms_setenv("HOGE", "\\\"", 1);
+	ms_add_export("HOGE");
+
+	// テスト
+	IoCapture 	*term;
+	term = testBuiltinExport(NULL, (char *const*)args, NULL);
+    EXPECT_EQ(term->getStdout(), expectStdout);
+    EXPECT_EQ(term->getStderr(), expectStderr);
+    EXPECT_EQ(term->getStatus(), expectStatus);
+	delete term;
+}

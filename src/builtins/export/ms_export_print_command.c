@@ -15,6 +15,7 @@
 #include "export_internal.h"
 #include "libft.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static void	ms_sort_environs(char *const envp[]);
 static void	ms_print_export_environs(char *const envp[]);
@@ -43,6 +44,7 @@ static void	ms_print_export_environs(char *const envp[])
 {
 	char		**envitr;
 	char		*envvalue;
+	char		*escaped_value;
 	char		*envname;
 
 	envitr = (char **)envp;
@@ -53,7 +55,11 @@ static void	ms_print_export_environs(char *const envp[])
 		if (envvalue == NULL)
 			printf("declare -x %s\n", envname);
 		else
-			printf("declare -x %s=\"%s\"\n", envname, envvalue);
+		{
+			escaped_value = ms_escape_export_value(envvalue);
+			printf("declare -x %s=\"%s\"\n", envname, escaped_value);
+			free(escaped_value);
+		}
 		envitr++;
 	}
 	return ;
