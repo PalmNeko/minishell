@@ -38,3 +38,11 @@ def test_getcwd_error():
         expected_stderr = (
             "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
             ))
+
+def test_escape_string():
+    script_tester.test("builtin/cd/test_errors/escape_string.sh",
+        expected_stdout = "",
+        expected_stderr = (
+            "minishell: cd: $'\\a \\b \\E \\f \\n \\r \\t \\v \\\\ \\\'': No such file or directory\n"
+            "minishell: cd: $'\\001 \\020 \\177 \\217 \\377': No such file or directory\n"
+            ))

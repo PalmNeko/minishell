@@ -25,7 +25,7 @@ TEST(ms_dup_escapedstr, will_escaped_character)
 	escaped = ms_dup_escapedstr("\a \b \e \f \n \r \t \v \\ '");
 	if (escaped == NULL)
 		FAIL();
-	EXPECT_STREQ(escaped, "\\a \\b \\e \\f \\n \\r \\t \\v \\\\ \\'");
+	EXPECT_STREQ(escaped, "\\a \\b \\E \\f \\n \\r \\t \\v \\\\ \\'");
 	free(escaped);
 }
 
