@@ -6,7 +6,7 @@
 /*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:33:59 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/08 19:24:13 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:04:56 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	ms_execution(const char *input)
 			ms_lsa_destroy(lsa);
 		}
 		else
-			ret = 1;
+		{
+			ret = 2;
+			ms_set_exit_status(ret);
+		}
 		ms_syntax_node_destroy(node);
 	}
 	ms_destroy_ntp2((void **)tokens, ms_destroy_token_wrapper);
