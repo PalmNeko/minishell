@@ -113,5 +113,7 @@ static int	ms_is_loop(int status)
 {
 	if (ms_has_meta(status, IS_CHILD))
 		return (0);
+	if (ms_has_meta(status, IS_EXIT))
+		return (0);
 	return (1);
 }
