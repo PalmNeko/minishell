@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/05 02:24:38 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/05 14:00:12 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ms_cleanup_and_exit(int status)
 	ms_clear_readline_buffer();
 	if (ms_is_interactive() && ! ms_has_meta(status, IS_CHILD))
 	{
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 2);
 		ms_add_mnsh_history("exit");
 		ms_export_history();
 	}
