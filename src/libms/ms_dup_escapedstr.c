@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:42:33 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/02 17:46:02 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/05 06:04:06 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ms_dup_escapedstr(const char *str)
 static char	*ms_toescapedstr(char dest[11], const int chr)
 {
 	const char	*escaped_str = "\a\b\e\f\n\r\t\v\\'";
-	const char	*escaped_map = "\\a\\b\\e\\f\\n\\r\\t\\v\\\\\\'";
+	const char	*escaped_map = "\\a\\b\\E\\f\\n\\r\\t\\v\\\\\\'";
 	char		*escaped_ptr;
 
 	escaped_ptr = ft_strchr(escaped_str, chr);
