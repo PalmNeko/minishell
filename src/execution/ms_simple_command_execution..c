@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_simple_command_execution..c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:31:38 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/26 06:50:45 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:06:49 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,8 @@ static int	ms_simple_command_execution_no_args(t_lsa_command *lsa_command);
 int	ms_simple_command_execution(t_lsa_command *lsa_command)
 {
 	int					ret;
-	t_environ_memento	*env_memento;
 
 	ret = 0;
-	env_memento = ms_save_environ_memento();
-	if (env_memento == NULL)
-		return (1);
 	if (lsa_command->args)
 	{
 		ret = ms_simple_command_execution_with_args(lsa_command);
@@ -35,9 +31,6 @@ int	ms_simple_command_execution(t_lsa_command *lsa_command)
 	{
 		ret = ms_simple_command_execution_no_args(lsa_command);
 	}
-	if (ms_restore_environ_memento(env_memento) == -1)
-		ret = 1;
-	ms_memento_destroy(env_memento);
 	return (ret);
 }
 
