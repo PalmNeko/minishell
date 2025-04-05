@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:32:03 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/04/03 09:22:48 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/05 02:08:48 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static const t_expand_func	g_expand_funcs[] = {
 
 static char	**ms_get_expand_texts(t_syntax_node *word_list_node);
 static bool	ms_is_chain_node(t_syntax_node *parent_node, int index);
-static int	ms_get_child_token_string(t_syntax_node *child_node,
-				char **string_ptr, bool join_flag);
+static bool	ms_is_all_null_word(t_syntax_node *parent_node);
+static char	*ms_get_expansion_string(t_syntax_node *word_list_node, int *index);
 
 char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 {
@@ -57,25 +57,25 @@ char	**ms_expansion(t_lsa_word_list *lsa_word_list)
 
 static char	**ms_get_expand_texts(t_syntax_node *word_list_node)
 {
-	char			**expanded_texts;
-	char			*token_string;
-	size_t			i;
-	t_list			*expanded_text_lst;
-	bool			join_flag;
+	char	**expanded_texts;
+	char	*token_string;
+	int		i;
+	t_list	*expanded_text_lst;
 
-	join_flag = false;
+	if (ms_is_all_null_word(word_list_node))
+		return (ft_calloc(1, sizeof(char *)));
 	expanded_text_lst = NULL;
 	i = 0;
 	while (word_list_node->children[i] != NULL)
 	{
-		if (ms_get_child_token_string(word_list_node->children[i],
-				&token_string, join_flag) == -1)
-			return (ft_lstclear(&expanded_text_lst, free), NULL);
-		join_flag = ms_is_chain_node(word_list_node, i);
-		if (!join_flag && word_list_node->children[i]->type != SY_NULL_WORD)
-			if (ms_lst_append_tail(&expanded_text_lst, token_string) == -1)
-				return (ft_lstclear(&expanded_text_lst, free), NULL);
-		i++;
+		if (word_list_node->children[i] != NULL)
+		{
+			token_string = ms_get_expansion_string(word_list_node, &i);
+			if (token_string == NULL
+				|| ms_lst_append_tail(&expanded_text_lst, token_string) == -1)
+				return (free(token_string),
+					ft_lstclear(&expanded_text_lst, free), NULL);
+		}
 	}
 	expanded_texts = ms_lst_to_ntp(&expanded_text_lst, (void *)ft_strdup, free);
 	if (expanded_texts == NULL)
@@ -83,29 +83,53 @@ static char	**ms_get_expand_texts(t_syntax_node *word_list_node)
 	return (expanded_texts);
 }
 
-static bool	ms_is_chain_node(t_syntax_node *parent_node, int index)
+static bool	ms_is_all_null_word(t_syntax_node *parent_node)
 {
-	return (parent_node->children[index + 1] != NULL
-		&& (parent_node->children[index]->end_pos
-			== parent_node->children[index + 1]->start_pos));
+	t_syntax_node	**children;
+	int				index;
+
+	index = 0;
+	children = parent_node->children;
+	while (children[index] != NULL)
+	{
+		if (children[index]->type != SY_NULL_WORD)
+			return (false);
+		index++;
+	}
+	return (true);
 }
 
-static int	ms_get_child_token_string(t_syntax_node *child_node,
-	char **string_ptr, bool join_flag)
+static char	*ms_get_expansion_string(t_syntax_node *word_list_node, int *index)
 {
-	const char	*token_string = child_node->token->token;
+	char	*token_string;
+	char	*cat_string;
 
-	if (join_flag)
+	if (word_list_node->children[*index] == NULL)
+		return (NULL);
+	cat_string = ft_strdup(word_list_node->children[*index]->token->token);
+	if (cat_string == NULL)
+		return (NULL);
+	(*index)++;
+	while (ms_is_chain_node(word_list_node, *index))
 	{
-		if (ms_replace_joined_str(string_ptr, token_string) == NULL)
-		{
-			free(*string_ptr);
-			*string_ptr = NULL;
-		}
+		token_string = (char *)word_list_node->children[*index]->token->token;
+		if (ms_replace_joined_str(&cat_string, token_string) == NULL)
+			return (free(cat_string), NULL);
+		(*index)++;
 	}
-	else
-		*string_ptr = ft_strdup(token_string);
-	if (*string_ptr == NULL)
-		return (-1);
-	return (0);
+	return (cat_string);
+}
+
+static bool	ms_is_chain_node(t_syntax_node *parent_node, int index)
+{
+	t_syntax_node	**children;
+
+	children = parent_node->children;
+	if (children[index] == NULL)
+		return (false);
+	if (index == 0)
+		return (true);
+	if (children[index - 1]->end_pos == children[index]->start_pos)
+		return (true);
+	return (false);
 }
