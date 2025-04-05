@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:10:41 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/11 07:38:33 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/05 13:44:58 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include <errno.h>
 #include <stdlib.h>
 
-static int	ms_cleanup_and_exit_dummy(int status);
-
 int	ms_builtin_exit(
 		const char *path, char *const argv[], char *const envp[])
 {
@@ -28,17 +26,10 @@ int	ms_builtin_exit(
 
 	(void)path;
 	(void)envp;
-	if (ms_get_interactive_stat() == 0)
-		ft_putendl_fd("exit", 2);
 	status = ms_parse_builtin_exit(&parsed, argv);
 	if (status != 0)
-		ms_cleanup_and_exit_dummy(status);
+		status = ms_add_meta(status, IS_EXIT);
 	else
-		ms_cleanup_and_exit_dummy(parsed.exit_status);
+		status = ms_add_meta(parsed.exit_status, IS_EXIT);
 	return (status);
-}
-
-static int	ms_cleanup_and_exit_dummy(int status)
-{
-	exit(status);
 }
