@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ms_tokenize_word.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 07:38:45 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/04 19:25:23 by nyts             ###   ########.fr       */
+/*   Updated: 2025/04/05 12:40:27 by rnakatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexical_analyze.h"
 #include "libft.h"
 
-bool	ms_is_word_token_char(const char *str);
+static bool	ms_is_word_token_char(const char *str);
+static bool	ms_is_word_token_char_special(const char *str);
 
 t_token	*ms_tokenize_word(const char *input, int pos)
 {
@@ -35,10 +36,18 @@ bool	ms_is_word_token_char(const char *str)
 {
 	if (ft_includes(*str, NOT_WORD_CHARS))
 	{
-		if (*str == '&' && ft_strncmp(str, "&&", 2) != 0)
-			return (1);
-		else
-			return (0);
+		return (ms_is_word_token_char_special(str));
 	}
-	return (1);
+	return (true);
+}
+
+bool	ms_is_word_token_char_special(const char *str)
+{
+	if (*str == '&' && ft_strncmp(str, "&&", 2) != 0)
+		return (true);
+	if (str[0] == '$'
+		&& (str[1] == '\0'
+			|| !ft_includes(str[1], (char *)g_variable_initial_chars)))
+		return (true);
+	return (false);
 }
