@@ -1,7 +1,8 @@
 import script_tester
 import pytest
 
-@pytest.mark.skip(reason="デバッグの時用")
+#`isatty(stdout)=falseの時にprintfのバッファが吸い込まれる
+@pytest.mark.skip(reason="pwdの出力がバッファリングされる関係でスキップ")
 def test_basic_usage():
     script_tester.test("builtin/cd/test_no_opt/can_change_directory.sh",
 		expected_stdout= (
