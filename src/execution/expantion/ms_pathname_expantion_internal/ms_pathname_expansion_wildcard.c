@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pathname_expansion_wildcard.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnakatan <rnakatan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 03:33:17 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/15 08:00:32 by rnakatan         ###   ########.fr       */
+/*   Updated: 2025/04/06 11:43:23 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	**ms_pathname_expansion_wildcard(char *dir_name, char *token)
 	char	**expanded_path_list;
 
 	file_list = ms_get_file_list_from_dir(dir_name);
+	if (file_list == NULL)
+		return (NULL);
 	index = 0;
 	while (token[index] != '\0')
 	{
