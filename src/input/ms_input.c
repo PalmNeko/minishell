@@ -48,13 +48,13 @@ static int	ms_run_command(char *line)
 	int		ret;
 
 	ret = 0;
-	if (! g_rl_is_sigint)
+	if (g_rl_is_sigint)
+		ms_set_exit_status(128 + SIGINT);
+	else
 	{
 		ms_add_mnsh_history(line);
 		ret = ms_execution(line);
 	}
-	if (g_rl_is_sigint)
-		ms_set_exit_status(ret);
 	return (ret);
 }
 

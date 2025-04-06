@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 12:14:43 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/04/01 08:57:49 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/06 13:08:12 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	ms_set_exit_status(int ret)
 	int		status;
 
 	status = ms_get_status_from_meta(ret);
-	if (g_rl_is_sigint)
-		status += 128 + SIGINT;
 	stat_str = ft_itoa(status);
 	ms_setenv("?", stat_str, 1);
 	free(stat_str);
