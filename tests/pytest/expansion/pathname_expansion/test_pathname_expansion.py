@@ -27,7 +27,8 @@ def test_include_nothing():
 	)
 
 def test_double():
+	result = "*/*\n"
 	script_tester.test(dirname + "test_double_wildcard.sh",
-		expected_stdout = "",
+		expected_stdout = result,
 		expected_stderr = ""
 	)
