@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:22:22 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/28 07:01:45 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/06 10:16:44 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ms_execute_compound_lists(t_lsa_list **lists)
 		return (1);
 	if (pid == 0)
 	{
+		ms_set_default_signal();;
 		if (ms_is_mnsh_subshell_var_enabled())
 			ms_increase_mnsh_subshell();
 		ret = ms_execute_lists(lists);
