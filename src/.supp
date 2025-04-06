@@ -18,6 +18,14 @@
 }
 
 {
+   exclude_readline_library
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:replace_history_entry
+}
+
+{
    usr_bin_leak
    Memcheck:Leak
    match-leak-kinds: all
