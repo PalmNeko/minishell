@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:16:25 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/02 07:26:04 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/06 12:56:42 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ms_builtin_unset(const char *path, char *const argv[], char *const envp[])
 	while (parsed.names[index] != NULL)
 	{
 		ms_unsetenv(parsed.names[index]);
+		ms_remove_export(parsed.names[index]);
 		index++;
 	}
 	return (0);
