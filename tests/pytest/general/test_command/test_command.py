@@ -26,3 +26,9 @@ def test_error_will_run_directory():
         expected_stdout = "126\n",
         expected_stderr = "minishell: ./: Is a directory\n"
         )
+
+def test_error_permission_denied():
+    script_tester.test("general/test_command/test_error_permission_denied.sh",
+        expected_stdout = "126\n",
+        expected_stderr = "minishell: ./anyfile.out: Permission denied\n"
+        )
