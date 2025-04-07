@@ -42,5 +42,5 @@ def test_variable_before_string():
 def test_syntax_error():
 	script_tester.test("pipeline/single/test_syntax_error_status.sh",
 		expected_stdout = "2\n0\n",
-		expected_stderr = ""
+		expected_stderr = "minishell: syntax error near unexpected token `('\n"
 	)
