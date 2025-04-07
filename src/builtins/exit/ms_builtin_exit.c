@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:10:41 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/05 13:44:58 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/06 12:30:35 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ int	ms_builtin_exit(
 
 	(void)path;
 	(void)envp;
+	parsed.exit_status = 0;
+	parsed.is_exit = true;
 	status = ms_parse_builtin_exit(&parsed, argv);
-	if (status != 0)
+	if (parsed.is_exit == false)
+		status = 1;
+	else if (status != 0)
 		status = ms_add_meta(status, IS_EXIT);
 	else
 		status = ms_add_meta(parsed.exit_status, IS_EXIT);

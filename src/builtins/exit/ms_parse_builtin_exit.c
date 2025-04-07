@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:37:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/03/05 13:24:51 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/06 12:30:00 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	ms_parse_builtin_exit(t_builtin_exit *parsed, char *const argv[])
 	char		*str;
 
 	idx = 1;
-	if (argv[idx] != NULL
-		&& ft_strcmp(argv[idx], "--") == 0)
+	if (argv[idx] != NULL && ft_strcmp(argv[idx], "--") == 0)
 		idx++;
 	if (argv[idx] == NULL)
 		str = ms_getenv("?");
@@ -39,12 +38,13 @@ int	ms_parse_builtin_exit(t_builtin_exit *parsed, char *const argv[])
 		return (ms_perror_cmd("exit", "not set `?' variable"), 1);
 	errno = 0;
 	status = ft_strtol(str, &endptr, 10);
-	if (ms_is_numeric(str, endptr) == false
-		|| errno != 0)
-		return (ms_perror_cmd2("exit",
-				str, "numeric argument required"), 2);
+	if (ms_is_numeric(str, endptr) == false || errno != 0)
+		return (ms_perror_cmd2("exit", str, "numeric argument required"), 2);
 	if (ms_ntpsize((void **)(argv + idx)) > 1)
+	{
+		parsed->is_exit = false;
 		return (ms_perror_cmd("exit", "too many arguments"), 1);
+	}
 	parsed->exit_status = status;
 	return (0);
 }
