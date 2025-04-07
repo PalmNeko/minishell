@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nyts <nyts@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 19:14:35 by nyts              #+#    #+#             */
-/*   Updated: 2025/03/04 19:14:36 by nyts             ###   ########.fr       */
+/*   Updated: 2025/04/06 10:16:59 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char			**ms_expansion(t_lsa_word_list *lsa_word_list);
 
 int				ms_run_assignment_variables(t_lsa_assignment **assignments);
 int				ms_run_redirects(t_lsa_redirection **redirects);
+
+void			ms_set_default_signal(void);
 
 t_syntax_node	*ms_parameter_expansion(t_syntax_node *word_list);
 t_syntax_node	*ms_execution_tilde_expantion(t_syntax_node *word_list);

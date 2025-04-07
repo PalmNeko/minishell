@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:18:04 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/23 12:00:58 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/06 10:26:30 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	ms_run_pipeline_command(t_lsa_pipeline *pipeline, int index,
 	pid_list[index] = fork();
 	if (pid_list[index] == 0)
 	{
+		ms_set_default_signal();
 		ret = ms_run_pipeline_child(pipeline, index, pipe_fds);
 		return (free(pid_list), ret);
 	}
@@ -128,7 +129,11 @@ static int	ms_wait_for_children(pid_t *pid_list, int cmd_count)
 		if (WIFEXITED(status))
 			status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		{
+			if (pid == pid_list[cmd_count - 1] && WCOREDUMP(status))
+				ft_putstr_fd("Quit (core dumped)\n", 2);
 			status = 128 + WTERMSIG(status);
+		}
 		i++;
 	}
 	return (status);
