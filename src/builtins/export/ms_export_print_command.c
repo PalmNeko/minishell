@@ -14,6 +14,7 @@
 #include "libms_internal.h"
 #include "export_internal.h"
 #include "libft.h"
+#include "ft_printf.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -53,11 +54,11 @@ static void	ms_print_export_environs(char *const envp[])
 		envname = *envitr;
 		envvalue = ms_getenv(envname);
 		if (envvalue == NULL)
-			printf("declare -x %s\n", envname);
+			ft_printf("declare -x %s\n", envname);
 		else
 		{
 			escaped_value = ms_escape_export_value(envvalue);
-			printf("declare -x %s=\"%s\"\n", envname, escaped_value);
+			ft_printf("declare -x %s=\"%s\"\n", envname, escaped_value);
 			free(escaped_value);
 		}
 		envitr++;

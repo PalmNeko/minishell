@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:53:39 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/02/03 06:46:02 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:41:23 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "libms.h"
 #include "ms_getopt.h"
+#include "ft_printf.h"
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -45,7 +46,7 @@ int	ms_builtin_pwd(
 			cwd = ft_strdup(cwd);
 	}
 	if (cwd != NULL)
-		printf("%s\n", cwd);
+		ft_printf("%s\n", cwd);
 	free(cwd);
 	return (0);
 }

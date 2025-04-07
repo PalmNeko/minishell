@@ -6,11 +6,12 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 05:55:29 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/05 06:52:20 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/07 11:39:49 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signal_header.h"
+#include "libft.h"
 #include <readline/readline.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -64,7 +65,7 @@ static void	ms_handle_sigint(int sig)
 	if (sig == SIGINT)
 	{
 		rl_replace_line("", 0);
-		printf("\n");
+		ft_putstr_fd("\n", 2);
 		rl_on_new_line();
 		g_rl_is_sigint = 1;
 		rl_done = 1;
