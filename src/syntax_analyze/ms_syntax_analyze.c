@@ -29,7 +29,7 @@ t_syntax_node	*ms_syntax_analyze(t_token **tokens)
 		node = ms_parse_declined(tokens, pos);
 	}
 	if (node->type == SY_DECLINED)
-		ft_dprintf(2,"minishell: syntax error near unexpected token `%s\'\n",
+		ft_dprintf(2, "minishell: syntax error near unexpected token `%s\'\n",
 			node->token->token);
 	return (node);
 }
