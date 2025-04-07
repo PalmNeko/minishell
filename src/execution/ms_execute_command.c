@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 21:27:56 by rnakatan          #+#    #+#             */
-/*   Updated: 2025/03/25 09:36:57 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/06 12:05:05 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ms_execute_command(char **args)
 	ret = ms_execute_command_external(args);
 	if (ret == -1)
 	{
-		if (errno == ENOENT || errno == EACCES)
+		if (errno == ENOENT)
 			ret = 127;
 		else
 			ret = 126;
