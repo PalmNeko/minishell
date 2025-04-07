@@ -83,3 +83,20 @@ TEST(ms_builtin_unset, error_if_use_invalid_option)
     EXPECT_EQ(term.getStdout(), expectStdout);
     EXPECT_EQ(term.getStderr(), expectStderr);
 }
+
+/** exportの方もunsetする */
+TEST(ms_builtin_unset, unset_export_environ)
+{
+	IoTerminal 	term;
+	const char 	*args[] = {"unset", "HOGE", NULL};
+	t_list		*export_env;
+
+	ms_setenv("HOGE", "\\\"", 1);
+
+	term.boot();
+	ms_builtin_unset(NULL, (char *const *)args, NULL);
+	term.exit();
+
+	export_env = ms_find_export("HOGE");
+	EXPECT_EQ(export_env, nullptr);
+}
