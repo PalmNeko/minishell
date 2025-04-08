@@ -22,11 +22,10 @@ int	ms_execute_lists(t_lsa_list **lists)
 	i = 0;
 	while (lists[i] && ms_has_meta(ret, IS_CHILD) == false)
 	{
-		if (lists[i]->type == LSA_LIST_AND && ret != 0)
-			break ;
-		if (lists[i]->type == LSA_LIST_OR && ret == 0)
-			break ;
-		ret = ms_execute_list(lists[i]);
+		if (lists[i]->type == LSA_LIST_ALWAYS
+			|| (lists[i]->type == LSA_LIST_AND && ret == 0)
+			|| (lists[i]->type == LSA_LIST_OR && ret != 0))
+			ret = ms_execute_list(lists[i]);
 		i++;
 	}
 	return (ret);
