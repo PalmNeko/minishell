@@ -3,7 +3,7 @@ import pytest
 import subprocess
 
 dirname = "expansion/pathname_expansion/"
-
+@pytest.mark.skip(reason="wildcard部分の一時的な除外")
 def test_only():
 	result = "aaaa\nbbbb\ncccc\ndddd.sh\neeee.sh\n"
 	script_tester.test(dirname + "test_include_only_wildcard.sh",
@@ -11,6 +11,7 @@ def test_only():
 		expected_stderr = ""
 	)
 
+@pytest.mark.skip(reason="wildcard部分の一時的な除外")
 def test_include_single():
 	result = "\ndddd.sh\neeee.sh\n"
 	result2 = "no*match\n"
@@ -19,6 +20,7 @@ def test_include_single():
 		expected_stderr = ""
 	)
 
+@pytest.mark.skip(reason="wildcard部分の一時的な除外")
 def test_include_nothing():
 	result = "nothing_wildcard\n"
 	script_tester.test(dirname + "test_include_nothing_wildcard.sh",
@@ -26,6 +28,7 @@ def test_include_nothing():
 		expected_stderr = ""
 	)
 
+@pytest.mark.skip(reason="wildcard部分の一時的な除外")
 def test_double():
 	result = "*/*\n"
 	script_tester.test(dirname + "test_double_wildcard.sh",

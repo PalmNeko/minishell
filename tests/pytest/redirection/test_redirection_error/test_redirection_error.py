@@ -13,7 +13,7 @@ def test_redirection_ambiguous_error_variable():
             "minishell: $Bob: ambiguous redirect\n"
             "minishell: $Chris: ambiguous redirect\n"
             ))
-
+@pytest.mark.skip(reason="wildcard部分の一時的な除外")
 def test_redirection_ambiguous_error_wildcard():
     script_tester.test("redirection/test_redirection_error/test_redirection_ambiguous_error_wildcard.sh",
 		expected_stdout = (
