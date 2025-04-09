@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 06:29:14 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/07 11:38:28 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/09 05:19:43 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "libft.h"
 #include "libms.h"
 #include "ms_error.h"
-#include "ft_printf.h"
 #include <stddef.h>
 #include <errno.h>
 #include <string.h>
@@ -54,7 +53,7 @@ static int	ms_builtin_cd2(t_builtin_cd *parsed)
 	if (chdir(resolved_path) == -1)
 		return (ms_perror_cd(resolved_path), free(resolved_path), 1);
 	if (parsed->is_to_oldpwd)
-		ft_printf("%s\n", resolved_path);
+		printf("%s\n", resolved_path);
 	result = ms_setnewpwd(parsed, resolved_path);
 	free(resolved_path);
 	return (result);

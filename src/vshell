@@ -8,6 +8,6 @@ valgrind \
 	--track-origins=yes \
 	--trace-children=yes \
 	--error-exitcode=230 \
-	--track-fds=all \
+	--track-fds=yes \
 	./minishell
 	# --gen-suppressions=yes \
