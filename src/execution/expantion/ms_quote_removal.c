@@ -14,11 +14,13 @@
 #include "lexical_analyze.h"
 #include "libms.h"
 #include "syntax_analyze.h"
+#include "quote_removal.h"
 #include <stdlib.h>
 
 static char				*ms_quote_removal_get_word(t_syntax_node *word_node);
 static t_syntax_node	*ms_create_quote_removal_word_node(char *word,
 							t_syntax_node *child_node);
+static bool				ms_is_quoted_word_node(t_syntax_node *word_list);
 
 t_syntax_node	*ms_quote_removal(t_syntax_node *word_list)
 {
@@ -28,11 +30,11 @@ t_syntax_node	*ms_quote_removal(t_syntax_node *word_list)
 	t_syntax_node	*new_word_node;
 
 	i = 0;
+	ms_remove_null_children(word_list);
 	while (word_list->children[i])
 	{
 		child_node = word_list->children[i];
-		if (child_node->type == SY_DOUBLE_QUOTED_WORD
-			|| child_node->type == SY_SINGLE_QUOTED_WORD)
+		if (ms_is_quoted_word_node(child_node))
 		{
 			word = ms_quote_removal_get_word(child_node);
 			if (word == NULL)
@@ -91,4 +93,10 @@ static t_syntax_node	*ms_create_quote_removal_word_node(char *word,
 	new_word_node->start_pos = child_node->start_pos;
 	new_word_node->end_pos = child_node->end_pos;
 	return (new_word_node);
+}
+
+bool	ms_is_quoted_word_node(t_syntax_node *word_list_node)
+{
+	return ((word_list_node->type == SY_DOUBLE_QUOTED_WORD
+			|| word_list_node->type == SY_SINGLE_QUOTED_WORD));
 }

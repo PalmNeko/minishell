@@ -21,7 +21,7 @@ typedef t_syntax_node		*(*t_expand_func)(t_syntax_node *word_list_node);
 static const t_expand_func	g_expand_funcs[] = {
 	ms_execution_tilde_expantion,
 	ms_parameter_expansion,
-	ms_pathname_expansion,
+	// ms_pathname_expansion,
 	ms_quote_removal,
 	NULL
 };
