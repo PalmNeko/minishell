@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 19:31:02 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/07 12:01:47 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/09 05:19:48 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libms.h"
 #include "ms_getopt.h"
 #include "builtin_internal.h"
-#include "ft_printf.h"
 #include <stddef.h>
 #include <stdio.h>
 
@@ -74,7 +73,7 @@ static void	ms_print_environ(void)
 	{
 		value = ms_getenv(*names);
 		if (value != NULL)
-			ft_printf("%s=%s\n", *names, value);
+			printf("%s=%s\n", *names, value);
 		names++;
 	}
 	ms_destroy_ntp(head);

@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:46:44 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/05 14:00:12 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/09 05:23:09 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include <stdio.h>
 
 static void	ms_export_history(void);
-static void	ms_clear_filedescriptors(void);
 
 void	ms_cleanup_and_exit(int status)
 {
@@ -34,7 +33,6 @@ void	ms_cleanup_and_exit(int status)
 	ms_clear_cdwd();
 	ms_clear_environ(NULL);
 	ms_clear_exports();
-	ms_clear_filedescriptors();
 	exit(ms_get_status_from_meta(status));
 }
 
@@ -55,11 +53,4 @@ static void	ms_export_history(void)
 	if (*endptr != '\0' || histfilesize < 0)
 		return ;
 	ms_history_truncate_file(ms_getenv("HISTFILE"), histfilesize);
-}
-
-static void	ms_clear_filedescriptors(void)
-{
-	close(0);
-	close(1);
-	close(2);
 }
