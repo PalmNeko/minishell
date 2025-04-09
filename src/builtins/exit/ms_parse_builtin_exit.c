@@ -6,7 +6,7 @@
 /*   By: tookuyam <tookuyam@student.42tokyo.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:37:20 by tookuyam          #+#    #+#             */
-/*   Updated: 2025/04/06 12:30:00 by tookuyam         ###   ########.fr       */
+/*   Updated: 2025/04/09 03:13:32 by tookuyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ms_parse_builtin_exit(t_builtin_exit *parsed, char *const argv[])
 		parsed->is_exit = false;
 		return (ms_perror_cmd("exit", "too many arguments"), 1);
 	}
-	parsed->exit_status = status;
+	parsed->exit_status = status & 0xff;
 	return (0);
 }
 
