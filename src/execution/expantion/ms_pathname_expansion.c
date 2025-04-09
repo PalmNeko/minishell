@@ -43,7 +43,6 @@ t_syntax_node	*ms_pathname_expansion(t_syntax_node *word_list)
 	ms_destroy_ntp2((void **)word_list->children,
 		ms_syntax_node_destroy_wrapper);
 	word_list->children = new_children;
-	ms_remove_null_children(word_list);
 	return (word_list);
 }
 
